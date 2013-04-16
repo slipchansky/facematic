@@ -14,10 +14,7 @@
 						maxOccurs="unbounded"></element>
 					<element type="c:ButtonType" name="Button" minOccurs="0"
 						maxOccurs="unbounded"></element>
-						
-					<element type="c:FieldType" name="Field" minOccurs="0" maxOccurs="unbounded"></element>
 					<element type="c:FieldType" name="TextField" minOccurs="0" maxOccurs="unbounded"></element>
-					
 					<element type="c:LabelType" name="Label" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:LinkType" name="Link" minOccurs="0"
