@@ -21,7 +21,7 @@
 						maxOccurs="unbounded" />
 					<element type="c:EmbeddedType" name="Embedded" minOccurs="0"
 						maxOccurs="unbounded" />
-					<element type="c:PopupDateFieldResolutionType" name="PopupDateField"
+					<element type="c:PopupDateFieldType" name="PopupDateField"
 						minOccurs="0" maxOccurs="unbounded"></element>
 					<element type="c:InlineDateFieldType" name="InlineDateField"
 						minOccurs="0" maxOccurs="unbounded"></element>

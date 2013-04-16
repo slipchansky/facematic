@@ -15,7 +15,7 @@
 	    </onClick>
 	</Button>
 
-	<complex name="nested" location="RESOURCE" path="buttons"></complex>
-	<complex name="more" location="RESOURCE" path="../moremarkup/buttons"></complex>
+	<composite name="nested" location="RESOURCE" path="buttons" />
+	<composite name="more" location="RESOURCE" path="../moremarkup/buttons" />
 
 </vl>

@@ -8,7 +8,7 @@
 	<FormLayout>
 		<TextField caption="mama"/>
 		<TextField caption="papa"/>
-		<Field caption="baba"/>
+		<PopupDateField name="date" caprtion="Date" />
 	</FormLayout>
 	
 </vl>
