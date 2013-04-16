@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vl name="content" xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://slipchansky.com/fm /WEB-INF/facematic.xsd" sizeFull="true"	expandRatio="100">
+
+	<Table name="table" expandRatio="100" sizeFull="true">
+		<columns>
+			<column id="firstName" header="First name" width="150" />
+			<column id="lastName" header="Last Name" expandRatio="100" />
+		</columns>
+	</Table>
+
+	<Button name="button" caption="mama">
+		<onClick>
+	      context.nested.okbutton.setVisible (false);
+	    </onClick>
+	</Button>
+
+	<complex name="nested" location="RESOURCE" path="buttons"></complex>
+	<complex name="more" location="RESOURCE" path="../moremarkup/buttons"></complex>
+
+</vl>

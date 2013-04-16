@@ -12,5 +12,6 @@ MANIFEST.MF
 *.zip
 /.svn/
 /*.svnignore
+va/src/main/webapp/VAADIN/
 rebel.xml
 nb*.xml
