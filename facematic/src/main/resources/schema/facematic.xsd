@@ -47,7 +47,7 @@
 						maxOccurs="unbounded"></element>
 					<element type="c:PanelType" name="Panel" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:ComplexType" name="complex" minOccurs="0"
+					<element type="c:CompositeType" name="composite" minOccurs="0"
 						maxOccurs="unbounded"></element>
 				</sequence>
 				<attribute name="spacing" type="c:TrueFalseType"></attribute>
@@ -140,14 +140,14 @@
 						maxOccurs="unbounded"></element>
 					<element type="c:PanelType" name="Panel" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:ComplexType" name="complex" minOccurs="0"
+					<element type="c:CompositeType" name="complex" minOccurs="0"
 						maxOccurs="unbounded"></element>
 				</choice>
 			</extension>
 		</complexContent>
 	</complexType>
 
-	<simpleType name="ComplexLocationType">
+	<simpleType name="CompositeLocationType">
 		<restriction base="string">
 			<enumeration value="RESOURCE" />
 			<enumeration value="FILE" />
@@ -155,10 +155,10 @@
 		</restriction>
 	</simpleType>
 
-	<complexType name="ComplexType">
+	<complexType name="CompositeType">
 		<complexContent>
 			<extension base="c:ContentType">
-				<attribute name="location" type="c:ComplexLocationType"
+				<attribute name="location" type="c:CompositeLocationType"
 					use="required"></attribute>
 				<attribute name="path" type="string" use="required"></attribute>
 			</extension>

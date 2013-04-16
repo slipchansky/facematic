@@ -11,14 +11,14 @@ import com.google.gwt.user.client.ui.Button;
 import com.slipchansky.fm.factory.builders.AbstractOrderedLayoutBuilder;
 import com.slipchansky.fm.factory.builders.BeanBuilder;
 import com.slipchansky.fm.factory.builders.ButtonBuilder;
-import com.slipchansky.fm.factory.builders.ComplexBuilder;
+import com.slipchansky.fm.factory.builders.CompositeBuilder;
 import com.slipchansky.fm.factory.builders.ComponentBuilder;
 import com.slipchansky.fm.factory.builders.ComponentContainerBuilder;
 import com.slipchansky.fm.factory.builders.PanelBuilder;
 import com.slipchansky.fm.factory.builders.SelectBuilder;
 import com.slipchansky.fm.factory.builders.TabSheetBuilder;
 import com.slipchansky.fm.factory.builders.TableBuilder;
-import com.slipchansky.fm.ui.Complex;
+import com.slipchansky.fm.ui.Composite;
 import com.slipchansky.utils.GroovyEngine;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractSingleComponentContainer;
@@ -83,7 +83,7 @@ public class ComponentFactory {
 			putBuilder (new SelectBuilder ());
 			putBuilder (new TableBuilder ());
 			putBuilder (new PanelBuilder ());
-			putBuilder (new ComplexBuilder ());
+			putBuilder (new CompositeBuilder ());
 		};
 		
 		
@@ -193,7 +193,7 @@ public class ComponentFactory {
 	}
 	
 	public <T> T createComplexClasInstance (Element node) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		return (T) new Complex();
+		return (T) new Composite();
 	}
 	
 
