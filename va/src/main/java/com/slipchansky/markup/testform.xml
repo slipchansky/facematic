@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vl name="content" xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://slipchansky.com/fm facematic.xsd" sizeFull="true"
+	expandRatio="100">
+	
+	<FormLayout>
+		<TextField caption="mama"/>
+		<TextField caption="papa"/>
+		<Field caption="baba"/>
+	</FormLayout>
+	
+</vl>

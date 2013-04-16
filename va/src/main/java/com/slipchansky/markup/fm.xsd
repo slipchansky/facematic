@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://slipchansky.com/fm"
+	xmlns:c="http://slipchansky.com/fm">
+
+
+	<complexType name="ContentContainerType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<sequence>
+					<element type="c:ContentContainerType" name="hl" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:ContentContainerType" name="vl" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:ButtonType" name="Button" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:FieldType" name="Field" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:LabelType" name="Label" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:LinkType" name="Link" minOccurs="0" maxOccurs="unbounded" />
+					<element type="c:EmbeddedType" name="Embedded" minOccurs="0" maxOccurs="unbounded" />
+					<element type="c:PopupDateFieldResolutionType" name="PopupDateField" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:InlineDateFieldType" name="InlineDateField" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:TextAreaType" name="TextArea" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:RichTextAreaType" name="RichTextArea" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:ListSelectType" name="ListSelect" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:TwinColSelectType" name="TwinColSelect" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:OptionGroupType" name="OptionGroup" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:SliderType" name="Slider" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:UploadType" name="Upload" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:FormLayoutType" name="FormLayout" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:TableType" name="Table" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:TreeType" name="Tree" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:PanelType" name="Panel" minOccurs="0" maxOccurs="unbounded"></element>
+				</sequence>
+				<attribute name="spacing" type="c:TrueFalseType"></attribute>
+				<attribute name="margin" type="c:TrueFalseType"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="ContentTypeAlignmentType">
+		<restriction base="string">
+			<enumeration value="BOTTOM_CENTER" />
+			<enumeration value="BOTTOM_LEFT" />
+			<enumeration value="BOTTOM_RIGHT" />
+			<enumeration value="MIDDLE_CENTER" />
+			<enumeration value="MIDDLE_LEFT" />
+			<enumeration value="MIDDLE_RIGHT" />
+			<enumeration value="TOP_CENTER" />
+			<enumeration value="TOP_LEFT" />
+			<enumeration value="TOP_RIGHT" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="TrueFalseType">
+		<restriction base="string">
+			<enumeration value="false" />
+			<enumeration value="true" />
+		</restriction>
+	</simpleType>
+
+
+	<complexType name="ContentType">
+		<sequence>		</sequence>
+		<attribute name="name" type="string" use="optional"></attribute>
+		<attribute name="id" type="string" use="optional"></attribute>
+		<attribute name="caption" type="string" use="optional"></attribute>
+		<attribute name="height" type="string" use="optional"></attribute>
+		<attribute name="width" type="string" use="optional"></attribute>
+		<attribute name="alignment" type="c:ContentTypeAlignmentType"
+			use="optional" />
+		<attribute name="sizeFull" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="expandRatio" type="float" use="optional" />
+		<attribute name="enabled" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="visible" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="styleName" type="string" use="optional"></attribute>
+		<attribute name="immediate" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="description" type="string" use="optional"></attribute>
+	</complexType>
+
+
+	<complexType name="PanelType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<choice>
+					<element ref="c:hl" maxOccurs="unbounded"></element>
+					<element ref="c:vl" maxOccurs="unbounded"></element>
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="PropertyType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<attribute name="value" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="FieldType">
+		<complexContent>
+			<extension base="c:PropertyType">
+				<attribute name="prompt" use="optional" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="TextFieldType">
+		<complexContent>
+			<extension base="c:FieldType">
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<simpleType name="PopupDateFieldResolutionType">
+		<restriction base="string">
+			<enumeration value="SECOND" />
+			<enumeration value="MINUTE" />
+			<enumeration value="HOUR" />
+			<enumeration value="DAY" />
+			<enumeration value="MONTH" />
+			<enumeration value="YEAR" />
+		</restriction>
+	</simpleType>
+
+
+
+	<complexType name="PopupDateFieldType">
+		<complexContent>
+			<extension base="c:FieldType">
+				<attribute name="resolution" type="c:PopupDateFieldResolutionType" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="InlineDateFieldType">
+		<complexContent>
+			<extension base="c:PopupDateFieldType" />
+		</complexContent>
+	</complexType>
+
+
+
+	<complexType name="LabelType">
+		<complexContent>
+			<extension base="c:PropertyType" />
+		</complexContent>
+	</complexType>
+
+	<complexType name="LinkType">
+		<complexContent>
+			<extension base="c:PropertyType">
+				<attribute name="resource" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<simpleType name="EmbeddedTypeType">
+		<restriction base="string">
+			<enumeration value="TYPE_BROWSER" />
+			<enumeration value="TYPE_IMAGE" />
+			<enumeration value="TYPE_OBJECT" />
+		</restriction>
+	</simpleType>
+
+
+	<complexType name="EmbeddedType">
+		<complexContent>
+			<extension base="c:LinkType">
+				<sequence>
+					<element name="parameter" type="string" minOccurs="0"
+						maxOccurs="unbounded" />
+				</sequence>
+
+				<attribute name="alternateText" type="string" />
+				<attribute name="mimeType" type="string" />
+				<attribute name="type" type="c:EmbeddedTypeType" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="TextAreaType">
+		<complexContent>
+			<extension base="c:FieldType">
+				<attribute name="rows" type="int" />
+				<attribute name="columns" type="int" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="RichTextAreaType">
+		<complexContent>
+			<extension base="c:TextAreaType">
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+	<complexType name="ButtonType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<sequence>
+					<element name="onClick" type="string" maxOccurs="10"
+						minOccurs="0" />
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="ListSelectType">
+		<complexContent>
+			<extension base="c:FieldType">
+				<sequence>
+					<element name="item" type="string" maxOccurs="unbounded"
+						minOccurs="0" />
+				</sequence>
+				<attribute name="rows" type="integer" use="optional"></attribute>
+				<attribute name="nullSelectionAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="multiSelect" type="c:TrueFalseType"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+	<complexType name="TwinColSelectType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<attribute name="leftColumnCaption" type="string" use="optional"></attribute>
+				<attribute name="rightColumnCaption" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+
+	<complexType name="OptionGroupType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<attribute name="htmlContentAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="ComboBoxFilteringModeType">
+		<restriction base="string">
+			<enumeration value="OFF" />
+			<enumeration value="STARTSWITH" />
+			<enumeration value="CONTAINS" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="ComboBoxType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<attribute name="filteringMode" type="c:ComboBoxFilteringModeType"
+					use="optional"></attribute>
+				<attribute name="newItemsAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="SliderOrientationType">
+		<restriction base="string">
+			<enumeration value="HORISONTAL" />
+			<enumeration value="VERTICAL" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="SliderType">
+		<complexContent>
+			<extension base="c:FieldType">
+				<attribute name="min" type="double" use="optional"></attribute>
+				<attribute name="max" type="double" use="optional"></attribute>
+				<attribute name="orientation" type="c:SliderOrientationType"
+					use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="UploadType">
+		<complexContent>
+			<extension base="c:FieldType">
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="FormLayoutType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<simpleType name="TableRowHeaderModeType">
+		<restriction base="string">
+			<enumeration value="ITEM">
+				<annotation>
+					<documentation>Column headers are explicitly specified with
+						setColumnHeaders(String[]).
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="INDEX">
+				<annotation>
+					<documentation>
+						Row caption mode: Index of the item is used as item
+						caption. The
+						index mode can only be used with the containers
+						implementing the
+						com.vaadin.data.Container.Indexed interface.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="HIDDEN">
+				<annotation>
+					<documentation>Column headers are hidden.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="ID">
+				<annotation>
+					<documentation>Property ID:s are used as column headers.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="EXPLICIT_DEFAULTS_ID">
+				<annotation>
+					<documentation>
+						Row caption mode: Item captions are explicitly
+						specified, but if
+						the
+						caption is missing, the item id objects
+						toString()
+						is used instead.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="EXPLICIT">
+				<annotation>
+					<documentation>Row caption mode: Item captions are explicitly
+						specified.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="ICON_ONLY">
+				<annotation>
+					<documentation>Row caption mode: Only icons are shown, the captions
+						are hidden.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="PROPERTY">
+				<annotation>
+					<documentation>Row caption mode: Item captions are read from
+						property specified with
+						setItemCaptionPropertyId(Object).
+					</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+
+
+	<simpleType name="TableColumnHeaderModeType">
+		<restriction base="string">
+			<enumeration value="HIDDEN">
+				<annotation>
+					<documentation>
+						Column headers are hidden.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="ID">
+				<annotation>
+					<documentation>
+						Property ID:s are used as column headers.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="EXPLICIT">
+				<annotation>
+					<documentation>
+						Column headers are explicitly specified with
+						setColumnHeaders(String[]).
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="EXPLICIT_DEFAULTS_ID">
+				<annotation>
+					<documentation>
+						Column headers are explicitly specified with
+						setColumnHeaders(String[]). If a header is not specified for
+						a
+						given property, its property id is used instead.
+						<p>
+							<b>This is the default behavior. </b>
+						</p>
+					</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="TableColumnAlignType">
+		<restriction base="string">
+			<enumeration value="LEFT" />
+			<enumeration value="CENTER" />
+			<enumeration value="RIGHT" />
+		</restriction>
+	</simpleType>
+
+
+
+	<complexType name="TableColumnType">
+		<sequence>
+		</sequence>
+		<attribute name="id" type="string"></attribute>
+		<attribute name="type" type="string" default="String.class"></attribute>
+		<attribute name="alignment" type="c:TableColumnAlignType"></attribute>
+		<attribute name="defaultValue" type="string"></attribute>
+		<attribute name="collapsed" type="c:TrueFalseType"></attribute>
+		<attribute name="collapsible" type="c:TrueFalseType"></attribute>
+		<attribute name="expandRatio" type="float"></attribute>
+		<attribute name="footer" type="string"></attribute>
+		<attribute name="header" type="string"></attribute>
+		<attribute name="icon" type="string"></attribute>
+		<attribute name="reorderingAllowed" type="c:TrueFalseType"></attribute>
+		<attribute name="width" type="int"></attribute>
+	</complexType>
+	<element name="column" type="c:TableColumnType"></element>
+
+
+	<complexType name="TableColumnsType">
+		<sequence>
+			<element ref="c:column" minOccurs="1" maxOccurs="unbounded"></element>
+		</sequence>
+	</complexType>
+
+	<element name="columns" type="c:TableColumnsType"></element>
+
+
+
+	<complexType name="TableType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<sequence>
+					<element ref="c:columns" minOccurs="0" maxOccurs="unbounded"></element>
+				</sequence>
+				<attribute name="multiSelectAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="columnReorderingAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="columnCollapsingAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="rowHeaderMode" type="c:TableRowHeaderModeType"
+					use="optional"></attribute>
+				<attribute name="columnHeaderMode" type="c:TableColumnHeaderModeType"
+					use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="TreeTableType">
+		<complexContent>
+			<extension base="c:TableType">
+				<attribute name="min" type="double" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+
+	<simpleType name="TreeDragModeType">
+		<restriction base="string">
+			<enumeration value="NONE">
+				<annotation>
+					<documentation>
+						When drag mode is NONE, dragging from Tree is not
+						supported. Browsers
+						may still support selecting text/icons from
+						Tree which can
+						initiate
+						HTML 5 style drag and drop operation.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="NODE">
+				<annotation>
+					<documentation>
+						When drag mode is NODE, users can initiate drag from
+						Tree nodes that
+						represent {@link Item}s in from the backed {@link
+						Container}.
+					</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+
+
+
+	<simpleType name="TreeMultiSelectModeType">
+		<restriction base="string">
+			<enumeration value="DEFAULT">
+				<annotation>
+					<documentation>
+						The default behavior of the multi select mode
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="SIMPLE">
+				<annotation>
+					<documentation>
+						The previous more simple behavior of the multi
+						select
+					</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+
+
+	<complexType name="TreeType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<sequence>
+				</sequence>
+				<attribute name="lazyLoading" type="c:TrueFalseType" use="optional"></attribute>
+				<attribute name="dragMode" type="c:TreeDragModeType" use="optional"></attribute>
+				<attribute name="multiselectMode" type="c:TreeMultiSelectModeType"
+					use="optional"></attribute>
+				<attribute name="newItemsAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="selectable" type="c:TrueFalseType" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+	<element name="Component" type="c:ContentType"></element>
+
+	<element name="ContentContainer" type="c:ContentContainerType"></element>
+
+	<element name="Label" type="c:LabelType"></element>
+
+	<element name="Link" type="c:LinkType"></element>
+
+	<element name="Embedded" type="c:EmbeddedType"></element>
+
+	<element name="Button" type="c:ButtonType"></element>
+
+	<element name="Field" type="c:FieldType"></element>
+
+	<element name="TextField" type="c:TextFieldType"></element>
+
+	<element name="hl" type="c:ContentContainerType"></element>
+
+	<element name="vl" type="c:ContentContainerType"></element>
+
+	<element name="HorizontalLayout" type="c:ContentContainerType"></element>
+
+	<element name="VerticalLayout" type="c:ContentContainerType"></element>
+
+
+	<element name="content" type="c:ContentContainerType"></element>
+
+	<element name="PoputDateField" type="c:PopupDateFieldType"></element>
+
+	<element name="InlineDateField" type="c:InlineDateFieldType"></element>
+
+	<element name="TextArea" type="c:TextAreaType"></element>
+
+	<element name="RichTextArea" type="c:RichTextAreaType"></element>
+
+	<element name="ListSelect" type="c:ListSelectType"></element>
+
+	<element name="TwinColSelect" type="c:TwinColSelectType"></element>
+
+	<element name="OptionGroup" type="c:OptionGroupType"></element>
+
+	<element name="Slider" type="c:SliderType"></element>
+
+	<element name="Upload" type="c:UploadType"></element>
+
+	<element name="FormLayout" type="c:FormLayoutType"></element>
+
+	<element name="Table" type="c:TableType"></element>
+
+	<element name="Tree" type="c:TreeType"></element>
+	<element name="Panel" type="c:PanelType"></element>
+
+
+</schema>
