@@ -642,6 +642,7 @@
 	<element name="hl" type="c:ContentContainerType"></element>
 	<element name="vl" type="c:ContentContainerType"></element>
 	<element name="content" type="c:ContentContainerType"></element>
+	<element type="c:CompositeType" name="composite"/>
 
 
 </schema>
