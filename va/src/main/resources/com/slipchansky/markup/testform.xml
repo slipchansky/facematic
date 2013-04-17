@@ -4,11 +4,11 @@
 	xsi:schemaLocation="http://slipchansky.com/fm https://raw.github.com/slipchansky/facematic/dev/facematic/src/main/resources/schema/facematic.xsd" sizeFull="true"
 	expandRatio="100">
 	
-	
 	<FormLayout>
 		<TextField caption="mama"/>
 		<TextField caption="papa"/>
-		<PopupDateField name="date" caprtion="Date" />
+		<PopupDateField caption="Date" resolution="MINUTE"/>
+		<Slider min="10" max="100" value="50" caption="test" width="100pt"/>
 	</FormLayout>
 	
 </vl>
