@@ -14,11 +14,13 @@ import com.slipchansky.fm.factory.builders.ButtonBuilder;
 import com.slipchansky.fm.factory.builders.CompositeBuilder;
 import com.slipchansky.fm.factory.builders.ComponentBuilder;
 import com.slipchansky.fm.factory.builders.ComponentContainerBuilder;
+import com.slipchansky.fm.factory.builders.HtmlBuilder;
 import com.slipchansky.fm.factory.builders.PanelBuilder;
 import com.slipchansky.fm.factory.builders.SelectBuilder;
 import com.slipchansky.fm.factory.builders.TabSheetBuilder;
 import com.slipchansky.fm.factory.builders.TableBuilder;
 import com.slipchansky.fm.ui.Composite;
+import com.slipchansky.fm.ui.Html;
 import com.slipchansky.utils.GroovyEngine;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractSingleComponentContainer;
@@ -56,19 +58,15 @@ public class ComponentFactory {
 	
 	
 	
-	static Method getMethod (String name, Class<?>... parameterTypes)  {
-		try {
-			return ComponentFactory.class.getMethod(name, parameterTypes);
-		} catch (Exception e) {
-			return null;
-		}
-	}
 	
 	static class Engine {
-		final static Map<String, Method> CREATORS = new HashMap<String, Method> () {{
-			put ("custom", getMethod("createCustomClasInstance", Element.class));
-			put ("complex", getMethod("createComplexClasInstance", Element.class));
+		final static Map<String, Class> CREATORS = new HashMap<String, Class> () {{
+			put ("composite", Composite.class);
+			put ("html", Html.class);
+			put ("Html", Html.class);
 		}};
+		
+		
 		
 		private static Map<Class, BeanBuilder> componentBuilders  = new HashMap<Class, BeanBuilder>  ();
 		
@@ -84,6 +82,7 @@ public class ComponentFactory {
 			putBuilder (new TableBuilder ());
 			putBuilder (new PanelBuilder ());
 			putBuilder (new CompositeBuilder ());
+			putBuilder (new HtmlBuilder ());
 		};
 		
 		
@@ -179,23 +178,20 @@ public class ComponentFactory {
 		}
 		
 		
-		Method createMethod = Engine.CREATORS.get(name);
-		
-		if (createMethod != null) {
-			return createMethod.invoke(this, node);
-		}
 		
 		String className = node.attributeValue("class");
 		if (className != null) {
 			return Class.forName(className).newInstance();
-		} 
+		}
+		
+		Class clazz = Engine.CREATORS.get(name);
+		
+		if (clazz != null) {
+			return clazz.newInstance();
+		}
+		
 		
 		return createUiClassInstance (name);
-	}
-	
-	public <T> T createCustomClasInstance (Element node) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		String className = node.attributeValue("class");
-		return (T) Class.forName(className).newInstance();
 	}
 	
 	public <T> T createComplexClasInstance (Element node) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -251,20 +247,25 @@ public class ComponentFactory {
 	}
 
 
+	public void put(String name, Object person) {
+		context.put(name, person);
+	}
 
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ClassCastException, DocumentException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		
 	     ComponentFactory ui = new ComponentFactory ();
-	     Object result = ui.buildFromResource("com.slipchansky.markup.test");
-	     
-	     Object o = ui.get("nested.view");
+	     ui.put("name", "Stas");
+	     Object result = ui.buildFromResource("com.test.test");
+	     result = ui.buildFromResource("com.test.test");
+	     result = ui.buildFromResource("com.test.test");
 	     
 	     Map<String, Object> context = ui.getContext();
 		
 		int k =0 ;
 		k++;
 	}
+
 	
 
 }
