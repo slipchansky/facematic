@@ -178,11 +178,17 @@ public class ComponentFactory {
 			name = substName;
 		}
 		
+		
 		Method createMethod = Engine.CREATORS.get(name);
 		
 		if (createMethod != null) {
 			return createMethod.invoke(this, node);
 		}
+		
+		String className = node.attributeValue("class");
+		if (className != null) {
+			return Class.forName(className).newInstance();
+		} 
 		
 		return createUiClassInstance (name);
 	}

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<vl name="content" xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<content name="content" xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://slipchansky.com/fm https://raw.github.com/slipchansky/facematic/dev/facematic/src/main/resources/schema/facematic.xsd" sizeFull="true"
 	expandRatio="100">
+
 	
 	<FormLayout>
+	
 		<TextField caption="mama"/>
 		<TextField caption="papa"/>
 		<PopupDateField caption="Date" resolution="MINUTE"/>
 		<Slider min="10" max="100" value="50" caption="test" width="100pt"/>
 	</FormLayout>
 	
-</vl>
+	
+	
+</content>

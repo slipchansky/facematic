@@ -4,6 +4,8 @@
 	
 <Button name="okbutton" caption="One" />
 
+
+
 <Button caption="Two">
 <onClick>
    context.okbutton.setVisible (true);

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://slipchansky.com/fm"
-	xmlns:c="http://slipchansky.com/fm"
-	elementFormDefault="qualified">
+	xmlns:c="http://slipchansky.com/fm" elementFormDefault="qualified">
 
 
 	<complexType name="ContentContainerType">
@@ -14,7 +13,8 @@
 						maxOccurs="unbounded"></element>
 					<element type="c:ButtonType" name="Button" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:FieldType" name="TextField" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:FieldType" name="TextField" minOccurs="0"
+						maxOccurs="unbounded"></element>
 					<element type="c:LabelType" name="Label" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:LinkType" name="Link" minOccurs="0"
@@ -56,6 +56,33 @@
 		</complexContent>
 	</complexType>
 
+	<complexType name="ContentType">
+		<sequence>
+		</sequence>
+		<attribute name="name" type="string" use="optional"></attribute>
+		<attribute name="id" type="string" use="optional"></attribute>
+		<attribute name="caption" type="string" use="optional"></attribute>
+		<attribute name="height" type="string" use="optional"></attribute>
+		<attribute name="width" type="string" use="optional"></attribute>
+		<attribute name="alignment" type="c:ContentTypeAlignmentType"
+			use="optional" />
+		<attribute name="sizeFull" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="expandRatio" type="float" use="optional" />
+		<attribute name="enabled" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="visible" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="styleName" type="string" use="optional"></attribute>
+		<attribute name="immediate" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="description" type="string" use="optional"></attribute>
+		<attribute name="class" type="string" use="optional">
+			<annotation>
+				<documentation>
+					Qualified component class name, for example, name="com.vaadin.ui.Button"
+				</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+
 	<simpleType name="ContentTypeAlignmentType">
 		<restriction base="string">
 			<enumeration value="BOTTOM_CENTER" />
@@ -78,22 +105,6 @@
 	</simpleType>
 
 
-	<complexType name="ContentType">
-		<sequence>		</sequence>
-		<attribute name="name" type="string" use="optional"></attribute>
-		<attribute name="id" type="string" use="optional"></attribute>
-		<attribute name="caption" type="string" use="optional"></attribute>
-		<attribute name="height" type="string" use="optional"></attribute>
-		<attribute name="width" type="string" use="optional"></attribute>
-		<attribute name="alignment" type="c:ContentTypeAlignmentType" use="optional" />
-		<attribute name="sizeFull" type="c:TrueFalseType" use="optional"></attribute>
-		<attribute name="expandRatio" type="float" use="optional" />
-		<attribute name="enabled" type="c:TrueFalseType" use="optional"></attribute>
-		<attribute name="visible" type="c:TrueFalseType" use="optional"></attribute>
-		<attribute name="styleName" type="string" use="optional"></attribute>
-		<attribute name="immediate" type="c:TrueFalseType" use="optional"></attribute>
-		<attribute name="description" type="string" use="optional"></attribute>
-	</complexType>
 
 
 	<complexType name="PanelType">
@@ -106,8 +117,10 @@
 						maxOccurs="unbounded"></element>
 					<element type="c:ButtonType" name="Button" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:FieldType" name="Field" minOccurs="0" maxOccurs="unbounded"></element>
-					<element type="c:FieldType" name="TextField" minOccurs="0" maxOccurs="unbounded"></element>
+					<element type="c:FieldType" name="Field" minOccurs="0"
+						maxOccurs="unbounded"></element>
+					<element type="c:FieldType" name="TextField" minOccurs="0"
+						maxOccurs="unbounded"></element>
 					<element type="c:LabelType" name="Label" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:LinkType" name="Link" minOccurs="0"
