@@ -26,7 +26,7 @@ public class JitController extends FaceController implements  TabSheet.SelectedT
 	String    compiledSource = "";
 	
 	
-	public JitController () throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException, ClassCastException, DocumentException {
+	public JitController () throws Exception {
 		super ();
 		build ();
 		source.setValue("<Button caption=\"OK\"/>\n");

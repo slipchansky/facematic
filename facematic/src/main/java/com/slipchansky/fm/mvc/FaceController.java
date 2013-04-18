@@ -3,6 +3,8 @@ package com.slipchansky.fm.mvc;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.util.Map;
+
 import org.dom4j.DocumentException;
 
 import com.slipchansky.fm.factory.FaceFactory;
@@ -14,7 +16,7 @@ public class FaceController {
 	private FaceFactory factory = new FaceFactory ();
 	private Component view;
 
-	protected <T extends FaceController> T build() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException, ClassCastException, DocumentException {
+	protected <T extends FaceController> T build() throws Exception {
 		String viewName = getClass().getCanonicalName(); 
 		
 		final String controolerSuffix = "Controller";
@@ -45,7 +47,20 @@ public class FaceController {
 				 modifiers &= ~Modifier.FINAL;
 				 modifiers |= Modifier.PUBLIC;
 				 modifiersField.setInt(field, modifiers);
+				 
+				 
+				 
+				 
+				
+				try { 
 				 field.set(this, value);
+				} catch (IllegalArgumentException e) {
+					if (value instanceof Map) {
+						Object newValue = factory.get(name+"_view");
+						field.set(this, newValue );
+					}
+				}
+				 
 			} catch (NoSuchFieldException e) {
 				 e.printStackTrace();
 			}
