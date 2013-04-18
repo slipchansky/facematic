@@ -7,6 +7,12 @@
 		<complexContent>
 			<extension base="c:ContentType">
 				<sequence minOccurs="0" maxOccurs="unbounded">
+					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
+						maxOccurs="unbounded"></element>
+					<element type="c:LabelType" name="Html" minOccurs="0"
+						maxOccurs="unbounded"></element>
+					<element type="c:LabelType" name="html" minOccurs="0"
+						maxOccurs="unbounded"></element>
 					<element type="c:ContentContainerType" name="hl" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:ContentContainerType" name="vl" minOccurs="0"
@@ -56,6 +62,15 @@
 		</complexContent>
 	</complexType>
 
+	<complexType name="TabSheetType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+			<attribute name="hideTabs" type="c:TrueFalseType"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
 	<complexType name="ContentType">
 		<sequence>
 		</sequence>
@@ -76,7 +91,8 @@
 		<attribute name="class" type="string" use="optional">
 			<annotation>
 				<documentation>
-					Qualified component class name, for example, name="com.vaadin.ui.Button"
+					Qualified component class name, for example,
+					name="com.vaadin.ui.Button"
 				</documentation>
 			</annotation>
 		</attribute>
@@ -111,23 +127,27 @@
 		<complexContent>
 			<extension base="c:ContentType">
 				<choice minOccurs="1" maxOccurs="1">
+					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
+						maxOccurs="unbounded"></element>
 					<element type="c:ContentContainerType" name="hl" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:ContentContainerType" name="vl" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:ButtonType" name="Button" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:FieldType" name="Field" minOccurs="0"
-						maxOccurs="unbounded"></element>
 					<element type="c:FieldType" name="TextField" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:LabelType" name="Label" minOccurs="0"
+						maxOccurs="unbounded"></element>
+					<element type="c:LabelType" name="Html" minOccurs="0"
+						maxOccurs="unbounded"></element>
+					<element type="c:LabelType" name="html" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:LinkType" name="Link" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:EmbeddedType" name="Embedded" minOccurs="0"
 						maxOccurs="unbounded" />
-					<element type="c:PopupDateFieldResolutionType" name="PopupDateField"
+					<element type="c:PopupDateFieldType" name="PopupDateField"
 						minOccurs="0" maxOccurs="unbounded"></element>
 					<element type="c:InlineDateFieldType" name="InlineDateField"
 						minOccurs="0" maxOccurs="unbounded"></element>
@@ -153,7 +173,7 @@
 						maxOccurs="unbounded"></element>
 					<element type="c:PanelType" name="Panel" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:CompositeType" name="complex" minOccurs="0"
+					<element type="c:CompositeType" name="composite" minOccurs="0"
 						maxOccurs="unbounded"></element>
 				</choice>
 			</extension>
@@ -642,6 +662,6 @@
 	<element name="hl" type="c:ContentContainerType"></element>
 	<element name="vl" type="c:ContentContainerType"></element>
 	<element name="content" type="c:ContentContainerType"></element>
-	<element type="c:ContentType" name="Component"/>
+	<element type="c:ContentType" name="Component" />
 
 </schema>

@@ -241,8 +241,8 @@ public class FaceFactory {
 	}
 
 
-	public void put(String name, Object person) {
-		context.put(name, person);
+	public void put(String name, Object value) {
+		context.put(name, value);
 	}
 
 	

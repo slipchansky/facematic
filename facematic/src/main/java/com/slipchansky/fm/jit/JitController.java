@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.dom4j.DocumentException;
 
 import com.slipchansky.fm.factory.FaceFactory;
+import com.slipchansky.fm.mvc.FaceController;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -14,7 +15,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 
-public class JitController implements  TabSheet.SelectedTabChangeListener {
+public class JitController extends FaceController implements  TabSheet.SelectedTabChangeListener {
 	
 	Component sourceTab;
 	Component resultTab;
@@ -22,33 +23,22 @@ public class JitController implements  TabSheet.SelectedTabChangeListener {
 	
 	TextArea  source;
 	Panel     result;
-	String     compiledSource = "";
+	String    compiledSource = "";
 	
 	
-	public JitController (FaceFactory env) {
-		sourceTab = env.get("sourceTab");
-		resultTab = env.get("resultTab");
-		tabSheet = env.get("tabSheet");
-		source = env.get("source");
-		result = env.get("result");
-		
+	public JitController () throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException, ClassCastException, DocumentException {
+		super ();
+		build ();
 		source.setValue("<Button caption=\"OK\"/>\n");
-		
 		tabSheet.addSelectedTabChangeListener(this);
 	}
 	
-	public static Component getView () throws Exception {
-		FaceFactory factory = new FaceFactory ();
-		Component result = factory.buildFromResource(JitController.class.getPackage().getName()+".JIT");
-		JitController viewController = new JitController (factory);
-		return result;
-	}
-
+	
+	
+	
 	@Override
 	public void selectedTabChange(SelectedTabChangeEvent event) {
-		
 		Object tab = tabSheet.getSelectedTab();
-		
 		if (tab == resultTab) {
 			recompile ();
 			
@@ -75,7 +65,5 @@ public class JitController implements  TabSheet.SelectedTabChangeListener {
 		result.setContent(content);
 		
 	}
-	
-	
 
 }

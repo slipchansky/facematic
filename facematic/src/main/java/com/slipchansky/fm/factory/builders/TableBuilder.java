@@ -1,6 +1,7 @@
 package com.slipchansky.fm.factory.builders;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +45,6 @@ public class TableBuilder extends SelectBuilder {
 		for (Element col : columns) {
 			addColumnToTable(builder, table, configuration, col);
 		}
-
 	}
 
 	private void addColumnToTable(FaceFactory builder, Table table,
