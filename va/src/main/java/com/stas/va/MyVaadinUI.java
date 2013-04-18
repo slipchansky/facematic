@@ -6,7 +6,8 @@ import java.util.HashMap;
 
 import org.dom4j.DocumentException;
 
-import com.slipchansky.fm.factory.ComponentFactory;
+import com.slipchansky.fm.factory.FaceFactory;
+import com.slipchansky.fm.jit.JitController;
 import com.vaadin.data.Container;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
@@ -92,10 +93,11 @@ public class MyVaadinUI extends UI {
     	
     	TextField f;
     	
-    	ComponentFactory bldr = new ComponentFactory (this);
+    	FaceFactory bldr = new FaceFactory (this);
     	Component content;
 		try {
-			content = bldr.buildFromResource("com.slipchansky.markup.testform");
+			//content = bldr.buildFromResource("com.slipchansky.markup.JIT");
+			content = JitController.getView ();
 			
 			/*
 			final Button b = bldr.get ("mamabutton");
@@ -112,30 +114,9 @@ public class MyVaadinUI extends UI {
 			
 			
 			setContent(content);
-			 
 			
 			
-			
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassCastException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

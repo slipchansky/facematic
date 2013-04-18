@@ -7,7 +7,7 @@ import java.util.List;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
-import com.slipchansky.fm.factory.ComponentFactory;
+import com.slipchansky.fm.factory.FaceFactory;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Table;
 
@@ -19,7 +19,7 @@ public class TableBuilder extends SelectBuilder {
 	}
 
 	@Override
-	public void build(ComponentFactory builder, Object oComponent,	Element configuration) {
+	public void build(FaceFactory builder, Object oComponent,	Element configuration) {
 		super.build(builder, oComponent, configuration);
 		Table table = (Table) oComponent;
 
@@ -27,7 +27,7 @@ public class TableBuilder extends SelectBuilder {
 
 	}
 
-	private void buildTable(ComponentFactory builder, Table table,
+	private void buildTable(FaceFactory builder, Table table,
 			Element configuration) {
 		
 		Boolean reorderingAllowed = getBool(configuration.attribute("reorderingAllowed"));
@@ -47,7 +47,7 @@ public class TableBuilder extends SelectBuilder {
 
 	}
 
-	private void addColumnToTable(ComponentFactory builder, Table table,
+	private void addColumnToTable(FaceFactory builder, Table table,
 			Element configuration, Element col) {
 		
 		Attribute aId = col.attribute("id");

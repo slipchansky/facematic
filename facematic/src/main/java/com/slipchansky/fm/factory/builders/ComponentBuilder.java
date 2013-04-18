@@ -1,7 +1,7 @@
 package com.slipchansky.fm.factory.builders;
 
 
-import com.slipchansky.fm.factory.ComponentFactory;
+import com.slipchansky.fm.factory.FaceFactory;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -15,7 +15,7 @@ public class ComponentBuilder extends BeanBuilder {
 		return AbstractComponent.class;
 	}
 	
-	public void build (ComponentFactory builder, Object oComponent, Element configuration) {
+	public void build (FaceFactory builder, Object oComponent, Element configuration) {
 		super.build (builder, oComponent, configuration);
 		
 		Attribute sizeFullAttr = configuration.attribute("sizeFull");

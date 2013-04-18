@@ -2,7 +2,7 @@ package com.slipchansky.fm.factory.builders;
 
 import org.dom4j.Element;
 
-import com.slipchansky.fm.factory.ComponentFactory;
+import com.slipchansky.fm.factory.FaceFactory;
 import com.slipchansky.utils.GroovyEngine;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -15,7 +15,7 @@ public class ButtonBuilder extends ComponentBuilder {
 	}
 
 	@Override
-	public void build(final ComponentFactory builder, Object oComponent,
+	public void build(final FaceFactory builder, Object oComponent,
 			Element configuration) {
 		super.build(builder, oComponent, configuration);
 		

@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
-import com.slipchansky.fm.factory.ComponentFactory;
+import com.slipchansky.fm.factory.FaceFactory;
 import com.slipchansky.fm.ui.Composite;
 
 public class CompositeBuilder extends PanelBuilder {
@@ -20,7 +20,7 @@ public class CompositeBuilder extends PanelBuilder {
 	}
 
 	@Override
-	protected Object prepareInnerComponent(ComponentFactory builder,
+	protected Object prepareInnerComponent(FaceFactory builder,
 			Element firstNested) {
 
 		String sLocation = firstNested.attributeValue("location");
@@ -41,7 +41,7 @@ public class CompositeBuilder extends PanelBuilder {
 
 		switch (location) {
 		case RESOURCE:
-			ComponentFactory nestedBuilder = new ComponentFactory();
+			FaceFactory nestedBuilder = new FaceFactory();
 			try {
 				result = nestedBuilder.buildFromResource(path);
 				if (result == null) {

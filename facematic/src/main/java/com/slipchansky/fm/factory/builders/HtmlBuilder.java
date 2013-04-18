@@ -10,7 +10,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
 import com.google.gwt.user.client.ui.HTML;
-import com.slipchansky.fm.factory.ComponentFactory;
+import com.slipchansky.fm.factory.FaceFactory;
 import com.slipchansky.fm.ui.Html;
 import com.vaadin.ui.Label;
 
@@ -22,7 +22,7 @@ public class HtmlBuilder extends ComponentBuilder {
 	}
 
 	@Override
-	public void build(ComponentFactory builder, Object oComponent,
+	public void build(FaceFactory builder, Object oComponent,
 			Element configuration) {
 		super.build(builder, oComponent, configuration);
 
