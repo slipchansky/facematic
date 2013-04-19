@@ -12,7 +12,13 @@ import com.vaadin.ui.Component;
 
 
 public class FaceController {
+	
 	private static final String MODIFIERS_FIELD = "modifiers";
+	
+	// TODO implement annotations!!! См. FaceFactory
+	private String viewName;
+	private String viewPath;
+	
 	private FaceFactory factory = new FaceFactory ();
 	private Component view;
 
@@ -39,7 +45,7 @@ public class FaceController {
 				continue;
 			}
 			
-			 Field modifiersField;
+			Field modifiersField;
 			try {
 				 modifiersField = Field.class.getDeclaredField(MODIFIERS_FIELD);
 				 modifiersField.setAccessible(true);
@@ -47,11 +53,6 @@ public class FaceController {
 				 modifiers &= ~Modifier.FINAL;
 				 modifiers |= Modifier.PUBLIC;
 				 modifiersField.setInt(field, modifiers);
-				 
-				 
-				 
-				 
-				
 				try { 
 				 field.set(this, value);
 				} catch (IllegalArgumentException e) {

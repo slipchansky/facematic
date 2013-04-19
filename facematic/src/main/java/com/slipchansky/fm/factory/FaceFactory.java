@@ -1,13 +1,13 @@
 package com.slipchansky.fm.factory;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.user.client.ui.Button;
 import com.slipchansky.fm.factory.builders.AbstractOrderedLayoutBuilder;
 import com.slipchansky.fm.factory.builders.BeanBuilder;
 import com.slipchansky.fm.factory.builders.ButtonBuilder;
@@ -19,15 +19,15 @@ import com.slipchansky.fm.factory.builders.PanelBuilder;
 import com.slipchansky.fm.factory.builders.SelectBuilder;
 import com.slipchansky.fm.factory.builders.TabSheetBuilder;
 import com.slipchansky.fm.factory.builders.TableBuilder;
+import com.slipchansky.fm.mvc.annotations.FaceAccessor;
+import com.slipchansky.fm.mvc.annotations.FaceContextAccessor;
+import com.slipchansky.fm.mvc.annotations.FaceController;
 import com.slipchansky.fm.ui.Composite;
 import com.slipchansky.fm.ui.Html;
 import com.slipchansky.utils.GroovyEngine;
 import com.vaadin.ui.AbstractComponent;
-import com.vaadin.ui.AbstractSingleComponentContainer;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -40,6 +40,7 @@ import org.dom4j.Element;
 
 
 public class FaceFactory {
+	private static final String MODIFIERS_FIELD = "modifiers";
 	
 	private Document document;
 	private Element  rootNode;
@@ -212,7 +213,13 @@ public class FaceFactory {
 		return warnings;
 	}
 	
-	public <T> T get (String name) {
+	/**
+	 * @see 
+	 * @param oName
+	 * @return
+	 */
+	public <T> T get (Object oName) {
+		String name = ""+oName; // TODO уточнить при имплементировании механизмов аннотирования @see
 		String path [] = name.split("\\.");
 		int i=0;
 		
@@ -246,20 +253,6 @@ public class FaceFactory {
 	}
 
 	
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ClassCastException, DocumentException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		
-	     FaceFactory ui = new FaceFactory ();
-	     ui.put("name", "Stas");
-	     Object result = ui.buildFromResource("com.test.test");
-	     result = ui.buildFromResource("com.test.test");
-	     result = ui.buildFromResource("com.test.test");
-	     
-	     Map<String, Object> context = ui.getContext();
-		
-		int k =0 ;
-		k++;
-	}
-
 	public <T>T buildFromString(String xml) throws DocumentException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException, ClassCastException {
 		
 		if (xml == null)
@@ -271,6 +264,85 @@ public class FaceFactory {
 		return (T)result;
 	}
 
+	/**
+	 * имплементировать механизмы аннотирования!!!
+	 * @param obj
+	 */
+	// TODO имплементировать механизмы аннотирования!!!
+	private void implementAnnotations(Object obj) {
+		Class clazz = obj.getClass();
+		FaceController faceControllerAnnotation = (FaceController) clazz.getAnnotation(FaceController.class);
+
+		if (faceControllerAnnotation != null) {
+			try {
+				if (!"".equals(faceControllerAnnotation.viewName()))
+					setFieldValue(obj, clazz.getDeclaredField("viewName"),
+							faceControllerAnnotation.viewName());
+			} catch (Exception e) {
+			}
+
+			try {
+				if (!"".equals(faceControllerAnnotation.viewPath()))
+					setFieldValue(obj, clazz.getDeclaredField("viewPath"),
+							faceControllerAnnotation.viewPath());
+			} catch (Exception e) {
+			}
+		}
+
+		for (Field field : clazz.getDeclaredFields()) {
+			implementFieldAnnotations(obj, field);
+		}
+
+		int k = 0;
+		k++;
+
+	}
+
+	private void implementFieldAnnotations(Object obj, Field field) {
+		FaceAccessor faceAccessor = field.getAnnotation(FaceAccessor.class);
+		FaceContextAccessor faceContextAccessor = field
+				.getAnnotation(FaceContextAccessor.class);
+
+		Object key = null;
+		if (faceAccessor != null) {
+			key = faceAccessor.path();
+			if (key == null || "".equals(key))
+				;
+			key = field.getName();
+		}
+
+		if (faceContextAccessor != null) {
+			key = field.getType();
+		}
+
+		Object value = get(key);
+		if (value != null) {
+			setFieldValue(obj, field, value);
+		}
+	}
+
+	private void setFieldValue(Object obj, Field field, Object value) {
+		if (value == null)
+			return;
+		Field modifiersField;
+		try {
+			modifiersField = Field.class.getDeclaredField(MODIFIERS_FIELD);
+			modifiersField.setAccessible(true);
+			int modifiers = modifiersField.getInt(field);
+			modifiers &= ~Modifier.FINAL;
+			modifiers |= Modifier.PUBLIC;
+			modifiersField.setInt(field, modifiers);
+			try {
+				field.set(this, value);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 	
 
 }
