@@ -97,7 +97,8 @@ public class MyVaadinUI extends UI {
     	Component content;
 		try {
 			//content = bldr.buildFromResource("com.slipchansky.markup.JIT");
-			content = JitController.getView ();
+			JitController jitController = new JitController ();
+			content = jitController.getView ();
 			
 			/*
 			final Button b = bldr.get ("mamabutton");

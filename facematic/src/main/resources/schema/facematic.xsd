@@ -9,9 +9,9 @@
 				<sequence minOccurs="0" maxOccurs="unbounded">
 					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:LabelType" name="Html" minOccurs="0"
+					<element type="c:HtmlType" name="Html" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:LabelType" name="html" minOccurs="0"
+					<element type="c:HtmlType" name="html" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:ContentContainerType" name="hl" minOccurs="0"
 						maxOccurs="unbounded"></element>
@@ -65,10 +65,154 @@
 	<complexType name="TabSheetType">
 		<complexContent>
 			<extension base="c:ContentContainerType">
-			<attribute name="hideTabs" type="c:TrueFalseType"></attribute>
+				<attribute name="hideTabs" type="c:TrueFalseType"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
+
+
+	<complexType name="CoreHtmlType" mixed="true">
+		<sequence minOccurs="0" maxOccurs="unbounded" >
+			<element type="c:CoreHtmlTableType" name="table" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="p" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="span" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="div" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="input" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="a" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="b" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="br" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="button" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="cente" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="form" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="li" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="image" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="iframe" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="i" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="hr" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="ol" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="pre" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="select" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="option" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="textarea" minOccurs="0"
+				maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="style" type="string"></attribute>
+		<attribute name="width" type="string"></attribute>
+		<attribute name="height" type="string"></attribute>
+		<attribute name="name" type="string"></attribute>
+		<attribute name="id" type="string"></attribute>
+		<attribute name="type" type="string"></attribute>
+		<attribute name="align" type="string"></attribute>
+	</complexType>
+
+
+	<complexType name="CoreHtmlTdType">
+		<complexContent>
+			<extension base="c:CoreHtmlType">
+				<attribute name="colspan" type="int"></attribute>
+				<attribute name="rowspan" type="int"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="CoreHtmlTrType">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<element type="c:CoreHtmlTdType" name="td" minOccurs="1"
+				maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="valign" type="string"></attribute>
+	</complexType>
+
+
+	<complexType name="CoreHtmlTableType">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<element type="c:CoreHtmlTrType" name="tr" minOccurs="1"
+				maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="border" type="int"></attribute>
+		<attribute name="width" type="string"></attribute>
+		<attribute name="height" type="string"></attribute>
+		<attribute name="style" type="string"></attribute>
+		<attribute name="id" type="string"></attribute>
+		<attribute name="cellspacing" type="string"></attribute>
+		<attribute name="cellpadding" type="string"></attribute>
+		<attribute name="bgcolor" type="string"></attribute>
+		<attribute name="frame" type="string"></attribute>
+	</complexType>
+
+
+
+
+	<complexType name="HtmlType">
+		<complexContent>
+			<extension base="c:LabelType">
+				<sequence maxOccurs="unbounded" minOccurs="0">
+					<element type="c:CoreHtmlTableType" name="table" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="p" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="span" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="div" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="input" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="a" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="b" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="br" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="button" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="cente" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="form" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="li" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="image" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="iframe" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="i" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="hr" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="ol" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="pre" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="select" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="option" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="textarea" minOccurs="0"
+						maxOccurs="unbounded" />
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
 
 
 	<complexType name="ContentType">
