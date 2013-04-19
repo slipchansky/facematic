@@ -303,9 +303,9 @@
 						maxOccurs="unbounded"></element>
 					<element type="c:LabelType" name="Label" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:LabelType" name="Html" minOccurs="0"
+					<element type="c:HtmlType" name="Html" minOccurs="0"
 						maxOccurs="unbounded"></element>
-					<element type="c:LabelType" name="html" minOccurs="0"
+					<element type="c:HtmlType" name="html" minOccurs="0"
 						maxOccurs="unbounded"></element>
 					<element type="c:LinkType" name="Link" minOccurs="0"
 						maxOccurs="unbounded" />
