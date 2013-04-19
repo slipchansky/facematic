@@ -174,7 +174,7 @@
 	<complexType name="HtmlType">
 		<complexContent>
 			<extension base="c:LabelType">
-				<sequence maxOccurs="unbounded" minOccurs="0">
+				<sequence maxOccurs="unbounded" minOccurs="0" mixed="true">
 					<element type="c:CoreHtmlTableType" name="table" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="p" minOccurs="0"
@@ -217,6 +217,16 @@
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="textarea" minOccurs="0"
 						maxOccurs="unbounded" />
+
+			<element type="c:CoreHtmlType" name="textarea" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h1" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h2" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h3" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h4" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h5" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h6" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="font" minOccurs="0" maxOccurs="unbounded" />
+
 				</sequence>
 			</extension>
 		</complexContent>
