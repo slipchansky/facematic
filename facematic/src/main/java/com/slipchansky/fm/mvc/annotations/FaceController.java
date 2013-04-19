@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Обеспечивает возможность создать экземпляр контролера для специфицированного view, или определить путь поиска разметки View <br>
- *  
+ * нап 
  *  
  *  @FaceController(viewName="com.slipchansky.views.SpecificView")<br/>
  *  class MyController ... {<br/>

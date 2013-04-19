@@ -111,8 +111,15 @@
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="option" minOccurs="0"
 				maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="textarea" minOccurs="0"
-				maxOccurs="unbounded" />
+
+			<element type="c:CoreHtmlType" name="textarea" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h1" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h2" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h3" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h4" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h5" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h6" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="font" minOccurs="0" maxOccurs="unbounded" />
 		</sequence>
 		<attribute name="style" type="string"></attribute>
 		<attribute name="width" type="string"></attribute>
@@ -139,6 +146,9 @@
 				maxOccurs="unbounded" />
 		</sequence>
 		<attribute name="valign" type="string"></attribute>
+		<attribute name="height" type="string"></attribute>
+		<attribute name="colspan" type="int"></attribute>
+		<attribute name="rowspan" type="int"></attribute>
 	</complexType>
 
 
