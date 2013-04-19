@@ -103,7 +103,7 @@
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="hr" minOccurs="0"
 				maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="ol" minOccurs="0"
+			<element type="c:CoreHtmlType" name="ul" minOccurs="0"
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="pre" minOccurs="0"
 				maxOccurs="unbounded" />
@@ -128,6 +128,7 @@
 		<attribute name="id" type="string"></attribute>
 		<attribute name="type" type="string"></attribute>
 		<attribute name="align" type="string"></attribute>
+		<attribute name="size" type="string"></attribute>
 	</complexType>
 
 
@@ -207,7 +208,7 @@
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="hr" minOccurs="0"
 						maxOccurs="unbounded" />
-					<element type="c:CoreHtmlType" name="ol" minOccurs="0"
+					<element type="c:CoreHtmlType" name="ul" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="pre" minOccurs="0"
 						maxOccurs="unbounded" />
