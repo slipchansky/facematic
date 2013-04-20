@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<content xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://slipchansky.com/fm https://raw.github.com/slipchansky/facematic/dev/facematic/src/main/resources/schema/facematic.xsd" >
- 
- <Button name="okButton" caption="ok"></Button>
-
-</content>
