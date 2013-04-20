@@ -12,6 +12,11 @@
    <Panel name="result" expandRatio="100" sizeFull="true" />
  </vl>
  
+ <vl expandRatio="100" sizeFull="true" caption="Controller" name="controllerTab">
+   <TextArea name="controllerText" sizeFull="true" expandRatio="1"></TextArea>
+ </vl>
+ 
+ 
 </TabSheet>	
 	
 </content>

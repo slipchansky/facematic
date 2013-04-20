@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.dom4j.Element;
 
-import com.slipchansky.fm.factory.FaceFactory;
+import com.slipchansky.fm.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Panel;
 
@@ -16,7 +16,7 @@ public class PanelBuilder extends ComponentBuilder {
 	}
 
 	@Override
-	public void build(FaceFactory builder, Object oComponent, Element configuration) {
+	public void build(FaceProducer builder, Object oComponent, Element configuration) {
 
 		super.build(builder, oComponent, configuration);
 
@@ -29,7 +29,7 @@ public class PanelBuilder extends ComponentBuilder {
 		
 	}
 
-	protected Object prepareInnerComponent(FaceFactory builder, Element configuration) {
+	protected Object prepareInnerComponent(FaceProducer builder, Element configuration) {
 		
 		Object inner = null;
 		List<Element> elements = configuration.elements();

@@ -2,7 +2,7 @@ package com.slipchansky.fm.factory.builders;
 
 import org.dom4j.Element;
 
-import com.slipchansky.fm.factory.FaceFactory;
+import com.slipchansky.fm.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import org.dom4j.tree.DefaultAttribute;
 import java.lang.reflect.Method;
@@ -14,8 +14,8 @@ public class BeanBuilder {
 		return Object.class;
 	}
 	
-	public void build (FaceFactory builder, Object oInstance, Element configuration) {
-		applyAttrinutes (oInstance, configuration);
+	public void build (FaceProducer builder, Object viewInstance, Element configuration) {
+		applyAttrinutes (viewInstance, configuration);
 	}
 	
 	private void applyAttrinutes (Object instance, Element node) {

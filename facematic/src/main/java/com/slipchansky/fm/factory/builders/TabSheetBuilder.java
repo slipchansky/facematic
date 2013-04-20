@@ -2,7 +2,7 @@ package com.slipchansky.fm.factory.builders;
 
 import org.dom4j.Element;
 
-import com.slipchansky.fm.factory.FaceFactory;
+import com.slipchansky.fm.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.TabSheet;
@@ -17,7 +17,7 @@ public class TabSheetBuilder extends ComponentContainerBuilder {
 	
 
 	@Override
-	public void build(FaceFactory builder, Object oComponent, Element configuration) {
+	public void build(FaceProducer builder, Object oComponent, Element configuration) {
 		super.build(builder, oComponent, configuration);
 		TabSheet tab = (TabSheet)oComponent;
 		String showTabs = configuration.attributeValue("hideTabs");

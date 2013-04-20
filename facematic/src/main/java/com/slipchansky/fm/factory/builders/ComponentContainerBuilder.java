@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.dom4j.Element;
 
-import com.slipchansky.fm.factory.FaceFactory;
+import com.slipchansky.fm.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractComponentContainer;
 
@@ -17,8 +17,8 @@ public class ComponentContainerBuilder extends ComponentBuilder {
 		
 
 	@Override
-	public void build(FaceFactory builder,  Object oComponent, Element configuration) {
-		super.build(builder, oComponent, configuration);
+	public void build(FaceProducer builder, Object viewInstance, Element configuration) {
+		super.build(builder, viewInstance, configuration);
 		
 		List<Element> elements = configuration.elements ();
 		Element componentsNode = configuration.element ("components");
@@ -29,14 +29,14 @@ public class ComponentContainerBuilder extends ComponentBuilder {
 		
 		
 		for (Element e : elements) {
-		     buildNestedComponent (builder, oComponent, e);
+		     buildNestedComponent (builder, viewInstance, e);
 		}
 		
 		
 	}
 
 
-	private void buildNestedComponent(FaceFactory builder, Object oComponent, Element node) {
+	private void buildNestedComponent(FaceProducer builder, Object oComponent, Element node) {
 		try {
 			Object inner = builder.build(node);
 			if (inner != null) {

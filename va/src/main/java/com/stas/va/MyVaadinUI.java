@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 import org.dom4j.DocumentException;
 
-import com.slipchansky.fm.factory.FaceFactory;
 import com.slipchansky.fm.jit.JitController;
+import com.slipchansky.fm.producer.FaceProducer;
 import com.vaadin.data.Container;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
@@ -50,70 +50,15 @@ public class MyVaadinUI extends UI {
         layout.setSizeFull();
         setContent(layout);
         
-//        Button button = new Button("Click Me");
-//        button.addClickListener(new Button.ClickListener() {
-//            public void buttonClick(ClickEvent event) {
-//                layout.addComponent(new Label("Thank you for clicking"));
-//            }
-//        });
-//        layout.addComponent(button);
-        /*
-        TableFieldFactory tff = new TableFieldFactory () {
-
-			@Override
-			public Field<?> createField(Container container, Object itemId, Object propertyId, Component uiContext) {
-				
-				return null;
-			}
-        	
-        };
-        */ 
-        
-        //table.setTableFieldFactory(fieldFactory)
-//        table.addContainerProperty ("firstName", Object.class, null);
-//        table.addContainerProperty ("lastName", Object.class, null);
-//        
-//        table.addItem(new Object [] {"Stas", "Lipchansky"},new Integer(1));
-//        
-//        
-//        table.setSizeFull();
-//        table.setVisibleColumns(new String [] {"firstName", "lastName"});
-//        table.setColumnHeader("firstName", "First name");
-//        table.setColumnHeader("lastName", "Last name");
-//        
-//        layout.addComponent(table);
-        
-    	
-    	//Link l = new Link ();
-    	//l.setCaption("");
-    	//l.setResource(resource)
-    	
-    	
-
-    	
     	TextField f;
-    	
-    	FaceFactory bldr = new FaceFactory (this);
+    	JitController jitController = new JitController ();
+    	FaceProducer  producer      = new FaceProducer (jitController);
     	Component content;
 		try {
-			//content = bldr.buildFromResource("com.slipchansky.markup.JIT");
-			JitController jitController = new JitController ();
-			content = jitController.getView ();
 			
-			/*
-			final Button b = bldr.get ("mamabutton");
-			final Button ok = bldr.get ("okbutton");
-			
-			b.addClickListener(new Button.ClickListener() {
-				
-				@Override
-				public void buttonClick(ClickEvent event) {
-					ok.setVisible(false);
-				}
-			});
-			*/
-			
-			
+			content = producer.buildFromResource("com/slipchansky/fm/jit/JitView.xml");
+			JitController controller = producer.getControllerInstance();
+			controller.init ();
 			setContent(content);
 			
 			

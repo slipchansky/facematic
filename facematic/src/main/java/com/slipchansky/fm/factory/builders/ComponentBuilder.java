@@ -1,7 +1,7 @@
 package com.slipchansky.fm.factory.builders;
 
 
-import com.slipchansky.fm.factory.FaceFactory;
+import com.slipchansky.fm.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -15,15 +15,15 @@ public class ComponentBuilder extends BeanBuilder {
 		return AbstractComponent.class;
 	}
 	
-	public void build (FaceFactory builder, Object oComponent, Element configuration) {
-		super.build (builder, oComponent, configuration);
+	public void build (FaceProducer builder, Object viewInstance, Element configuration) {
+		super.build (builder, viewInstance, configuration);
 		
 		Attribute sizeFullAttr = configuration.attribute("sizeFull");
 		if (sizeFullAttr != null) {
 			if ("true".equals(sizeFullAttr.getValue())) {
-				((AbstractComponent)oComponent).setSizeFull();
+				((AbstractComponent)viewInstance).setSizeFull();
 			} else {
-				((AbstractComponent)oComponent).setSizeUndefined();
+				((AbstractComponent)viewInstance).setSizeUndefined();
 			}
 		}
 		

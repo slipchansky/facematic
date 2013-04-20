@@ -72,11 +72,13 @@
 
 
 	<complexType name="CoreHtmlType" mixed="true">
-		<sequence minOccurs="0" maxOccurs="unbounded" >
+		<sequence minOccurs="0" maxOccurs="unbounded">
 			<element type="c:CoreHtmlTableType" name="table" minOccurs="0"
 				maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="p" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="span" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="p" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="span" minOccurs="0"
+				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="div" minOccurs="0"
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="input" minOccurs="0"
@@ -112,14 +114,22 @@
 			<element type="c:CoreHtmlType" name="option" minOccurs="0"
 				maxOccurs="unbounded" />
 
-			<element type="c:CoreHtmlType" name="textarea" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h1" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h2" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h3" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h4" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h5" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h6" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="font" minOccurs="0" maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="textarea" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h1" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h2" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h3" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h4" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h5" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h6" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="font" minOccurs="0"
+				maxOccurs="unbounded" />
 		</sequence>
 		<attribute name="style" type="string"></attribute>
 		<attribute name="width" type="string"></attribute>
@@ -175,7 +185,7 @@
 	<complexType name="HtmlType" mixed="true">
 		<complexContent>
 			<extension base="c:LabelType">
-				<sequence maxOccurs="unbounded" minOccurs="0" >
+				<sequence maxOccurs="unbounded" minOccurs="0">
 					<element type="c:CoreHtmlTableType" name="table" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="p" minOccurs="0"
@@ -219,13 +229,20 @@
 					<element type="c:CoreHtmlType" name="textarea" minOccurs="0"
 						maxOccurs="unbounded" />
 
-			<element type="c:CoreHtmlType" name="h1" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h2" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h3" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h4" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h5" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="h6" minOccurs="0" maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="font" minOccurs="0" maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h1" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h2" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h3" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h4" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h5" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h6" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="font" minOccurs="0"
+						maxOccurs="unbounded" />
 
 				</sequence>
 			</extension>
@@ -355,8 +372,8 @@
 	<complexType name="CompositeType">
 		<complexContent>
 			<extension base="c:ContentType">
-				<attribute name="location" type="c:CompositeLocationType"
-					use="required"></attribute>
+				<attribute name="controller" type="string" use="optional"></attribute>
+				<attribute name="location" type="c:CompositeLocationType" use="required"></attribute>
 				<attribute name="path" type="string" use="required"></attribute>
 			</extension>
 		</complexContent>
@@ -823,9 +840,16 @@
 	</complexType>
 
 
-	<element name="hl" type="c:ContentContainerType"></element>
-	<element name="vl" type="c:ContentContainerType"></element>
-	<element name="content" type="c:ContentContainerType"></element>
-	<element type="c:ContentType" name="Component" />
+	<complexType name="RootContentType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+				<attribute name="controller" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<element name="hl" type="c:RootContentType"></element>
+	<element name="vl" type="c:RootContentType"></element>
+	<element name="content" type="c:RootContentType"></element>
 
 </schema>

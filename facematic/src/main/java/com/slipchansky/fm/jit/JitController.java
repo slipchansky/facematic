@@ -1,11 +1,14 @@
 package com.slipchansky.fm.jit;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.dom4j.DocumentException;
 
-import com.slipchansky.fm.factory.FaceFactory;
-import com.slipchansky.fm.mvc.BaseFaceController;
+import com.slipchansky.fm.mvc.annotations.FmController;
+import com.slipchansky.fm.mvc.annotations.FmViewComponent;
+import com.slipchansky.fm.producer.FaceProducer;
+import com.slipchansky.fm.producer.StructureListener;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -15,25 +18,43 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 
-public class JitController extends BaseFaceController implements  TabSheet.SelectedTabChangeListener {
+public class JitController implements  TabSheet.SelectedTabChangeListener {
 	
+	@FmViewComponent
 	Component sourceTab;
+	
+	@FmViewComponent
 	Component resultTab;
+	
+	@FmViewComponent
 	TabSheet  tabSheet;
 	
+	@FmViewComponent
 	TextArea  source;
-	Panel     result;
+	
+	@FmViewComponent
+	Panel result;
+
+	@FmViewComponent
+	Component controllerTab;
+	
+	@FmViewComponent
+	TextArea controllerText;
+	
+	
+	
 	String    compiledSource = "";
+
+	private Component content;
 	
 	
-	public JitController () throws Exception {
-		super ();
-		build ();
+	public JitController () {
+	}
+	
+	public void init () {
 		source.setValue("<Button caption=\"OK\"/>\n");
 		tabSheet.addSelectedTabChangeListener(this);
 	}
-	
-	
 	
 	
 	@Override
@@ -42,7 +63,21 @@ public class JitController extends BaseFaceController implements  TabSheet.Selec
 		if (tab == resultTab) {
 			recompile ();
 			
+		} else if (tab == controllerTab) {
+			recompile ();
 		}
+		
+	}
+
+	private void prepareControllerSource() {
+		String sourceXml = source.getValue();
+		if (sourceXml== null) return;
+		if (sourceXml.trim().equals("")) return;
+		if (sourceXml.equals(compiledSource)) return;
+		
+		String result = "";
+		
+		
 		
 	}
 
@@ -53,17 +88,50 @@ public class JitController extends BaseFaceController implements  TabSheet.Selec
 		if (sourceXml.equals(compiledSource)) return;
 		compiledSource = sourceXml;
 		
-		FaceFactory factory = new FaceFactory ();
+		FaceProducer factory = new FaceProducer (this);
+		
+		final StringBuilder controllerTextBuilder = new StringBuilder ("public class SampleController implements FmBaseController {\n");
+		final StringBuilder importsTextBuilder = new StringBuilder ("import com.slipchansky.fm.mvc.annotations.FmViewComponent;\nimport com.slipchansky.fm.mvc.annotations.FmController;\nimport com.slipchansky.fm.mvc.FmBaseController;\n");
+		final Map<String, String> importedClasses = new HashMap ();
+		
+		factory.setStructureListener(new StructureListener() {
+			
+			@Override
+			public void putView(Object name, Component view) {
+				
+				controllerTextBuilder.append("     @FmViewComponent(name=\""+name+"\")\n");
+				controllerTextBuilder.append("     private "+view.getClass().getSimpleName()+" "+name+";\n\n");
+				if (importedClasses.get (view.getClass().getCanonicalName())==null) {
+				   importsTextBuilder.append("import "+ view.getClass().getCanonicalName()+";\n");
+				   importedClasses.put (view.getClass().getCanonicalName(), "");
+				}
+			}
+			
+			@Override
+			public void putController(String name, Object controller) {
+				controllerTextBuilder.append("     @FmController(name=\""+name+"\")\n");
+				controllerTextBuilder.append("     private "+controller.getClass().getSimpleName()+" "+name+";\n\n");
+				if (importedClasses.get (controller.getClass().getCanonicalName())==null) {
+				   importsTextBuilder.append("import "+ controller.getClass().getCanonicalName()+";\n");
+				   importedClasses.put (controller.getClass().getCanonicalName(), "");
+				}
+			}
+		});
 
-		Component content = null;
+		content = null;
+		controllerText.setValue ("");
 		try {
 			content = factory.buildFromString (sourceXml);
+			String controllert = ""+importsTextBuilder +"\n\n"+ 
+					controllerTextBuilder+
+					"\n\n     @Override\n     public void main () {\n          //TODO Here you can add event listeners for implementing business-logic.\n     }\n\n"+
+					"}\n";
+			controllerText.setValue (controllert);
 		} catch (Exception e) {
 			content = new Label (e.getMessage(), ContentMode.PREFORMATTED);
 		}
-		
 		result.setContent(content);
-		
+				
 	}
 
 }
