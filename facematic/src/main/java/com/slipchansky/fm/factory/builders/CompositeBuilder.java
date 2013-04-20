@@ -6,6 +6,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 import com.slipchansky.fm.factory.FaceFactory;
+import com.slipchansky.fm.mvc.BaseFaceController;
+import com.slipchansky.fm.mvc.annotations.FaceController;
 import com.slipchansky.fm.ui.Composite;
 
 public class CompositeBuilder extends PanelBuilder {
@@ -55,13 +57,17 @@ public class CompositeBuilder extends PanelBuilder {
 				return null;
 			}
 			
-			//builder.getContext().putAll(nestedBuilder.getContext());
+			
 			
 			Object currentContext = builder.getContext().get(name);
-			nestedBuilder.getContext().put ("view", currentContext);
+			nestedBuilder.put (FaceFactory.CONTEXT_PARENT_CONTEXT,       builder.getContext());
+			nestedBuilder.put (FaceFactory.CONTEXT_PARENT_VIEW,          builder.get (FaceFactory.CONTEXT_VIEW));
+			nestedBuilder.put (FaceFactory.CONTEXT_PARENT_CONTROLLER,    builder.get (FaceFactory.CONTEXT_CONTROLLER));
+			nestedBuilder.put (FaceFactory.CONTEXT_VIEW_SUFFIX,          currentContext);
+			
 			nestedBuilder.getContext().put("applicationUI", builder.getContext().get("applicationUI"));
-			builder.getContext().put(name+"_view",  currentContext);
-			builder.getContext().put(name, nestedBuilder.getContext());
+			if (name != null) builder.getContext().put(name+FaceFactory.CONTEXT_VIEW_SUFFIX,  currentContext);
+			if (name != null) builder.getContext().put(name, nestedBuilder.getContext());
 			break;
 		case FILE:
 		case URL:

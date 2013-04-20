@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.dom4j.DocumentException;
 
 import com.slipchansky.fm.factory.FaceFactory;
-import com.slipchansky.fm.mvc.FaceController;
+import com.slipchansky.fm.mvc.BaseFaceController;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -15,7 +15,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 
-public class JitController extends FaceController implements  TabSheet.SelectedTabChangeListener {
+public class JitController extends BaseFaceController implements  TabSheet.SelectedTabChangeListener {
 	
 	Component sourceTab;
 	Component resultTab;

@@ -22,6 +22,7 @@ import com.slipchansky.fm.factory.builders.TableBuilder;
 import com.slipchansky.fm.mvc.annotations.FaceAccessor;
 import com.slipchansky.fm.mvc.annotations.FaceContextAccessor;
 import com.slipchansky.fm.mvc.annotations.FaceController;
+import com.slipchansky.fm.mvc.annotations.FaceParent;
 import com.slipchansky.fm.ui.Composite;
 import com.slipchansky.fm.ui.Html;
 import com.slipchansky.utils.GroovyEngine;
@@ -31,6 +32,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import org.codehaus.groovy.runtime.StackTraceUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -40,11 +42,18 @@ import org.dom4j.Element;
 
 
 public class FaceFactory {
-	private static final String MODIFIERS_FIELD = "modifiers";
+	public static final String CONTEXT_CONTEXT = "context";
+	public static final  String CONTEXT_VIEW = "__VIEW";
+	public static final  String CONTEXT_PARENT_CONTEXT = "__PARENT_CONTEXT";
+	public  static final String CONTEXT_VIEW_SUFFIX = "_view";
+	public  static final String CONTEXT_PARENT_VIEW = "__parent_view";
+	public static final  String MODIFIERS_FIELD = "modifiers";
+	public static final  String CONTEXT_CONTROLLER = "__controller"; 
+	public static final  String CONTEXT_PARENT_CONTROLLER = "__parent_controller";
 	
 	private Document document;
 	private Element  rootNode;
-	private Map<String, Object> context = new HashMap<String, Object> ();
+	private FaceContext context = new FaceContext();
 	private ComponentContainer parentComponent = null;
 	private List<String> warnings = new ArrayList<String> ();
 	private GroovyEngine engine;
@@ -55,7 +64,7 @@ public class FaceFactory {
 		put ("vl", VerticalLayout.class.getSimpleName());
 		put ("hl", HorizontalLayout.class.getSimpleName());
 		put ("content", VerticalLayout.class.getSimpleName());
-	}}; 
+	}};
 	
 	
 	
@@ -98,11 +107,11 @@ public class FaceFactory {
 	}
 	
 	public FaceFactory () {
-		context.put("context", context);
+		context.put(CONTEXT_CONTEXT, context);
 	}
 	
 	public FaceFactory(UI ui) {
-		context.put("context", context);
+		context.put(CONTEXT_CONTEXT, context);
 		context.put("applicationUI", ui);
 	}
 
@@ -128,26 +137,27 @@ public class FaceFactory {
 		if (xml==null) {
 			return null;
 		}
-		
 		context.put ("markupPath", resourceName);
 		context.put ("markupLocation", "RESOURCE");
-		
 		return buildFromString (xml);
 	} 
 	
 
 	public <T> T build(Element node) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException, ClassCastException {
+		
 		T instance = (T) createInstance (node);
 		if (instance == null) {
 			return null;
 		}
+		context.put (CONTEXT_VIEW, instance);
 		
 		Attribute nameAttr = node.attribute("name");
 		if (nameAttr != null) {
 			if (context.get (contextKey(nameAttr)) != null) {
 				warnings.add ("Duplicate name: '"+contextKey(nameAttr)+"'");
 			}
-		   context.put (contextKey(nameAttr), instance);
+			context.put (contextKey(nameAttr), instance);
+		   
 		}
 		
 		BeanBuilder builder = Engine.getBuilder(instance.getClass ());
@@ -200,14 +210,10 @@ public class FaceFactory {
 	}
 	
 	
-	
-	public Map<String, Object> getContext() {
+	public FaceContext getContext() {
 		return context;
 	}
 
-	public void setContext(Map<String, Object> context) {
-		this.context = context;
-	}
 
 	public List<String> getWarnings() {
 		return warnings;
@@ -237,12 +243,10 @@ public class FaceFactory {
 		
 	}
 
-
-
 	public GroovyEngine getEngine() {
 		if (this.engine==null) {
 			this.engine = new GroovyEngine();
-			engine.put("context", context);
+			engine.put(CONTEXT_CONTEXT, context);
 		}
 		return engine;
 	}
@@ -260,89 +264,10 @@ public class FaceFactory {
 		
 		Document document = DocumentHelper.parseText(xml);
 		Object result = build (document);
-		
 		return (T)result;
 	}
-
-	/**
-	 * имплементировать механизмы аннотирования!!!
-	 * @param obj
-	 */
-	// TODO имплементировать механизмы аннотирования!!!
-	private void implementAnnotations(Object obj) {
-		Class clazz = obj.getClass();
-		FaceController faceControllerAnnotation = (FaceController) clazz.getAnnotation(FaceController.class);
-
-		if (faceControllerAnnotation != null) {
-			try {
-				if (!"".equals(faceControllerAnnotation.viewName()))
-					setFieldValue(obj, clazz.getDeclaredField("viewName"),
-							faceControllerAnnotation.viewName());
-			} catch (Exception e) {
-			}
-
-			try {
-				if (!"".equals(faceControllerAnnotation.viewPath()))
-					setFieldValue(obj, clazz.getDeclaredField("viewPath"),
-							faceControllerAnnotation.viewPath());
-			} catch (Exception e) {
-			}
-		}
-
-		for (Field field : clazz.getDeclaredFields()) {
-			implementFieldAnnotations(obj, field);
-		}
-
-		int k = 0;
-		k++;
-
-	}
-
-	private void implementFieldAnnotations(Object obj, Field field) {
-		FaceAccessor faceAccessor = field.getAnnotation(FaceAccessor.class);
-		FaceContextAccessor faceContextAccessor = field
-				.getAnnotation(FaceContextAccessor.class);
-
-		Object key = null;
-		if (faceAccessor != null) {
-			key = faceAccessor.path();
-			if (key == null || "".equals(key))
-				;
-			key = field.getName();
-		}
-
-		if (faceContextAccessor != null) {
-			key = field.getType();
-		}
-
-		Object value = get(key);
-		if (value != null) {
-			setFieldValue(obj, field, value);
-		}
-	}
-
-	private void setFieldValue(Object obj, Field field, Object value) {
-		if (value == null)
-			return;
-		Field modifiersField;
-		try {
-			modifiersField = Field.class.getDeclaredField(MODIFIERS_FIELD);
-			modifiersField.setAccessible(true);
-			int modifiers = modifiersField.getInt(field);
-			modifiers &= ~Modifier.FINAL;
-			modifiers |= Modifier.PUBLIC;
-			modifiersField.setInt(field, modifiers);
-			try {
-				field.set(this, value);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 	
+	
+		
 
 }
