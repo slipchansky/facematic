@@ -101,7 +101,7 @@
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlImageType" name="img" minOccurs="0"
 				maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="iframe" minOccurs="0"
+			<element type="c:CoreHtmlIframeType" name="iframe" minOccurs="0"
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="i" minOccurs="0"
 				maxOccurs="unbounded" />
@@ -149,7 +149,7 @@
 			<extension base="c:CoreHtmlType">
 				<attribute name="colspan" type="int"></attribute>
 				<attribute name="rowspan" type="int"></attribute>
-		        <attribute name="valign" type="string"></attribute>
+				<attribute name="valign" type="string"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -164,12 +164,12 @@
 		<attribute name="colspan" type="int"></attribute>
 		<attribute name="rowspan" type="int"></attribute>
 	</complexType>
-	
+
 	<complexType name="CoreHtmlImageType">
 		<complexContent>
 			<extension base="c:CoreHtmlType">
-		     <attribute name="src" type="string"></attribute>
-		</extension>
+				<attribute name="src" type="string"></attribute>
+			</extension>
 		</complexContent>
 	</complexType>
 
@@ -189,6 +189,17 @@
 		<attribute name="bgcolor" type="string"></attribute>
 		<attribute name="frame" type="string"></attribute>
 	</complexType>
+
+	<complexType name="CoreHtmlIframeType">
+		<complexContent>
+			<extension base="c:CoreHtmlType">
+		     <attribute name="src" type="string"></attribute>
+		     <attribute name="frameborder" type="int"></attribute>
+		     <attribute name="allowfullscreen" type="int"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
 
 
 
@@ -384,7 +395,8 @@
 		<complexContent>
 			<extension base="c:ContentType">
 				<attribute name="controller" type="string" use="optional"></attribute>
-				<attribute name="location" type="c:CompositeLocationType" use="required"></attribute>
+				<attribute name="location" type="c:CompositeLocationType"
+					use="required"></attribute>
 				<attribute name="path" type="string" use="required"></attribute>
 			</extension>
 		</complexContent>
