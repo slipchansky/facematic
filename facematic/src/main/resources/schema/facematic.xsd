@@ -234,7 +234,7 @@
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="image" minOccurs="0"
 						maxOccurs="unbounded" />
-					<element type="c:CoreHtmlType" name="iframe" minOccurs="0"
+					<element type="c:CoreHtmlIframeType" name="iframe" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="i" minOccurs="0"
 						maxOccurs="unbounded" />
