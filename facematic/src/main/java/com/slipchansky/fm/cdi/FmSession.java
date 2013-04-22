@@ -9,7 +9,6 @@ public class FmSession extends VaadinSession {
 	
 	public FmSession(VaadinService service) {
 		super(service);
-		addUIProvider(new DefaultUIProvider());
 	}
 
 	@Override

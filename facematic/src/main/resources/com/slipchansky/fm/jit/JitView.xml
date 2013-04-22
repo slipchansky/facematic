@@ -4,7 +4,7 @@
 
 <TabSheet expandRatio="100" sizeFull="true" name="tabSheet">
 
- <vl expandRatio="100" sizeFull="true" caption="Source" name="sourceTab">
+ <vl expandRatio="100" sizeFull="true" caption="Markup" name="sourceTab">
    <TextArea name="source" sizeFull="true" expandRatio="1"></TextArea>
  </vl>
  
