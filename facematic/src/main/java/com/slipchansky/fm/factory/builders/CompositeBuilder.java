@@ -50,7 +50,7 @@ public class CompositeBuilder extends ComponentBuilder {
 		
 		if (controllerClassName != null && !"".equals(controllerClassName)) {
 			try {
-				controller = Class.forName(controllerClassName).newInstance();
+				controller = builder.createClassInstance(controllerClassName);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -69,7 +69,7 @@ public class CompositeBuilder extends ComponentBuilder {
 
 		switch (location) {
 		case RESOURCE:
-			FaceProducer nestedBuilder = new FaceProducer(builder, name, controller);
+			FaceProducer nestedBuilder = new FaceProducer(controller, builder, name);
 			try {
 				result = nestedBuilder.buildFromResource(path);
 			} catch (Exception e) {

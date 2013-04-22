@@ -84,7 +84,7 @@ public class StreamUtils {
 	 */
 	public static String getString (InputStream in) throws IOException {
 		byte [] bytes = getBytes (in);
-		return new String (bytes);
+		return new String (bytes, "UTF-8");
 	}
 
 	/**

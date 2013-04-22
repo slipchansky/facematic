@@ -1,0 +1,15 @@
+1. Inject services
+1.1. Own servlet class, plaseholder for injections
+1.2. FmUI extends UI
+1.3. implemnt injections
+
+2. Internal injections
+
+3. Maven artefact
+4. Maven archetype
+
+5. Eclipse plugins:
+5.1. Create Fm controller
+5.2. Fm code navigation
+5.3. Fm view-controller integrity checker
+

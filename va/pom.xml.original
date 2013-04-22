@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Vaadin Web Application</name>
-
+	
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,12 +45,11 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
-
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>2.1.1</version>
-		</dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>2.1.1</version>
+            </dependency>
 
 		<dependency>
 			<groupId>dom4j</groupId>
@@ -89,20 +88,10 @@
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		
-
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<scope>compile</scope>
-			<version>1.1-20130403</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -110,20 +99,6 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		
-		<dependency>
-			<groupId>ru.playa</groupId>
-			<artifactId>sl-ejb</artifactId>
-			<type>ejb</type>
-			<scope>provided</scope>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-		
-		
-		
-		
-
-
 
 	</dependencies>
 

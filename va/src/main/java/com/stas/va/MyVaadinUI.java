@@ -1,58 +1,47 @@
 package com.stas.va;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.dom4j.DocumentException;
+import javax.inject.Inject;
+
 
 import com.slipchansky.fm.jit.JitController;
 import com.slipchansky.fm.producer.FaceProducer;
-import com.vaadin.data.Container;
-import com.vaadin.server.Page;
+import com.slipchansky.fm.ui.FacematicUI;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
-import com.vaadin.ui.ListSelect;
-import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.PopupDateField;
-import com.vaadin.ui.RichTextArea;
-import com.vaadin.ui.Slider;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TableFieldFactory;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Tree;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 /**
  * The Application's "main" class
  */
 @SuppressWarnings("serial")
-public class MyVaadinUI extends UI {
+public class MyVaadinUI extends FacematicUI {
+	
+	@Inject 
+	private String mama;
+	
+	@Inject
+	private Integer papa;
+	
+	public MyVaadinUI () {
+		int k = 0;
+		k++;
+	}
 
     @Override
     protected void init(VaadinRequest request) {
+    	
         final VerticalLayout layout = new VerticalLayout();
+        
         layout.setMargin(true);
         layout.setSizeFull();
         setContent(layout);
         
     	TextField f;
     	JitController jitController = new JitController ();
-    	FaceProducer  producer      = new FaceProducer (jitController);
+    	FaceProducer  producer      = new FaceProducer(jitController, this);
     	Component content;
 		try {
 			
@@ -65,7 +54,6 @@ public class MyVaadinUI extends UI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
     	
     	
     }

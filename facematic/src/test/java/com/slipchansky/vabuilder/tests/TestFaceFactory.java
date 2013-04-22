@@ -12,7 +12,7 @@ public class TestFaceFactory {
 
 	@Test
 	public void test() throws Exception {
-		FaceProducer factory = new FaceProducer ();
+		FaceProducer factory = new FaceProducer (null);
 		factory.buildFromResource("com.test.composite");
 		Controller c = factory.getControllerInstance();
 		assertNotNull(c);

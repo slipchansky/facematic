@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Vaadin Web Application</name>
-
+	
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,12 +45,11 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
-
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>2.1.1</version>
-		</dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>2.1.1</version>
+            </dependency>
 
 		<dependency>
 			<groupId>dom4j</groupId>
@@ -89,20 +88,10 @@
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		
-
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<scope>compile</scope>
-			<version>1.1-20130403</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -110,20 +99,6 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		
-		<dependency>
-			<groupId>ru.playa</groupId>
-			<artifactId>sl-ejb</artifactId>
-			<type>ejb</type>
-			<scope>provided</scope>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-		
-		
-		
-		
-
-
 
 	</dependencies>
 
@@ -138,7 +113,7 @@
 				</configuration>
 			</plugin>
 			<!-- As we are doing "inplace" GWT compilation, ensure the widgetset -->
-			<!-- directory is cleaned properly -->
+			<!-- directory is cleaned properly 
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>2.4.1</version>
@@ -155,17 +130,13 @@
 				<artifactId>vaadin-maven-plugin</artifactId>
 				<version>${vaadin.plugin.version}</version>
 				<configuration>
-					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-					<!-- <runTarget>mobilemail</runTarget> -->
-					<!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This 
-						way compatible with Vaadin eclipse plugin. -->
+					<extraJvmArgs>-Xmx1024M -Xss4096k</extraJvmArgs>
 					<webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
 					</webappDirectory>
 					<hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
 					</hostedWebapp>
 					<noServer>true</noServer>
-					<!-- Remove draftCompile when project is ready -->
-					<draftCompile>false</draftCompile>
+					<draftCompile>true</draftCompile>
 					<compileReport>true</compileReport>
 					<style>OBF</style>
 					<strict>true</strict>
@@ -174,18 +145,15 @@
 				<executions>
 					<execution>
 						<configuration>
-							<!-- if you don't specify any modules, the plugin will find them -->
-							<!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module> 
-								</modules> -->
 						</configuration>
 						<goals>
-							<goal>resources</goal>
-							<goal>update-widgetset</goal>
-							<goal>compile</goal>
+<goal>compile</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
+                        -->
+
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>

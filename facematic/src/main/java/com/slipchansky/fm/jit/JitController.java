@@ -4,8 +4,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 
 import com.slipchansky.fm.mvc.annotations.FmController;
+import com.slipchansky.fm.mvc.annotations.FmUI;
 import com.slipchansky.fm.mvc.annotations.FmViewComponent;
 import com.slipchansky.fm.producer.FaceProducer;
 import com.slipchansky.fm.producer.StructureListener;
@@ -17,6 +20,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.UI;
 
 public class JitController implements  TabSheet.SelectedTabChangeListener {
 	
@@ -40,6 +44,12 @@ public class JitController implements  TabSheet.SelectedTabChangeListener {
 	
 	@FmViewComponent
 	TextArea controllerText;
+	
+	@FmUI
+	UI ui;
+	
+	@Inject
+	String someString;
 	
 	
 	
@@ -76,9 +86,6 @@ public class JitController implements  TabSheet.SelectedTabChangeListener {
 		if (sourceXml.equals(compiledSource)) return;
 		
 		String result = "";
-		
-		
-		
 	}
 
 	private void recompile() {
@@ -88,7 +95,7 @@ public class JitController implements  TabSheet.SelectedTabChangeListener {
 		if (sourceXml.equals(compiledSource)) return;
 		compiledSource = sourceXml;
 		
-		FaceProducer factory = new FaceProducer (this);
+		FaceProducer factory = new FaceProducer (ui);
 		
 		final StringBuilder controllerTextBuilder = new StringBuilder ("public class SampleController implements FmBaseController {\n");
 		final StringBuilder importsTextBuilder = new StringBuilder ("import com.slipchansky.fm.mvc.annotations.FmViewComponent;\nimport com.slipchansky.fm.mvc.annotations.FmController;\nimport com.slipchansky.fm.mvc.FmBaseController;\n");

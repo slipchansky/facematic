@@ -20,6 +20,7 @@ import com.slipchansky.fm.ui.Html;
 import com.slipchansky.utils.GroovyEngine;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -39,6 +40,7 @@ public class FaceProducer {
 	private FaceProducer parent;
 	private Object     context;
 	private StructureListener structureListener = null;
+	private UI ui;
 	
 	private final static Map<String, String> substs = new HashMap<String, String> () {{
 		put ("vl", VerticalLayout.class.getSimpleName());
@@ -80,20 +82,39 @@ public class FaceProducer {
 		BeanFactory.componentBuilders.put (componentBuilder.getBuildingClass(), componentBuilder);
 	}
 	
-	public FaceProducer() {
+	public FaceProducer(UI ui) {
+		if (ui==null) {
+			throw new RuntimeException ("You cannot create instance of FaceProducer without UI reference");
+		}
+		this.ui = ui;
 	}
 	
-	public FaceProducer(Object controllerInstance) {
-		this ();
+	
+	public FaceProducer(Object controllerInstance, FaceProducer parent, String name) {
+		if (parent != null) {
+			this.ui = parent.getUi();
+		}
+		if (ui==null) {
+			throw new RuntimeException ("You cannot create instance of FaceProducer without UI reference");
+		}
+		
 		this.controllerInstance = controllerInstance;
-	}
-	
-	public FaceProducer(FaceProducer parent, String name, Object controllerInstance) {
-		this (controllerInstance);
 		this.prefix = name;
 		this.parent = parent;
 	}
 	
+	public FaceProducer(Object controllerInstance, UI ui) {
+		this.controllerInstance = controllerInstance;
+		this.ui = ui;
+		if (ui==null) {
+			throw new RuntimeException ("You cannot create instance of FaceProducer without UI reference");
+		}
+	}
+
+	private UI getUi() {
+		return ui;
+	}
+
 	public void setContext (Object context) {
 		this.context = context;
 	} 
@@ -114,11 +135,12 @@ public class FaceProducer {
 	}
 	
 	private void prepareContext(Element root) {
-		
 		if ( controllerInstance == null ) {
 			prepareControllerInstance (root);
 		}
 		reflectionHelper = new FaceReflectionHelper (controllerInstance);
+		reflectionHelper.addUiInjections (ui);
+		
 		if (parent != null && controllerInstance != null && prefix != null) {
 			parent.putController(prefix, controllerInstance);
 			putController ("parent", parent.getControllerInstance());
@@ -139,7 +161,7 @@ public class FaceProducer {
 			return;
 		}
 		try {
-			controllerInstance = Class.forName(controllerClassName).newInstance();
+			controllerInstance = createClassInstance(controllerClassName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -182,8 +204,6 @@ public class FaceProducer {
 		
 	}
 
-	
-
 	private Object createInstance(Element node) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException, ClassCastException {
 		String name = node.getName();
 		String substName = substs.get(name.toLowerCase());
@@ -195,7 +215,7 @@ public class FaceProducer {
 		
 		String className = node.attributeValue("class");
 		if (className != null) {
-			return Class.forName(className).newInstance();
+			return createClassInstance(className);
 		}
 		
 		Class clazz = BeanFactory.CREATORS.get(name);
@@ -205,7 +225,7 @@ public class FaceProducer {
 		}
 		
 		
-		return createUiClassInstance (name);
+		return createClassInstance (name);
 	}
 	
 	public <T> T createComplexClasInstance (Element node) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -213,9 +233,10 @@ public class FaceProducer {
 	}
 	
 
-	public <T>T createUiClassInstance (String componentClassSimpleName) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ClassCastException {
+	public <T>T createClassInstance (String componentClassSimpleName) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ClassCastException {
 		String className = "com.vaadin.ui."+componentClassSimpleName;
-		return (T) Class.forName(className).newInstance();
+		Object classInstance = Class.forName(className).newInstance();
+		return (T)classInstance;
 	}
 	
 	public GroovyEngine getGroovyEngine() {
