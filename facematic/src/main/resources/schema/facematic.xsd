@@ -414,7 +414,7 @@
 	<complexType name="FieldType">
 		<complexContent>
 			<extension base="c:PropertyType">
-				<attribute name="prompt" use="optional" type="string"></attribute>
+				<attribute name="inputPrompt" use="optional" type="string"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
