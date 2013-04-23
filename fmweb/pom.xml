@@ -19,7 +19,7 @@
 	<repositories>
 		<repository>
 			<id>facematic</id>
-			<url>http://localhost:8088/org/test/</url>
+			<url>https://github.com/slipchansky/facematic/tree/dev/facematic/snapshots</url>
 		</repository>
 		<repository>
 			<id>vaadin-addons</id>
