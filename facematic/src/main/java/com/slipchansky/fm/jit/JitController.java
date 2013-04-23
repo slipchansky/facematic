@@ -22,7 +22,7 @@ import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.UI;
 
-public class JitController implements  TabSheet.SelectedTabChangeListener {
+public class JitController implements com.slipchansky.fm.mvc.FmBaseController,  TabSheet.SelectedTabChangeListener {
 	
 	@FmViewComponent
 	Component sourceTab;
@@ -59,8 +59,11 @@ public class JitController implements  TabSheet.SelectedTabChangeListener {
 	
 	
 	public JitController () {
+		int k = 0;
+		k++;
 	}
-	
+
+	@Override
 	public void init () {
 		source.setValue("<Button caption=\"OK\"/>\n");
 		tabSheet.addSelectedTabChangeListener(this);

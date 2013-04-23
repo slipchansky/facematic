@@ -64,7 +64,7 @@ public class Controller implements FmBaseController {
 	}
 
 	@Override
-	public void main() {
+	public void init() {
 		// TODO Auto-generated method stub
 		int k = 0;
 		k++;

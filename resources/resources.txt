@@ -1,0 +1,10 @@
+sonatype:
+slipchansky
+https://issues.sonatype.org/browse/OSSRH-5981
+
+openshift:
+org-facematic.rhcloud.com
+
+github:
+https://github.com/slipchansky/facematic
+

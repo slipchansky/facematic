@@ -128,7 +128,7 @@ public class FaceProducer {
 		}
 		if (controllerInstance != null) {
 			if (controllerInstance instanceof FmBaseController) {
-				((FmBaseController)controllerInstance).main();
+				((FmBaseController)controllerInstance).init();
 			}
 		}
 		return (T)view;
@@ -234,9 +234,12 @@ public class FaceProducer {
 	
 
 	public <T>T createClassInstance (String componentClassSimpleName) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ClassCastException {
-		String className = "com.vaadin.ui."+componentClassSimpleName;
-		Object classInstance = Class.forName(className).newInstance();
-		return (T)classInstance;
+		
+		try {
+			return (T)Class.forName(componentClassSimpleName).newInstance();
+		} catch (Exception e) {
+			return (T)Class.forName("com.vaadin.ui."+componentClassSimpleName).newInstance();
+		}
 	}
 	
 	public GroovyEngine getGroovyEngine() {

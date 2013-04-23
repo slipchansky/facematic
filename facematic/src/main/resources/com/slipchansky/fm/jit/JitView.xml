@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<content name="content" xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://slipchansky.com/fm /WEB-INF/facematic.xsd" sizeFull="true"	expandRatio="100">
+<content name="content" 
+    xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://slipchansky.com/fm https://raw.github.com/slipchansky/facematic/dev/facematic/src/main/resources/schema/facematic.xsd"  
+	sizeFull="true"	expandRatio="100" controller="com.slipchansky.fm.jit.JitController">
+
 
 <TabSheet expandRatio="100" sizeFull="true" name="tabSheet">
 

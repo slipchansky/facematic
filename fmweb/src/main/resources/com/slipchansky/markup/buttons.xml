@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hl xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://slipchansky.com/fm http://slipchansky.com/fm https://raw.github.com/slipchansky/facematic/dev/facematic/src/main/resources/schema/facematic.xsd" spacing="true" >
+	
+<Button name="okbutton" caption="One" />
+
+
+
+<Button caption="Two">
+<onClick>
+   context.okbutton.setVisible (true);
+</onClick>
+
+</Button>	
+	
+</hl>	
