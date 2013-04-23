@@ -18,6 +18,10 @@
 	</properties>
 	<repositories>
 		<repository>
+			<id>facematic</id>
+			<url>http://localhost:8088/org/test/</url>
+		</repository>
+		<repository>
 			<id>vaadin-addons</id>
 			<url>http://maven.vaadin.com/vaadin-addons</url>
 		</repository>
@@ -106,16 +110,6 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>ru.playa</groupId>
-			<artifactId>sl-ejb</artifactId>
-			<type>ejb</type>
-			<scope>provided</scope>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-
-
 
 
 
