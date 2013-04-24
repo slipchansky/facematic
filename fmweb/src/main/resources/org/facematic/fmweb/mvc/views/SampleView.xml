@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://slipchansky.com/fm https://raw.github.com/slipchansky/facematic/dev/facematic/src/main/resources/schema/facematic.xsd"
+	controller="org.facematic.fmweb.mvc.controllers.SampleController"
+	>
+	<TabSheet height="200" name="tabSheet">
+		<vl caption="first" name="firstTab" margin="true">
+			<html>First tab text</html>
+		</vl>
+		<vl caption="second" name="secondTab" margin="true">
+			<html>Second tab text</html>
+		</vl>
+	</TabSheet>
+	<hl>
+	<Button name="buttonFirst" caption="first"></Button>
+	<Button name="buttonSecond" caption="second"></Button>
+	</hl>
+
+</content>

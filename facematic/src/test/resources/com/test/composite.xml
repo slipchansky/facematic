@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <content xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://slipchansky.com/fm /schema/facematic.xsd" controller="com.slipchansky.vabuilder.tests.Controller"
+	xsi:schemaLocation="http://slipchansky.com/fm /schema/facematic.xsd" controller="org.facematic.vabuilder.tests.Controller"
 	>
 
 	<composite name="first" location="RESOURCE" path="com/test/simpleA.xml"
-		controller="com.slipchansky.vabuilder.tests.ControllerA"/>
+		controller="org.facematic.vabuilder.tests.ControllerA"/>
 
 	<composite name="second" location="RESOURCE" path="com/test/simpleB.xml"
-		controller="com.slipchansky.vabuilder.tests.ControllerB"/>
+		controller="org.facematic.vabuilder.tests.ControllerB"/>
 		
 	<composite name="third" location="RESOURCE" path="com/test/simpleB.xml" />
 
