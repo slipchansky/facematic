@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<content name="content" xmlns="http://slipchansky.com/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://slipchansky.com/fm facematic.xsd" sizeFull="true"	expandRatio="100"
+<content name="content" xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm facematic.xsd" sizeFull="true"	expandRatio="100"
 	>
 
 
+    <html alignment="MIDDLE_LEFT" sizeFull="false" >
+        <img src="${context.logo}" />
+    </html>
 
   <html>
    <p>
