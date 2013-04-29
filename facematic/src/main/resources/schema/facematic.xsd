@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://slipchansky.com/fm"
-	xmlns:c="http://slipchansky.com/fm" elementFormDefault="qualified">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://facematic.org/fm"
+	xmlns:c="http://facematic.org/fm" elementFormDefault="qualified">
 
 
 	<complexType name="ContentContainerType">
