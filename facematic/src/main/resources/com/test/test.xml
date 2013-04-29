@@ -1,5 +1,0 @@
-<Html>
-	<b>Mama</b>
-	<br />
-	Myla ${context.name} ramu
-</Html>
