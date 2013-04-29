@@ -96,6 +96,18 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
 		</plugins>
 
 		<pluginManagement>
@@ -107,7 +119,9 @@
 					<artifactId>lifecycle-mapping</artifactId>
 					<version>1.0.0</version>
 				</plugin>
+
 			</plugins>
+
 		</pluginManagement>
 	</build>
 

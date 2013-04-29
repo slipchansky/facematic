@@ -16,6 +16,8 @@ import java.util.jar.JarInputStream;
  * The set of iostream utilite functions
  */
 public class StreamUtils {
+	
+	private static ResourceAccessor resourceAccessor = null;
 
 
 	/**
@@ -93,6 +95,9 @@ public class StreamUtils {
 	 * @return InputStream
 	 */
 	public static InputStream classLoaderInputStram (String path) {
+		if (resourceAccessor != null) {
+			return resourceAccessor.getResourceStream(path);
+		}
 		return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 	}
 
@@ -119,4 +124,7 @@ public class StreamUtils {
 		return resource;
 	}
 
+	public static void setResourceAccessor(ResourceAccessor resourceAccessor) {
+		StreamUtils.resourceAccessor = resourceAccessor;
+	}
 }

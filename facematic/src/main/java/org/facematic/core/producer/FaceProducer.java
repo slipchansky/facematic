@@ -19,6 +19,8 @@ import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.ui.Composite;
 import org.facematic.core.ui.Html;
 import org.facematic.utils.GroovyEngine;
+import org.facematic.utils.StreamUtils;
+
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
@@ -50,6 +52,7 @@ public class FaceProducer implements Serializable {
 	private Object     context;
 	private NodeWatcher structureListener = null;
 	private UI ui;
+	private ClassLoader customClassLoader;
 	
 	private final static Map<String, String> substs = new HashMap<String, String> () {{
 		put ("vl", VerticalLayout.class.getSimpleName());
@@ -247,10 +250,24 @@ public class FaceProducer implements Serializable {
 		try {
 			return (T)Class.forName(componentClassSimpleName).newInstance();
 		} catch (Exception e) {
-			return (T)Class.forName("com.vaadin.ui."+componentClassSimpleName).newInstance();
+			try {
+			   return (T)Class.forName("com.vaadin.ui."+componentClassSimpleName).newInstance();
+			} catch (Exception e1) {
+				try {
+			      return (T)loadClass(componentClassSimpleName).newInstance ();
+				} catch (Exception e2) {
+					return (T)loadClass("com.vaadin.ui."+componentClassSimpleName).newInstance ();
+				}
+			}
 		}
 	}
 	
+	private Class loadClass(String className) throws ClassNotFoundException {
+		if (this.customClassLoader == null)
+			return null;
+		return customClassLoader.loadClass(className);
+	}
+
 	public GroovyEngine getGroovyEngine() {
 		if (this.engine==null) {
 			this.engine = new GroovyEngine();
@@ -289,9 +306,9 @@ public class FaceProducer implements Serializable {
 	public void setStructureListener (NodeWatcher structureListener) {
 		this.structureListener = structureListener;
 	}
-	
-	
 
-		
-
+	public void setCustomClassLoader(ClassLoader customClassLoader) {
+		this.customClassLoader = customClassLoader;
+	}
+	
 }
