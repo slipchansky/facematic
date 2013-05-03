@@ -1,12 +1,12 @@
 package ${controllerPackage};
 
-${GENERATED_CODE_BEGIN}
-import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import org.facematic.core.annotations.FmUI;
 import org.facematic.core.annotations.FmView;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.mvc.FmBaseController;
+import com.vaadin.ui.Component;
+${GENERATED_CODE_BEGIN}
 
 
 @FmView(name="${viewPackage}.$view")

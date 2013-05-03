@@ -1,7 +1,8 @@
 package org.facematic.facematic.editors;
 
+
 import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -12,6 +13,9 @@ import org.eclipse.ui.ide.IDEActionFactory;
 import org.eclipse.ui.part.MultiPageEditorActionBarContributor;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
+import org.facematic.Activator;
+import org.facematic.facematic.editors.parts.FmXmlEditor;
+import org.facematic.facematic.editors.parts.HaveParent;
 
 /**
  * Manages the installation/deinstallation of global actions for multi-page editors.
@@ -20,7 +24,9 @@ import org.eclipse.ui.texteditor.ITextEditorActionConstants;
  */
 public class FmMvcEditorContributor extends MultiPageEditorActionBarContributor {
 	private IEditorPart activeEditorPart;
-	private Action sampleAction;
+	private Action updateControllerAction;
+	private Action foreceRefreshAction;
+	private FmMvcEditor mvcEditor;
 	/**
 	 * Creates a multi-page contributor.
 	 */
@@ -44,6 +50,13 @@ public class FmMvcEditorContributor extends MultiPageEditorActionBarContributor 
 			return;
 
 		activeEditorPart = part;
+
+		if (activeEditorPart != null && (activeEditorPart instanceof HaveParent ) ) {
+				mvcEditor = ((HaveParent)activeEditorPart).getParent();
+		}
+		
+		
+
 
 		IActionBars actionBars = getActionBars();
 		if (actionBars != null) {
@@ -81,33 +94,52 @@ public class FmMvcEditorContributor extends MultiPageEditorActionBarContributor 
 		}
 	}
 	private void createActions() {
-		sampleAction = new Action() {
+		updateControllerAction = new Action() {
 			public void run() {
-				//MessageDialog.openInformation(null, "Facematic", "Sample Action Executed");
 				updateController ();
 			}
 		};
-		sampleAction.setText("Sample Action");
-		sampleAction.setToolTipText("Sample Action tool tip");
-		sampleAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(IDE.SharedImages.IMG_OBJS_TASK_TSK));
+		updateControllerAction.setText("Update Controller source code");
+		updateControllerAction.setToolTipText("Update Controller source code");
+		updateControllerAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(IDE.SharedImages.IMG_OBJS_TASK_TSK));
+		
+		foreceRefreshAction = new Action() {
+			public void run() {
+				forceRefresh ();
+			}
+		};
+		
+		
+		ImageDescriptor img = Activator.getImageDescriptor("icons/arrow_circle_double.png");
+		foreceRefreshAction.setText("Force refresh");
+		foreceRefreshAction.setToolTipText("Force refresh. Implement Controller modifications.");
+		foreceRefreshAction.setImageDescriptor(img);
+		
+		
+		
+	}
+	
+	protected void forceRefresh() {
+		if (mvcEditor != null){
+			mvcEditor.forceRefresh();
+		}
 	}
 	
 	protected void updateController() {
-		if (activeEditorPart instanceof MyXmlEditor) {
-			((MyXmlEditor)activeEditorPart).getParent ().updateControllerSourceCode ();
+		if (mvcEditor != null){
+			mvcEditor.updateControllerSourceCode ();
 		}
-		
-		
-		
 	}
 	public void contributeToMenu(IMenuManager manager) {
-		IMenuManager menu = new MenuManager("Editor &Menu");
+		IMenuManager menu = new MenuManager("Facematic");
 		manager.prependToGroup(IWorkbenchActionConstants.MB_ADDITIONS, menu);
-		menu.add(sampleAction);
+		menu.add(updateControllerAction);
+		menu.add(foreceRefreshAction);
+		
 	}
 	public void contributeToToolBar(IToolBarManager manager) {
 		manager.add(new Separator());
-		manager.add(sampleAction);
+		manager.add(updateControllerAction);
+		manager.add(foreceRefreshAction);
 	}
 }

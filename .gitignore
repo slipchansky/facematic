@@ -9,7 +9,8 @@ MANIFEST.MF
 *.zip
 /.svn/
 /*.svnignore
-fmweb/src/main/webapp/VAADIN/
+/target/
+/VAADIN/
 rebel.xml
 nb*.xml
 add

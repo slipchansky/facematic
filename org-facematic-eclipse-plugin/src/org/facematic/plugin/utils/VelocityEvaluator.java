@@ -26,7 +26,8 @@ public class VelocityEvaluator {
 	}
 	
 	public InputStream evaluate ( String  templateName ) throws Exception {
-		String template = org.facematic.utils.StreamUtils.getResourceAsString("templates/"+templateName);
+		
+		String template = StreamUtils.getResourceAsString("templates/"+templateName);
 		OutputStream bos = new ByteArrayOutputStream();
 		PrintWriter out = new PrintWriter(bos);
 		

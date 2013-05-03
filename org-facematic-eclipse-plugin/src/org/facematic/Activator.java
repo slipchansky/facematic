@@ -13,6 +13,7 @@ import org.apache.velocity.runtime.RuntimeInstance;
 import org.apache.velocity.runtime.parser.node.SimpleNode;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.facematic.facematic.editors.FmMvcEditor;
 import org.facematic.plugin.utils.VelocityEvaluator;
 import org.osgi.framework.BundleContext;
 
@@ -48,6 +49,7 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
+		FmMvcEditor.shutDown ();
 		plugin = null;
 		super.stop(context);
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
-<plugin>
+<plugin >
 
    <extension
          point="org.eclipse.ui.newWizards">
@@ -16,6 +16,7 @@
             name="Create Facematic View+Controller">
       </wizard>
    </extension>
+   
    <extension
          point="org.eclipse.ui.editors">
       <editor

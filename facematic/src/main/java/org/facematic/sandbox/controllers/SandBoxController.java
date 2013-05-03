@@ -97,10 +97,10 @@ public class SandBoxController implements org.facematic.core.mvc.FmBaseControlle
 		final StringBuilder importsTextBuilder = new StringBuilder ("import org.facematic.core.annotations.FmViewComponent;\nimport org.facematic.core.annotations.FmController;\nimport org.facematic.core.mvc.FmBaseController;\n");
 		final Map<String, String> importedClasses = new HashMap ();
 		
-		factory.setStructureListener(new FaceProducer.NodeWatcher() {
+		factory.setStructureWatcher(new FaceProducer.NodeWatcher() {
 			
 			@Override
-			public void putView(Object name, Component view) {
+			public void putView(String name, Object view) {
 				
 				controllerTextBuilder.append("     @FmViewComponent(name=\""+name+"\")\n");
 				controllerTextBuilder.append("     private "+view.getClass().getSimpleName()+" "+name+";\n\n");

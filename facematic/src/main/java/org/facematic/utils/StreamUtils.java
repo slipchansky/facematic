@@ -98,7 +98,14 @@ public class StreamUtils {
 		if (resourceAccessor != null) {
 			return resourceAccessor.getResourceStream(path);
 		}
-		return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+		URL url = Thread.currentThread().getContextClassLoader().getResource(path);
+		try {
+		   return getUrlStream (url.toString(), false);
+		} catch (Exception e) {
+			return null;
+		}
+		
+		//return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 	}
 
 	/**
@@ -127,4 +134,5 @@ public class StreamUtils {
 	public static void setResourceAccessor(ResourceAccessor resourceAccessor) {
 		StreamUtils.resourceAccessor = resourceAccessor;
 	}
+	
 }
