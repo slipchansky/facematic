@@ -16,7 +16,7 @@ import com.vaadin.server.DeploymentConfiguration;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinServletService;
 
-public abstract class FmCdiServlet extends VaadinServlet {
+public class FmCdiServlet extends VaadinServlet {
 
 	protected String widgetSetName;
 	List<FmCdiEntryPoint> injections = new ArrayList<FmCdiEntryPoint> (); 
@@ -49,7 +49,9 @@ public abstract class FmCdiServlet extends VaadinServlet {
 		ui.setInjections (injections);
 	}
 	
-	public abstract Class<? extends FacematicUI> getUiClass ();
+	public Class<? extends FacematicUI> getUiClass () {
+		return FacematicUI.class;
+	}
 	
 	
 }

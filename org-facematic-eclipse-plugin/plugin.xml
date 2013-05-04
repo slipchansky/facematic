@@ -15,6 +15,16 @@
             id="org.facematic.wizards.FacematicNewWizard"
             name="Create Facematic View+Controller">
       </wizard>
+      <wizard
+            canFinishEarly="false"
+            class="org.facematic.wizards.NewFacematicProjectWizard"
+            finalPerspective="org.eclipse.jst.j2ee.J2EEPerspective"
+            hasPages="true"
+            icon="icons/fm-vaadin.png"
+            id="org.facematic.wizards.NewFacematicProjectWizard"
+            name="Facematic Project"
+            project="true">
+      </wizard>
    </extension>
    
    <extension

@@ -5,7 +5,7 @@
 
 	<groupId>org.facematic</groupId>
 	<artifactId>facematic</artifactId>
-	<version>1.0.0-BETA</version>
+	<version>1.0.3-BETA</version>
 
 	<packaging>jar</packaging>
 	<name>facematic</name>
@@ -47,7 +47,6 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client</artifactId>
 			<version>${vaadin.version}</version>
-			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<artifactId>vaadin-shared</artifactId>
@@ -62,25 +61,32 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.4</version>
-			<scope>provided</scope>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.0.1</version>
+		    <scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
-			<scope>provided</scope>
-			<version>1.1-20130403</version>
+			<version>[1,)</version>
+		    <scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>el-api</artifactId>
+					<groupId>javax.el</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 
@@ -96,17 +102,6 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
 		</plugins>
 

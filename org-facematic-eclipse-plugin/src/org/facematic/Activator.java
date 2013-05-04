@@ -3,6 +3,7 @@ package org.facematic;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.Properties;
 
 import org.apache.velocity.Template;
@@ -11,10 +12,13 @@ import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeInstance;
 import org.apache.velocity.runtime.parser.node.SimpleNode;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.internal.util.BundleUtility;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.facematic.facematic.editors.FmMvcEditor;
 import org.facematic.plugin.utils.VelocityEvaluator;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -73,4 +77,13 @@ public class Activator extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+	
+	public static URL getResourceURL (String path) {
+		 Bundle bundle = Platform.getBundle(PLUGIN_ID);
+	        if (!BundleUtility.isReady(bundle)) {
+				return null;
+			}
+	        URL url = BundleUtility.find(bundle, path);
+	        return url;
+	} 
 }

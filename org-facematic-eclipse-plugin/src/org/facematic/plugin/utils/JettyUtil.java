@@ -8,6 +8,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 
 
 public class JettyUtil implements IJettyServer {
+	private static final String INTERNAL_SERVLET_CLASS_NAME = "org.facematic.fmweb.plugin.FmInternalServletForPluginPurposes";
+	
 	int    port;
 	private Server server;
 	private String webAppPath;
@@ -24,12 +26,11 @@ public class JettyUtil implements IJettyServer {
 	  {
 		this.port = port;
 	    server = new Server(port);
-	    Class<? extends Servlet> fmInternalTestServletClass = (Class<? extends Servlet>)classLoader.loadClass("org.facematic.fmweb.servlet.FmInternalServletForPluginPurposes");
+	    Class<? extends Servlet> fmInternalTestServletClass = (Class<? extends Servlet>)classLoader.loadClass(INTERNAL_SERVLET_CLASS_NAME);
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         handler.addServlet(fmInternalTestServletClass, "/*"); 
         handler.setSessionHandler(new SessionHandler ());
         handler.setClassLoader(classLoader);
-	    
 	    server.setHandler(handler);
 	  }
 	 
@@ -66,7 +67,7 @@ public class JettyUtil implements IJettyServer {
 			try {
 				server.stop ();
 			    server = new Server(port);
-			    Class<? extends Servlet> fmInternalTestServletClass = (Class<? extends Servlet>)classLoader.loadClass("org.facematic.fmweb.servlet.FmInternalTestServlet");
+			    Class<? extends Servlet> fmInternalTestServletClass = (Class<? extends Servlet>)classLoader.loadClass(INTERNAL_SERVLET_CLASS_NAME);
 		        ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		        handler.addServlet(fmInternalTestServletClass, "/*"); 
 		        handler.setSessionHandler(new SessionHandler ());
