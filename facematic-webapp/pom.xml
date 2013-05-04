@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>${GROUPID}</groupId>
-	<artifactId>${ARTEFACTNAME}</artifactId>
+	<groupId>org.facematic</groupId>
+	<artifactId>facematic-webapp</artifactId>
 
 	<packaging>war</packaging>
-	<version>${VERSION}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>Facematic Web Application</name>
 
 	<properties>
@@ -19,14 +19,15 @@
 
 	<repositories>
 		<repository>
-			<id>facematic</id>
-			<url>https://github.com/slipchansky/facematic/raw/dev/repo/snapshots/</url>
-		</repository>
-
-		<repository>
 			<id>vaadin-addons</id>
 			<url>http://maven.vaadin.com/vaadin-addons</url>
 		</repository>
+		
+		<repository>
+			<id>facematic</id>
+			<url>https://github.com/slipchansky/facematic/raw/dev/repo/snapshots/</url>
+		</repository>
+		
 
 		<repository>
 			<id>vaadin-snapshots</id>
@@ -59,7 +60,7 @@
 		<dependency>
 			<groupId>org.facematic</groupId>
 			<artifactId>facematic</artifactId>
-			<version>${FACEMATICVERSION}</version>
+			<version>1.0.3-BETA</version>
 		</dependency>
 
 		
@@ -111,8 +112,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>${JAVA-VER}</source>
-					<target>${JAVA-VER}</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 		</plugins>
