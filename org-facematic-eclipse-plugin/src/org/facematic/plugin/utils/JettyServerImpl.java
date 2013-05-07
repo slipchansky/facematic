@@ -7,14 +7,14 @@ import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
 
-public class JettyUtil implements IJettyServer {
+public class JettyServerImpl implements IJettyServer {
 	private static final String INTERNAL_SERVLET_CLASS_NAME = "org.facematic.fmweb.plugin.FmInternalServletForPluginPurposes";
 	
 	int    port;
 	private Server server;
 	private String webAppPath;
 	
-	public JettyUtil (String webAppPath) {
+	public JettyServerImpl (String webAppPath) {
 		this.webAppPath = webAppPath;
 	}
 	

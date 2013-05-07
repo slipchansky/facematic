@@ -46,7 +46,7 @@ import org.facematic.core.producer.FaceProducer;
 import org.facematic.facematic.editors.parts.FmJavaEditor;
 import org.facematic.facematic.editors.parts.FmXmlEditor;
 import org.facematic.plugin.utils.IJettyServer;
-import org.facematic.plugin.utils.JettyUtil;
+import org.facematic.plugin.utils.JettyServerImpl;
 import org.facematic.plugin.utils.VelocityEvaluator;
 
 
@@ -487,7 +487,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	
 	private IJettyServer createJettyServerInstance() {
 		//return new JettyServerProxy ();
-		return new JettyUtil (webAppPath);
+		return new JettyServerImpl (webAppPath);
 	}
 
 	public void forceRefresh() {
