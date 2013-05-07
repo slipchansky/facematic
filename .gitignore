@@ -2,11 +2,9 @@
 target
 .DS_Store
 .faces-config.xml.jsfdia
-MANIFEST.MF
 .idea
 *.iml
 *.bat
-*.zip
 /.svn/
 /*.svnignore
 /target/
