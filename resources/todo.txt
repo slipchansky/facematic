@@ -3,20 +3,30 @@
 +1.2. FmUI extends UI
 +1.3. implemnt injections
 
-2. Internal injections
++2. Internal injections
 
-3. Maven artefact
-	<repository>
-	    <id>facematic</id>
-	    <url>https://github.com/slipchansky/facematic/tree/dev/facematic/snapshots</url>
-	</repository>
++3. Maven artefact
++	<repository>
++	    <id>facematic</id>
++	    <url>https://github.com/slipchansky/facematic/tree/dev/facematic/snapshots</url>
++	</repository>
 
 
-4. Maven archetype
-mvn archetype:create-from-project
++4. Maven archetype
++mvn archetype:create-from-project
 
-5. Eclipse plugins:
-5.1. Create Fm controller
++5. Eclipse plugins:
++5.1. Create Fm controller
+
 5.2. Fm code navigation
 5.3. Fm view-controller integrity checker
+
+
+
+stage2
+- plugin: implement facematic into existing web project
+
+stage3
+- plugin: add facematic web-module into existing ear
+
 
