@@ -45,9 +45,9 @@ import org.eclipse.ui.ide.IDE;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.facematic.editors.parts.FmJavaEditor;
 import org.facematic.facematic.editors.parts.FmXmlEditor;
+import org.facematic.plugin.utils.GroovyEngine;
 import org.facematic.plugin.utils.IJettyServer;
 import org.facematic.plugin.utils.JettyServerImpl;
-import org.facematic.plugin.utils.VelocityEvaluator;
 
 
 @SuppressWarnings({"rawtypes", "unchecked", "restriction"})
@@ -105,15 +105,14 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	final static String CONTROLLERS_PACKAGE_SUFFIX = ".controllers";
 	final static String CONTROLLER_SUFFIX = "Controller";
 	final static String VIEW_SUFFIX = "View";
-	final static String GENERATED_CODE_BEGIN = "// GENERATED_CODE_BEGIN. Do not replace this comment!";
-	final static String GENERATED_CODE_END = "// GENERATED_CODE_END. Do not replace this comment!";
+	public final static String GENERATED_CODE_BEGIN = "// GENERATED_CODE_BEGIN. Do not replace this comment!";
+	public final static String GENERATED_CODE_END = "// GENERATED_CODE_END. Do not replace this comment!";
 	
 	static int jettyPortPull = JETTY_PORT_PULL_STARTS_FROM;
 	
 	static Map<String, ClassLoader>      classLoadersForProjects  = new ConcurrentHashMap<String, ClassLoader> ();
 	static Map<String, IJettyServer> jettyServersForProjects  = new ConcurrentHashMap<String, IJettyServer> ();
 
-	private VelocityEvaluator velocityEvaluator;
 
 	private TextEditor   xmlEditor;
 	private FmJavaEditor javaEditor;
@@ -134,6 +133,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	private IJettyServer server;
 	private Browser          browser;
 	private String webAppPath;
+	private GroovyEngine groovy = new GroovyEngine();
 
 	/**
 	 * Creates a multi-page editor example.
@@ -215,11 +215,6 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	@SuppressWarnings("deprecation")
 	public void init(IEditorSite site, IEditorInput edInput) throws PartInitException {
 
-		try {
-			velocityEvaluator = new VelocityEvaluator();
-		} catch (Exception e1) {
-			throw new RuntimeException(e1);
-		}
 
 		if (!(edInput instanceof IFileEditorInput)) {
 			throw new PartInitException("Invalid Input: Must be IFileEditorInput");
@@ -263,31 +258,24 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 		viewName = updateSuffix(viewControllerNameBase, VIEW_SUFFIX, CONTROLLER_SUFFIX);
 		controllerName = updateSuffix(viewControllerNameBase, CONTROLLER_SUFFIX,VIEW_SUFFIX);
 
-		velocityEvaluator.put("viewPackage", viewPackageName);
-		velocityEvaluator.put("controllerPackage", controllerPackageName);
-		velocityEvaluator.put("controller", controllerName);
-		velocityEvaluator.put("view", viewName);
-		velocityEvaluator.put("GENERATED_CODE_BEGIN", GENERATED_CODE_BEGIN);
-		velocityEvaluator.put("GENERATED_CODE_END", GENERATED_CODE_END);
+		groovy.put("viewPackage", viewPackageName);
+		groovy.put("controllerPackage", controllerPackageName);
+		groovy.put("controller", controllerName);
+		groovy.put("view", viewName);
+		groovy.put("GENERATED_CODE_BEGIN", GENERATED_CODE_BEGIN);
+		groovy.put("GENERATED_CODE_END", GENERATED_CODE_END);
 
-		javaFile = updateSourceFile(controllerPackageName, controllerName, MAIN_JAVA, ".java", "controller.vm");
-		xmlFile = updateSourceFile(viewPackageName, viewName, MAIN_RESOURCES,".xml", "view.vm");
+		javaFile = updateSourceFile("src.main.java."+ controllerPackageName, controllerName, MAIN_JAVA, ".java", "controller.vm");
+		xmlFile  = updateSourceFile("src.main.resources."+viewPackageName, viewName, MAIN_RESOURCES,".xml", "view.vm");
 		this.setTitle(viewControllerNameBase);
 
 		super.init(site, edInput);
-
 	}
 
 
 	private File updateSourceFile(String packageName, String artefactName,
 			String mvnPrefix, String ext, String templateName) {
 		String packagePath = packageName;
-		if (projectStructureIsMaven) {
-			packagePath = "src." + mvnPrefix + packageName;
-		} else {
-			packagePath = "src." + packageName;
-		}
-
 		packagePath = packagePath.replace('.', '/');
 		String sourceFileName = packagePath + '/' + artefactName + ext;
 
@@ -324,7 +312,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 
 	private InputStream prepareSourceCodeByTemplate (String templateName) {
 		try {
-			return velocityEvaluator.evaluate(templateName);
+			return new ByteArrayInputStream(groovy.evaluateTemplate(templateName).getBytes());
 		} catch (Exception e) {
 			return new ByteArrayInputStream(e.toString().getBytes());
 		}

@@ -6,18 +6,11 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Properties;
 
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeInstance;
-import org.apache.velocity.runtime.parser.node.SimpleNode;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.internal.util.BundleUtility;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.facematic.facematic.editors.FmMvcEditor;
-import org.facematic.plugin.utils.VelocityEvaluator;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 

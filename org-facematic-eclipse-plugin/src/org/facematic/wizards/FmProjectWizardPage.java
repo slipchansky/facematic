@@ -18,13 +18,13 @@ public class FmProjectWizardPage extends WizardPage  {
 	private Text artefactText;
 	private Text servletNameText;
 	private Text uiNameText;
-	private WizardNewProjectCreationPage projectPage;
+	private NewFacematicProjectWizard projectPage;
 	private Text skinNameText;
 	private Text artefactVersionText;
 
-	protected FmProjectWizardPage(String pageName, WizardNewProjectCreationPage projectPage) {
+	protected FmProjectWizardPage(String pageName, NewFacematicProjectWizard newFacematicProjectWizard) {
 		super(pageName);
-		this.projectPage = projectPage;
+		this.projectPage = newFacematicProjectWizard;
 	}
 
 	@Override
@@ -86,6 +86,15 @@ public class FmProjectWizardPage extends WizardPage  {
 		skinNameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		skinNameText.setLayoutData(gd);
+		
+		if (projectPage.isImplementToExistingProject()) {
+			artefactVersionText.setText(projectPage.getPom().getVersion());
+			artefactVersionText.setEditable(false);
+			groupText.setText(projectPage.getPom().getGroupId());
+			groupText.setEditable(false);
+			artefactText.setText(projectPage.getPom().getArtifactId());
+			artefactText.setEditable(false);
+		}
 		
 		setControl(container);
 	}

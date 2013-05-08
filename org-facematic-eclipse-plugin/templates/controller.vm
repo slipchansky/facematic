@@ -1,11 +1,14 @@
 package ${controllerPackage};
 
-import com.vaadin.ui.UI;
+import javax.inject.Inject;
 import org.facematic.core.annotations.FmUI;
 import org.facematic.core.annotations.FmView;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.mvc.FmBaseController;
+import org.facematic.core.ui.FacematicUI;
+
 import com.vaadin.ui.Component;
+
 ${GENERATED_CODE_BEGIN}
 
 
@@ -14,8 +17,8 @@ public class ${controller} implements FmBaseController {
 	
 ${GENERATED_CODE_END}
 	
-	@FmUI
-	UI ui;
+    @FmUI
+    FacematicUI ui;
 	
 	
 	

@@ -27,18 +27,28 @@ import org.facematic.Activator;
 
 public class FmProjectSupport {
 	
+	GroovyEngine groovy = new GroovyEngine ();
+	private String projectName;
+	private URI location;
+	private boolean implement;
+	private ProjectPomHelper pom;
+	private IProject project;
 	
+	public FmProjectSupport (String projectName, URI location, Map<String, String> substs, boolean implement, ProjectPomHelper pom) {
+		this.groovy = groovy;
+		this.groovy.put(substs);
+		this.projectName = projectName;
+		this.location = location;
+		this.implement = implement;
+		this.pom = pom;
+	}
 
 
-	public static IProject createProject(String projectName, URI location, Map<String, String> substs) throws Exception {
+	public  IProject createProject() throws Exception {
 		Assert.isNotNull(projectName);
 		Assert.isTrue(projectName.trim().length() > 0);
-		
-		VelocityEvaluator velocity = new VelocityEvaluator  (substs);
-
-		
 		try {
-			IProject project = createBaseProject(projectName, location, velocity);
+			IProject project = createBaseProject();
 			return project;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,16 +59,16 @@ public class FmProjectSupport {
 		
 	}
 
-	private static IProject createBaseProject(String projectName, URI location, VelocityEvaluator velocity) throws IOException, CoreException {
+	private  IProject createBaseProject() throws IOException, CoreException {
 
-		IProject newProject = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
+		this.project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 
-		if (!newProject.exists()) {
+		if (!project.exists()) {
 			URI projectLocation = location;
 			
 			
 
-			IProjectDescription desc = newProject.getWorkspace().newProjectDescription(newProject.getName());
+			IProjectDescription desc = project.getWorkspace().newProjectDescription(project.getName());
 
 			if (location != null && ResourcesPlugin.getWorkspace().getRoot().getLocationURI().equals(location)) {
 				projectLocation = null;
@@ -80,43 +90,56 @@ public class FmProjectSupport {
 
 			desc.setLocationURI(projectLocation);
 			try {
-				newProject.create(desc,  null);
+				project.create(desc,  null);
 				
-				if (!newProject.isOpen()) {
-					newProject.open(null);
-				}
-				fillProject (newProject, velocity);
 				
 			} catch (CoreException e) {
 				e.printStackTrace();
+				return null;
 			}
 		}
-
-		return newProject;
+		
+		if (!project.isOpen()) {
+			project.open(null);
+		}
+		fillProject ();
+		return project;
 	}
 
-	private static void fillProject(IProject newProject, VelocityEvaluator velocity) throws IOException, CoreException {
+	private  void fillProject() throws IOException, CoreException {
 		List<Entry> entries = getFakeEntries ();
 		for (Entry e : entries ) {
 			if (e.isdir) {
-				createProjectFolder(newProject, e, velocity);
+				createProjectFolder(e);
 			} else {
-				createFile (newProject, e, velocity);
+				if (implement)
+					if (!e.name.startsWith("src/main/java/") && !e.name.startsWith("src/main/resources/") && !e.name.startsWith("src/main/webapp/VAADIN/"))
+						continue;
+				
+				createFile (e);
 			}
 			
+		}
+		if (implement && pom != null) {
+			pom.addFacematicFeatures ();
+			updateFile ("pom.xml", new ByteArrayInputStream(pom.getSource().getBytes()));
 		}
 		
 	}
 
-	private static void createProjectFolder(IProject newProject, Entry e, VelocityEvaluator velocity) throws CoreException {
-		createProjectFolder (newProject, velocity.evaluateString(e.name));
+	private  void createProjectFolder(Entry e) throws CoreException {
+		createProjectFolder (groovy.evaluateString(e.name));
 		
 	}
 
-	private static void createFile(IProject project, Entry e, VelocityEvaluator velocity) throws CoreException {
-		String fileName = velocity.evaluateString(e.name);
+	private  void createFile(Entry e) throws CoreException {
+		String fileName = groovy.evaluateString(e.name);
+		InputStream is = prepareByTemplate(e);
+		updateFile(fileName, is);
+	}
+
+	private  void updateFile(String fileName,	InputStream is) throws CoreException {
 		File file = (File) project.getFile(fileName);
-		InputStream is = prepareByTemplate(e, velocity);
 		if (!file.exists()) {
 			file.create(is, true, null);
 		} else {
@@ -126,17 +149,14 @@ public class FmProjectSupport {
 			is.close();
 		} catch (IOException e1) {
 		}
-		
-		
-		
 	}
 
-	private static InputStream prepareByTemplate(Entry e, VelocityEvaluator velocity) {
-		String result = velocity.evaluateString(e.body);
+	private  InputStream prepareByTemplate(Entry e) {
+		String result = groovy.evaluateString(e.body);
 		return new ByteArrayInputStream(result.getBytes());
 	}
 
-	private static IFolder createFolder(IFolder folder) throws CoreException {
+	private  IFolder createFolder(IFolder folder) throws CoreException {
 		IContainer parent = folder.getParent();
 		if (parent instanceof IFolder) {
 			createFolder((IFolder) parent);
@@ -149,13 +169,13 @@ public class FmProjectSupport {
 		return folder;
 	}
 
-	private static IFolder createProjectFolder(IProject newProject, String path)
+	private  IFolder createProjectFolder(String path)
 			throws CoreException {
-		IFolder etcFolders = newProject.getFolder(path);
+		IFolder etcFolders = project.getFolder(path);
 		return createFolder(etcFolders);
 	}
 	
-	static class Entry {
+	 class Entry {
 		public String name;
 		public String body;
 		public boolean isdir;
@@ -167,7 +187,7 @@ public class FmProjectSupport {
 		}
 	}
 
-	public static List<Entry> getFakeEntries () throws IOException {
+	public  List<Entry> getFakeEntries () throws IOException {
 		URL url = Activator.getResourceURL("templates/projects/fmfastbuild.zip");
 		InputStream in = url.openStream();
 		
@@ -178,7 +198,7 @@ public class FmProjectSupport {
 		return entries;
 	}
 
-	private static List<Entry> getTemplateEntries(InputStream is) throws IOException {
+	private List<Entry> getTemplateEntries(InputStream is) throws IOException {
 		ZipInputStream zis = new ZipInputStream(is);
 
 		ZipEntry ze;
