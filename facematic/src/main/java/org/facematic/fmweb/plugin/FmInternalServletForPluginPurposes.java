@@ -3,8 +3,8 @@ package org.facematic.fmweb.plugin;
 
 
 
+import org.facematic.core.servlet.FacematicServlet;
 import org.facematic.core.ui.FacematicUI;
-import org.facematic.typesafeservlet.FacematicServlet;
 
 
 /**

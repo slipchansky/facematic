@@ -27,7 +27,7 @@
    
   </html>
 
-	<Table name="table" expandRatio="100" sizeFull="true">
+	<Table name="table" expandRatio="100" sizeFull="true" onChange="someMethod">
 		<columns>
 			<column id="firstName" header="First name" width="150" />
 			<column id="lastName" header="Last Name" expandRatio="100" />
@@ -35,8 +35,8 @@
 	</Table>
 
 	<Button name="button" caption="mama">
-		<onClick>
-	      context.nested.okbutton.setVisible (false);
+		<onClick call="test">
+	      
 	    </onClick>
 	</Button>
 

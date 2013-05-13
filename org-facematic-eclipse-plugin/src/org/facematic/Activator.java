@@ -6,13 +6,17 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Properties;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.internal.util.BundleUtility;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.facematic.facematic.editors.FmMvcEditor;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.log.LogService;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -24,11 +28,16 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
+
+	private static ILog logger;	
+	
 	
 	/**
 	 * The constructor
 	 */
 	public Activator() {
+		
+		
 	}
 
 	/*
@@ -38,7 +47,7 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		
+		logger = Activator.getDefault().getLog();		
 	}
 
 	/*
@@ -78,5 +87,15 @@ public class Activator extends AbstractUIPlugin {
 			}
 	        URL url = BundleUtility.find(bundle, path);
 	        return url;
-	} 
+	}
+
+	public static void info (String message) {
+		logger.log (new Status(Status.INFO, Activator.PLUGIN_ID, Status.INFO, message, null));
+	}
+	
+	public static void error (String message, Throwable exception) {
+		logger.log (new Status(Status.ERROR, Activator.PLUGIN_ID, Status.INFO, message, exception));
+	}
+	
+	
 }

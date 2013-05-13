@@ -6,8 +6,11 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.Servlet;
@@ -22,9 +25,13 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.equinox.log.Logger;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.launching.JavaRuntime;
@@ -34,6 +41,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Display;
@@ -42,16 +50,20 @@ import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.ide.IDE;
+import org.facematic.Activator;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.facematic.editors.parts.FmJavaEditor;
 import org.facematic.facematic.editors.parts.FmXmlEditor;
 import org.facematic.plugin.utils.GroovyEngine;
 import org.facematic.plugin.utils.IJettyServer;
 import org.facematic.plugin.utils.JettyServerImpl;
+import org.osgi.service.log.LogService;
+import org.osgi.util.tracker.ServiceTracker;
 
 
 @SuppressWarnings({"rawtypes", "unchecked", "restriction"})
 class FaceProducerProxy  {
+	
 	
 	Method createClassInstance;
 	Method buildFromString;
@@ -59,7 +71,8 @@ class FaceProducerProxy  {
 	Object instance;
 	
 	public FaceProducerProxy (ClassLoader classLoader) throws Exception {
-		    Class producerClass = classLoader.loadClass(FaceProducer.class.getCanonicalName());
+		Class producerClass = null;
+		    producerClass = classLoader.loadClass(FaceProducer.class.getCanonicalName());
 			instance = producerClass.newInstance();
 			createClassInstance = producerClass.getMethod("createClassInstance", String.class);
 			buildFromString = producerClass.getMethod("buildFromString", String.class);
@@ -98,6 +111,9 @@ class FaceProducerProxy  {
  */
 @SuppressWarnings("restriction")
 public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeListener {
+	
+	
+	
 	final static int   JETTY_PORT_PULL_STARTS_FROM = 8888;
 	final static String MAIN_JAVA = "main.java.";
 	final static String MAIN_RESOURCES = "main.resources.";
@@ -134,11 +150,14 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	private Browser          browser;
 	private String webAppPath;
 	private GroovyEngine groovy = new GroovyEngine();
+	
+	 
 
 	/**
 	 * Creates a multi-page editor example.
 	 */
 	public FmMvcEditor() {
+
 		super();
 
 	}
@@ -234,7 +253,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	    try {
 			prepareProjectClassLoader ();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Activator.error("Can't prepare activator", e);
 		}
 
 		
@@ -286,7 +305,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 				file.create(prepareSourceCodeByTemplate(templateName), true, null);
 				return file;
 			} catch (CoreException e) {
-				e.printStackTrace();
+				Activator.error ("Can't create file "+javaPath, e);
 				return null;
 			}
 		}
@@ -366,6 +385,12 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	
 
 	public void updateControllerSourceCode() {
+	    try {
+			prepareProjectClassLoader ();
+		} catch (Exception e) {
+			Activator.error("Can't prepare classloader ", e);
+		}
+		
 		try {
 			final  IDocument doc = (IDocument) xmlEditor.getAdapter(IDocument.class);
 			String markup = doc.get();
@@ -373,24 +398,27 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 			updateControllerJavaSourceCode (markup);
 
 		} catch (Exception e) {
+			Activator.error("Can't updateControllerJavaSourceCode.", e);
 			throw new RuntimeException(e);
 		}
 
 	}
 
 	public void updateControllerJavaSourceCode (String markup) throws Exception {
+
+		IDocument doc = javaEditor.getViewer().getDocument();
+		String existingJavaSourceCode = doc.get();
 		
 		FaceProducerProxy producer = new FaceProducerProxy (projectClassLoader); 
 		
 		FmStructureWatcher watcher = new FmStructureWatcher(controllerName);
+		watcher.setSourceCode (existingJavaSourceCode);
 		producer.setStructureWatcher(watcher);
 		producer.buildFromString (markup);
 		
-		String controllerJavaSourceCode = watcher.toString();
+		existingJavaSourceCode = watcher.getModifiedSourceCode ();
+		String controllerJavaSourceCode = watcher.getGeneratedSourceBlock();
 		
-		IDocument doc = javaEditor.getViewer().getDocument();
-		
-		String existingJavaSourceCode = doc.get();
 		
 		int startPos = existingJavaSourceCode.indexOf(GENERATED_CODE_BEGIN);
 		if (startPos<0) {
@@ -412,14 +440,15 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 
 	
 	private void prepareProjectClassLoader () throws Exception {
-		projectClassLoader  = classLoadersForProjects.get(project.getName());
-		if (projectClassLoader != null) return;
+		
+		//projectClassLoader  = classLoadersForProjects.get(project.getName());
+		//if (projectClassLoader != null) return;
 		
 		IJavaProject javaProject = JavaCore.create(project);
 		String[] classPathEntries = JavaRuntime.computeDefaultRuntimeClassPath(javaProject);
 		this.webAppPath = classPathEntries[0]+"/../../src/main/webapp/"; 
 		
-		List<URL> urlList = new ArrayList<URL>();
+		Set<URL> urlList = new LinkedHashSet<URL>();
 		for (int i = 0; i < classPathEntries.length; i++) {
 			 String entry = classPathEntries[i];
 			 IPath path = new Path(entry);
@@ -428,15 +457,19 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 		}
 		
 		
-		urlList.add(org.eclipse.jetty.servlet.listener.IntrospectorCleaner.class.getClassLoader().getResource(""));
-		urlList.add(org.eclipse.jetty.webapp.WebAppContext.class.getClassLoader().getResource(""));
-		urlList.add(Servlet.class.getClassLoader().getResource(""));
-		urlList.add(ServletContextHandler.class.getClassLoader().getResource(""));
-		urlList.add(ServletHolder.class.getClassLoader().getResource(""));
+//		urlList.add(org.eclipse.jetty.servlet.listener.IntrospectorCleaner.class.getClassLoader().getResource(""));
+//		urlList.add(org.eclipse.jetty.webapp.WebAppContext.class.getClassLoader().getResource(""));
+//		urlList.add(Servlet.class.getClassLoader().getResource(""));
+//		urlList.add(ServletContextHandler.class.getClassLoader().getResource(""));
+//		urlList.add(ServletHolder.class.getClassLoader().getResource(""));
+		
+		Activator.info("classLoader urls: "+urlList);
 		
 		
 		URL[] urls = (URL[]) urlList.toArray(new URL[urlList.size()]);
+		
 		projectClassLoader = new URLClassLoader(urls, Servlet.class.getClassLoader());
+		
 		
 		classLoadersForProjects.put(project.getName(), projectClassLoader);
 		
@@ -454,6 +487,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 			server.prepare (jettyPortPull++, projectClassLoader);
 		} catch (Exception e) {
 			e.printStackTrace();
+			Activator.error ("Can't prepare jetty ", e);
 			return false;
 		}
 		

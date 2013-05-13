@@ -4,12 +4,14 @@ import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
 import org.facematic.core.producer.FaceProducer;
+import org.facematic.core.annotations.FmUI;
 
 
 
 
 @SuppressWarnings("serial")
 @Widgetset("com.vaadin.DefaultWidgetSet") 
+@FmUI
 public class ${UICLASS} extends org.facematic.core.ui.FacematicUI {
 
     @Override

@@ -1,4 +1,4 @@
-package org.facematic.core.producer;
+package com.test;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.facematic.core.producer.builders.AbstractOrderedLayoutBuilder;
 import org.facematic.core.producer.builders.BeanBuilder;
@@ -38,6 +40,7 @@ import org.dom4j.Element;
  * @author stas
  * 
  */
+@Named
 public class FaceProducer implements Serializable {
 
 	public interface NodeWatcher {
@@ -100,6 +103,8 @@ public class FaceProducer implements Serializable {
 	private Object context; // groovy execution context
 	
 
+	@Inject
+	@FmUI
 	private FacematicUI ui;
 
 	private final static Map<String, String> substs = new HashMap<String, String>() {
@@ -162,7 +167,7 @@ public class FaceProducer implements Serializable {
 	/**
 	 * for plugin purposes
 	 */
-	public 
+	public @Inject
 	FaceProducer() {
 		super();
 		if (ui == null) {

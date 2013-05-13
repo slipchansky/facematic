@@ -193,9 +193,9 @@
 	<complexType name="CoreHtmlIframeType">
 		<complexContent>
 			<extension base="c:CoreHtmlType">
-		     <attribute name="src" type="string"></attribute>
-		     <attribute name="frameborder" type="int"></attribute>
-		     <attribute name="allowfullscreen" type="int"></attribute>
+				<attribute name="src" type="string"></attribute>
+				<attribute name="frameborder" type="int"></attribute>
+				<attribute name="allowfullscreen" type="int"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -234,8 +234,8 @@
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlImageType" name="img" minOccurs="0"
 						maxOccurs="unbounded" />
-					<element type="c:CoreHtmlIframeType" name="iframe" minOccurs="0"
-						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlIframeType" name="iframe"
+						minOccurs="0" maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="i" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="hr" minOccurs="0"
@@ -401,13 +401,26 @@
 			</extension>
 		</complexContent>
 	</complexType>
+	<complexType name="EventListenerType" mixed="true">
+		<attribute name="call" type="string"></attribute>
+	</complexType>
 
 
 	<complexType name="PropertyType">
 		<complexContent>
 			<extension base="c:ContentType">
 				<attribute name="value" type="string"></attribute>
+				<attribute name="onChange" type="string">
+					<annotation>
+						<documentation>
+							The name of controller method. You must implement method with this
+							name with parameter type of ValueChangeEvent. for example: public
+							void onValueChange (ValueChangeEvent event) {...}.
+						</documentation>
+					</annotation>
+				</attribute>
 			</extension>
+
 		</complexContent>
 	</complexType>
 
@@ -518,9 +531,18 @@
 		<complexContent>
 			<extension base="c:ContentType">
 				<sequence>
-					<element name="onClick" type="string" maxOccurs="10"
-						minOccurs="0" />
+					<element name="onClick" type="c:EventListenerType"
+						maxOccurs="10" minOccurs="0">
+						<annotation>
+							<documentation>
+								The name of controller method. You must implement method with such
+								name in your controller. For example: public void onClick
+								(ClickEvent event) {...}.
+							</documentation>
+						</annotation>
+					</element>
 				</sequence>
+
 			</extension>
 		</complexContent>
 	</complexType>

@@ -11,8 +11,8 @@ import javax.inject.Inject;
 import org.facematic.core.annotations.FmUI;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.annotations.FmController;
+import org.facematic.core.servlet.FacematicServlet;
 import org.facematic.core.ui.FacematicUI;
-import org.facematic.typesafeservlet.FacematicServlet;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;

@@ -3,6 +3,7 @@ package ${controllerPackage};
 import javax.inject.Inject;
 import org.facematic.core.annotations.FmUI;
 import org.facematic.core.annotations.FmView;
+import org.facematic.core.annotations.FmReaction;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.ui.FacematicUI;

@@ -122,6 +122,11 @@ public class SandBoxController implements org.facematic.core.mvc.FmBaseControlle
 				   importedClasses.put (controller.getClass().getCanonicalName(), "");
 				}
 			}
+
+			@Override
+			public void addMethod(String name, Class parameterType) {
+				
+			}
 		});
 
 		content = null;

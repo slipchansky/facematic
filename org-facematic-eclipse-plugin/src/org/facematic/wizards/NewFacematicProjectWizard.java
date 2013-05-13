@@ -131,7 +131,7 @@ public class NewFacematicProjectWizard extends Wizard implements INewWizard, IEx
 			put ("ARTEFACTNAME",      _pageTwo.getArtefactName());
 			put ("JAVAVERSION", "1.6");
 			put ("VERSION",          _pageTwo.getArtefactVersion ());
-			put ("FACEMATICVERSION", "1.0.3-BETA");
+			put ("FACEMATICVERSION", "2.0.0-SNAPSHOT");
 			put ("UICLASS",          _pageTwo.getUICLASS());
 			put ("THEMENAME",        _pageTwo.getTHEMENAME());
 			put ("SERVLETCLASS",     _pageTwo.getSERVLETCLASS());

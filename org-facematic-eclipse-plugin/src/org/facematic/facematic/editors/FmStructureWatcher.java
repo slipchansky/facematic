@@ -3,10 +3,14 @@ package org.facematic.facematic.editors;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.facematic.plugin.utils.JavaSourceCodeTools;
+
 public class FmStructureWatcher {
 	StringBuilder importsTextBuilder;
 	StringBuilder controllerTextBuilder;
 	Map<String, String> importedClasses = new HashMap();
+	String sourceCode = null;
+	private JavaSourceCodeTools sourceCodeHandler;
 
 	public FmStructureWatcher(String controllerName) {
 		importsTextBuilder = new StringBuilder(
@@ -41,8 +45,20 @@ public class FmStructureWatcher {
 		}
 	}
 	
-	@Override
-	public String toString() {
+	public void addMethod(String name, Class parameterType) {
+		sourceCodeHandler.addMethod(name, parameterType, "event");
+	}
+	
+	public String getGeneratedSourceBlock () {
 		return importsTextBuilder+"\n\n"+controllerTextBuilder;
+	}
+
+	public void setSourceCode(String sourceCode) {
+		this.sourceCode = sourceCode;
+		sourceCodeHandler = JavaSourceCodeTools.getHandler(sourceCode);
+	}
+
+	public String getModifiedSourceCode() {
+		return sourceCodeHandler.toString();
 	}
 }

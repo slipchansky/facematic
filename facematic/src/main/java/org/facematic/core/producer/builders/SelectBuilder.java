@@ -5,7 +5,7 @@ import org.dom4j.Element;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractSelect;
 
-public class SelectBuilder extends ComponentBuilder {
+public class SelectBuilder extends AbstractFieldBuilder {
 
 	@Override
 	public Class getBuildingClass() {
@@ -13,8 +13,9 @@ public class SelectBuilder extends ComponentBuilder {
 	}
 
 	@Override
-	public void build(FaceProducer builder, Object oComponent, Element configuration) {
+	public void build(FaceProducer builder, final Object oComponent, Element configuration) {
 		super.build(builder, oComponent, configuration);
+		
 	}
 	
 	

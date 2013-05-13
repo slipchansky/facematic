@@ -127,7 +127,7 @@ public class FacematicNewWizardPage extends WizardPage {
 			}
 			
 		}
-		fileText.setText("composite.xml");
+		fileText.setText("");
 	}
 
 	/**
