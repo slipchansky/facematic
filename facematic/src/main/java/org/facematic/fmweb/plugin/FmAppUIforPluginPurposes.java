@@ -9,7 +9,8 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 
 /**
- * The Application's "main" class
+ * UI for plugin preview page
+ * @author Stanislav Lipchansky
  */
 @SuppressWarnings("serial")
 @Theme("reindeer")
@@ -20,7 +21,6 @@ public class FmAppUIforPluginPurposes extends org.facematic.core.ui.FacematicUI 
     protected void init(VaadinRequest request) {
 		try {
 			FaceProducer  producer = new FaceProducer(this);
-			
 			String viewName = request.getPathInfo();
 		    if (viewName.startsWith("/")) {
 		        viewName = viewName.substring(1);
@@ -32,8 +32,6 @@ public class FmAppUIforPluginPurposes extends org.facematic.core.ui.FacematicUI 
 		    	if (cont != null)
 		    		content = (Component)cont;
 		    }
-			
-			
 			setContent(content);
 
 		} catch (Exception e) {

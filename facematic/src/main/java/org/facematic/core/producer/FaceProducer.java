@@ -5,6 +5,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.facematic.core.producer.builders.AbstractOrderedLayoutBuilder;
 import org.facematic.core.producer.builders.BeanBuilder;
 import org.facematic.core.producer.builders.ButtonBuilder;
@@ -16,13 +20,13 @@ import org.facematic.core.producer.builders.PanelBuilder;
 import org.facematic.core.producer.builders.SelectBuilder;
 import org.facematic.core.producer.builders.TabSheetBuilder;
 import org.facematic.core.producer.builders.TableBuilder;
+import org.facematic.core.annotations.FmUI;
 import org.facematic.core.mvc.FmBaseController;
-import org.facematic.core.ui.Composite;
 import org.facematic.core.ui.DummyFacematicUi;
-import org.facematic.core.ui.Html;
+import org.facematic.core.ui.FacematicUI;
+import org.facematic.core.ui.custom.Composite;
+import org.facematic.core.ui.custom.Html;
 import org.facematic.utils.GroovyEngine;
-import org.facematic.utils.StreamUtils;
-
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
@@ -31,31 +35,34 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-
-
 /**
  * @author stas
  * 
  */
+@Named
 public class FaceProducer implements Serializable {
 
 	public interface NodeWatcher {
 		void putView(String name, Object view);
+
 		void putController(String name, Object controller);
 	}
+
+	// TODO replace it with standard Proxy !!!
 	class NodeWatcherProxy implements NodeWatcher {
 		private Object obj;
 		Method putView;
 		Method putController;
 
-		public NodeWatcherProxy (Object obj) throws NoSuchMethodException, SecurityException {
+		public NodeWatcherProxy(Object obj) throws NoSuchMethodException,
+				SecurityException {
 			this.obj = obj;
 			Class clazz = obj.getClass();
 			putView = clazz.getMethod("putView", String.class, Object.class);
-			putController = clazz.getMethod("putController", String.class, Object.class);
-			
+			putController = clazz.getMethod("putController", String.class,
+					Object.class);
 		}
-		
+
 		public void putView(String name, Object view) {
 			try {
 				putView.invoke(obj, name, view);
@@ -73,17 +80,21 @@ public class FaceProducer implements Serializable {
 			}
 		}
 	}
-	
 
 	private ClassLoader customClassLoader;
 	private String prefix = "";
 	private FaceReflectionHelper reflectionHelper;
-	private GroovyEngine engine;
 	private Object controllerInstance;
 	private FaceProducer parent;
-	private Object context;
 	private NodeWatcher structureWatcher = null;
-	private UI ui;
+	
+	private GroovyEngine engine;
+	private Object context; // groovy execution context
+	
+
+	@Inject
+	@FmUI
+	private FacematicUI ui;
 
 	private final static Map<String, String> substs = new HashMap<String, String>() {
 		{
@@ -93,7 +104,13 @@ public class FaceProducer implements Serializable {
 		}
 	};
 
-	static class BeanFactory {
+	/**
+	 * Produces BeanBuilder for specified Vaadin component class by inheritance
+	 * hierarchy
+	 * 
+	 * @author papa
+	 */
+	static class BeanBuilderFactory {
 		final static Map<String, Class> CREATORS = new HashMap<String, Class>() {
 			{
 				put("composite", Composite.class);
@@ -101,7 +118,10 @@ public class FaceProducer implements Serializable {
 				put("Html", Html.class);
 			}
 		};
+
 		private static Map<Class, BeanBuilder> componentBuilders = new HashMap<Class, BeanBuilder>();
+
+		// Register bean builders
 		static {
 			putBuilder(new BeanBuilder());
 			putBuilder(new ComponentBuilder());
@@ -116,41 +136,59 @@ public class FaceProducer implements Serializable {
 			putBuilder(new HtmlBuilder());
 		};
 
+		private static void putBuilder(BeanBuilder componentBuilder) {
+			componentBuilders.put(componentBuilder.getBuildingClass(),
+					componentBuilder);
+		}
+
 		private static BeanBuilder getBuilder(Class clazz) {
-			if (clazz == null)
+			if (clazz == null) {
 				return null;
+			}
 			BeanBuilder builder = componentBuilders.get(clazz);
-			if (builder != null)
+			if (builder != null) {
 				return builder;
+			}
 			return getBuilder(clazz.getSuperclass());
 		}
-	}
-
-	private static void putBuilder(BeanBuilder componentBuilder) {
-		BeanFactory.componentBuilders.put(componentBuilder.getBuildingClass(),
-				componentBuilder);
 	}
 
 	/**
 	 * for plugin purposes
 	 */
-	public FaceProducer() {
+	public @Inject
+	FaceProducer() {
 		super();
-		this.ui = new DummyFacematicUi();
-	}
-
-	public FaceProducer(UI ui) {
 		if (ui == null) {
-			throw new RuntimeException(
-					"You cannot create instance of FaceProducer without UI reference");
+			this.ui = new DummyFacematicUi();
 		}
-		this.ui = ui;
 	}
 
-	public FaceProducer(Object controllerInstance, FaceProducer parent,
-			String name) {
+	/**
+	 * UI - based producer
+	 * @param ui
+	 */
+	public FaceProducer(FacematicUI ui) {
+		if (this.ui == null) {
+			if (ui == null) {
+				throw new RuntimeException(
+						"You cannot create instance of FaceProducer without UI reference");
+			}
+			this.ui = ui;
+		}
+	}
+
+	/**
+	 * Controller - based hierarchical producer
+	 * @param controllerInstance
+	 * @param parent
+	 * @param parentNamePrefix
+	 */
+	public FaceProducer(Object controllerInstance, FaceProducer parent, String parentNamePrefix) {
 		if (parent != null) {
-			this.ui = parent.getUi();
+			if (this.ui == null) {
+			    this.ui = parent.getUi();
+			}
 			this.customClassLoader = parent.customClassLoader;
 		}
 		if (ui == null) {
@@ -159,33 +197,55 @@ public class FaceProducer implements Serializable {
 		}
 
 		this.controllerInstance = controllerInstance;
-		this.prefix = name;
+		this.prefix = parentNamePrefix;
 		this.parent = parent;
 	}
 
-	public FaceProducer(Object controllerInstance, UI ui) {
+	/**
+	 * Controller based producer
+	 * @param controllerInstance
+	 * @param ui
+	 */
+	public FaceProducer(Object controllerInstance, FacematicUI ui) {
 		this.controllerInstance = controllerInstance;
-		this.ui = ui;
+		if (this.ui == null) {
+		    this.ui = ui;
+		}
 		if (ui == null) {
 			throw new RuntimeException(
 					"You cannot create instance of FaceProducer without UI reference");
 		}
 	}
 
-	private UI getUi() {
+	
+	/**
+	 * For hierarchical building purposes
+	 * @return
+	 */
+	private FacematicUI getUi() {
 		return ui;
 	}
 
+	/**
+	 * Assign
+	 * @param context
+	 */
 	public void setContext(Object context) {
 		this.context = context;
 	}
 
+	/**
+	 * Builds view-controller pair by given entire xml document
+	 * @param document
+	 * @return
+	 * @throws Exception
+	 */
 	private <T> T build(Document document) throws Exception {
 		Element root = document.getRootElement();
-		prepareContext(root);
+		prepareBuildingEnvironment(root);
 		Object view = build(root);
 		if (view instanceof Component) {
-			putView("view", (Component) view);
+			addView("view", (Component) view);
 		}
 		if (controllerInstance != null) {
 			if (controllerInstance instanceof FmBaseController) {
@@ -195,28 +255,37 @@ public class FaceProducer implements Serializable {
 		return (T) view;
 	}
 
-	private void prepareContext(Element root) {
+	private void prepareBuildingEnvironment (Element root) {
 		if (controllerInstance == null) {
-			prepareControllerInstance(root);
+			createControllerInstance(root);
 		}
 		reflectionHelper = new FaceReflectionHelper(controllerInstance);
 		reflectionHelper.addUiInjections(ui);
 
 		if (parent != null && controllerInstance != null && prefix != null) {
-			parent.putController(prefix, controllerInstance);
-			putController("parent", parent.getControllerInstance());
+			parent.addController(prefix, controllerInstance);
+			addController("parent", parent.controllerInstance);
 		}
 	}
+	
 
-	private void putController(String name, Object controllerInstance) {
+	/**
+	 * Add controller instance
+	 * @param name
+	 * @param controllerInstance
+	 */
+	private void addController(String name, Object controllerInstance) {
 		if (structureWatcher != null) {
 			structureWatcher.putController(name, controllerInstance);
 		}
-
 		reflectionHelper.putController(name, controllerInstance);
 	}
 
-	private void prepareControllerInstance(Element root) {
+	/**
+	 * Creates controller instance
+	 * @param root
+	 */
+	private void createControllerInstance(Element root) {
 		String controllerClassName = root.attributeValue("controller");
 		if (controllerClassName == null) {
 			return;
@@ -228,6 +297,12 @@ public class FaceProducer implements Serializable {
 		}
 	}
 
+	/**
+	 * Build view-controller by xml description, saved as application resource
+	 * @param resourceName - qualified name | path-name of resouce, for example: org.some.Resource | org/some/Resource.xml 
+	 * @return
+	 * @throws Exception
+	 */
 	public <T> T buildFromResource(String resourceName) throws Exception {
 		String xml = org.facematic.utils.StreamUtils
 				.getResourceAsString(resourceName);
@@ -243,6 +318,26 @@ public class FaceProducer implements Serializable {
 		return (T) buildFromString(xml);
 	}
 
+	/**
+	 * Build view-controller by xml text
+	 * @param xml
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> T buildFromString(String xml) throws Exception {
+		if (xml == null) {
+			return null;
+		}
+		Document document = DocumentHelper.parseText(xml);
+		return (T) build(document);
+	}
+	
+	/**
+	 * Build view-controller according to given xml node
+	 * @param node
+	 * @return
+	 * @throws Exception
+	 */
 	public <T> T build(Element node) throws Exception {
 		Object viewInstance = createInstance(node);
 
@@ -253,10 +348,10 @@ public class FaceProducer implements Serializable {
 		String itemname = node.attributeValue("name");
 		if ((itemname != null && !"".equals(itemname))
 				&& viewInstance instanceof Component) {
-			putView(itemname, (Component) viewInstance);
+			addView(itemname, (Component) viewInstance);
 		}
 
-		BeanBuilder builder = BeanFactory.getBuilder(viewInstance.getClass());
+		BeanBuilder builder = BeanBuilderFactory.getBuilder(viewInstance.getClass());
 		if (builder == null) {
 			return (T) viewInstance;
 		}
@@ -266,10 +361,22 @@ public class FaceProducer implements Serializable {
 
 	}
 
+	/**
+	 * Creates instance according to given xml node
+	 * @param node
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws ClassCastException
+	 */
 	private Object createInstance(Element node) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException,
 			ClassNotFoundException, InstantiationException, ClassCastException {
 		String name = node.getName();
+		
 		String substName = substs.get(name.toLowerCase());
 		if (substName != null) {
 			name = substName;
@@ -280,65 +387,87 @@ public class FaceProducer implements Serializable {
 			return createClassInstance(className);
 		}
 
-		Class clazz = BeanFactory.CREATORS.get(name);
+		Class clazz = BeanBuilderFactory.CREATORS.get(name);
 
 		if (clazz != null) {
 			return clazz.newInstance();
 		}
-
 		return createClassInstance(name);
 	}
 
-	public <T> T createComplexClasInstance(Element node)
-			throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
-		return (T) new Composite();
-	}
 
+	/**
+	 * Creates instance of class by name
+	 * @param className
+	 * @return
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws ClassCastException
+	 */
 	@SuppressWarnings("unchecked")
-	public <T> T createClassInstance(String componentClassSimpleName)
-			throws InstantiationException, IllegalAccessException, ClassNotFoundException, ClassCastException {
+	public <T> T createClassInstance(String className)
+			throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, ClassCastException {
 
-		T result = null;
+		Class clazz = null;
+		try {
+			clazz = Class.forName(className);
+		} catch (Exception e) {
+		}
 
-		if (result == null)
+		if (clazz == null)
 			try {
-				result = (T) Class.forName(componentClassSimpleName)
-						.newInstance();
+				clazz = Class.forName("com.vaadin.ui."
+						+ className);
 			} catch (Exception e) {
 			}
-		
-		if (result == null)
-			try {
-				result = (T) Class.forName(
-						"com.vaadin.ui." + componentClassSimpleName).newInstance();
-			} catch (Exception e) {
 
-			}
-
-		if (result == null)
+		if (clazz == null)
 			try {
-				result = (T) loadClass(componentClassSimpleName).newInstance();
+				clazz = loadClass(className);
 			} catch (Exception e2) {
 			}
 
-		if (result == null)
+		if (clazz == null)
 			try {
-				result = (T) loadClass(
-						"com.vaadin.ui." + componentClassSimpleName)
-						.newInstance();
+				clazz = loadClass("com.vaadin.ui." + className);
 			} catch (Exception e1) {
 			}
 
-		return result;
+		if (clazz == null) {
+			return null;
+		}
+
+		if (ui != null) {
+			if (ui instanceof FacematicUI) {
+				Object instance = ((FacematicUI) ui).getClassInstance(clazz);
+				if (instance != null) {
+					return (T) instance;
+				}
+			}
+		}
+
+		Object instance = clazz.newInstance();
+		return (T) instance;
 	}
 
+	/**
+	 * Load class by external classloader (for plugin purposes) 
+	 * @param className
+	 * @return
+	 * @throws ClassNotFoundException
+	 */
 	private Class loadClass(String className) throws ClassNotFoundException {
 		if (this.customClassLoader == null)
 			return null;
 		return customClassLoader.loadClass(className);
 	}
 
+	/**
+	 * Groovy Engine instance
+	 * @return
+	 */
 	public GroovyEngine getGroovyEngine() {
 		if (this.engine == null) {
 			this.engine = new GroovyEngine();
@@ -347,47 +476,44 @@ public class FaceProducer implements Serializable {
 		return engine;
 	}
 
-	public void putView(String name, Component value) {
+	/**
+	 * adds view instance
+	 * @param name
+	 * @param value
+	 */
+	public void addView(String name, Component value) {
 		if (structureWatcher != null) {
 			structureWatcher.putView(name, value);
 		}
-
 		reflectionHelper.putView(name, value);
-
 		if (parent != null) {
-			parent.putView(prefix + '.' + name, value);
+			parent.addView(prefix + '.' + name, value);
 		}
 	}
 
-	public <T> T buildFromString(String xml) throws Exception {
-		if (xml == null) {
-			return null;
-		}
-		Document document = DocumentHelper.parseText(xml);
-		return (T) build(document);
-	}
 
-	public <T> T getControllerInstance() {
-		return (T) controllerInstance;
-	}
 
+	/**
+	 * Adds structure watcher for trace hierarchical dependencies  
+	 * @param watcher
+	 */
 	public void setStructureWatcher(final Object watcher) {
-		  try{
-		  this.structureWatcher = (NodeWatcher)watcher;
-		  } catch (Exception e) {
-			  try {
-				this.structureWatcher = new NodeWatcherProxy (watcher);
+		try {
+			this.structureWatcher = (NodeWatcher) watcher;
+		} catch (Exception e) {
+			try {
+				this.structureWatcher = new NodeWatcherProxy(watcher);
 			} catch (Exception e1) {
 			}
-		  }
+		}
 	}
 
+	/**
+	 * For plugin purposes
+	 * @param customClassLoader
+	 */
 	public void setCustomClassLoader(ClassLoader customClassLoader) {
 		this.customClassLoader = customClassLoader;
-	}
-
-	public void setUi(Object ui) {
-		this.ui = (UI) ui;
 	}
 
 }

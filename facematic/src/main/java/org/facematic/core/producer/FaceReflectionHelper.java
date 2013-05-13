@@ -8,12 +8,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.facematic.cdi.FmCdiEntryPoint;
-import org.facematic.cdi.FmCdiServlet;
 import org.facematic.core.annotations.FmUI;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.annotations.FmController;
 import org.facematic.core.ui.FacematicUI;
+import org.facematic.typesafeservlet.FacematicServlet;
+
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 
@@ -166,6 +166,7 @@ public class FaceReflectionHelper implements Serializable {
 		}
 	}
 
+	@Deprecated
 	public void addUiInjections (UI ui) {
 		if (instance==null) {
 			return;
@@ -191,23 +192,7 @@ public class FaceReflectionHelper implements Serializable {
 			}
 		}
 		
-		if ( ui instanceof FacematicUI ) {
-			 List<FmCdiEntryPoint> uiInjections = ((FacematicUI)ui).getInjections();
-			 if (uiInjections != null) {
-				 implementExternalInjections (uiInjections);
-			 }
-		}
 		
-	}
-
-	private void implementExternalInjections(List<FmCdiEntryPoint> uiInjections) {
-		for (FmCdiEntryPoint injectionEntry : uiInjections) {
-			String key = injectionEntry.getEntryPointClass().getCanonicalName();
-			Field annotatedField = findAnnotatedField(key, injectComponentMatcher, Inject.class);
-			if (annotatedField != null) {
-				setFieldValue (annotatedField, injectionEntry.getValue());
-			}
-		}
 	}
 
 	public static Object getFieldValue(Object instance, Field field) {

@@ -30,8 +30,7 @@ public class FmStructureWatcher {
 	}
 
 	public void putController(String name, Object controller) {
-		controllerTextBuilder.append("     @FmController(name=\"" + name
-				+ "\")\n");
+		controllerTextBuilder.append("     @Inject\n");
 		controllerTextBuilder.append("     private "
 				+ controller.getClass().getSimpleName() + " "
 				+ name.replace('.', '_') + "Controller;\n\n");

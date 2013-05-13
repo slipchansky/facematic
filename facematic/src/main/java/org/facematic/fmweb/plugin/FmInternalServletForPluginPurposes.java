@@ -3,11 +3,16 @@ package org.facematic.fmweb.plugin;
 
 
 
-import org.facematic.cdi.FmCdiServlet;
 import org.facematic.core.ui.FacematicUI;
+import org.facematic.typesafeservlet.FacematicServlet;
 
 
-public class FmInternalServletForPluginPurposes extends FmCdiServlet {
+/**
+ * 
+ * @author papa
+ *
+ */
+public class FmInternalServletForPluginPurposes extends FacematicServlet {
 
 	@Override
 	public Class<? extends FacematicUI> getUiClass() {

@@ -7,7 +7,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 import org.facematic.core.producer.FaceProducer;
-import org.facematic.core.ui.Composite;
+import org.facematic.core.ui.custom.Composite;
+
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;

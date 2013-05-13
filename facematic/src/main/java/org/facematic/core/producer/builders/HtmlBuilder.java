@@ -11,7 +11,8 @@ import org.dom4j.io.XMLWriter;
 
 import com.google.gwt.user.client.ui.HTML;
 import org.facematic.core.producer.FaceProducer;
-import org.facematic.core.ui.Html;
+import org.facematic.core.ui.custom.Html;
+
 import com.vaadin.ui.Label;
 
 public class HtmlBuilder extends ComponentBuilder {

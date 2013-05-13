@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import org.facematic.core.annotations.FmUI;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.producer.FaceProducer;
+import org.facematic.core.ui.FacematicUI;
+
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -38,11 +40,12 @@ public class SandBoxController implements org.facematic.core.mvc.FmBaseControlle
 	@FmViewComponent
 	TextArea controllerText;
 	
-	@FmUI
-	UI ui;
-	
 	@Inject
-	String someString;
+	@FmUI
+	FacematicUI ui;
+	
+//	@Inject
+//	String someString;
 	
 	
 	

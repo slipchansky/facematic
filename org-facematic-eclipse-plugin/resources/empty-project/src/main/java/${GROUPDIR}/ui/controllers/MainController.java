@@ -16,7 +16,8 @@ ${GENERATED_CODE_BEGIN}
 public class MainController implements FmBaseController {
 	
 ${GENERATED_CODE_END}
-	
+
+    @Inject	
     @FmUI
     FacematicUI ui;
 	

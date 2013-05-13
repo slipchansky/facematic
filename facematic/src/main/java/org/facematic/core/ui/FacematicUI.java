@@ -1,84 +1,86 @@
 package org.facematic.core.ui;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
-import org.facematic.cdi.FmCdiEntryPoint;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.spi.Bean;
+import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.util.AnnotationLiteral;
+import javax.inject.Inject;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import org.facematic.core.producer.FaceProducer;
-import org.facematic.core.producer.FaceReflectionHelper;
-import org.facematic.eventsystem.IEvent;
-import org.facematic.eventsystem.router.FmEventRouter;
-
 import com.vaadin.ui.UI;
 
+/**
+ * Base class for building facematic ui.
+ * Contains mechanisms for instantinate annotated beans
+ * 
+ * @author papa
+ *
+ */
 public abstract class FacematicUI extends UI {
-	private List<FmCdiEntryPoint> injections;
+	private static final String BEAN_MANAGER_URI = "java:comp/BeanManager";
 	protected FaceProducer producer;
-	private FmEventRouter eventRouter = new FmEventRouter ();
+	
+	@Inject BeanManager beanManager;
+	boolean beanManagerDoesNotExists = false;
 	
 	
 	public FacematicUI () {
 		producer =new FaceProducer (this, this);
 	}
-	
-	public List<FmCdiEntryPoint>  getInjections () {
-		return injections;
-	}
-	
-	public void setInjections (List<FmCdiEntryPoint> injections) {
-		this.injections = injections;
-		List<FmCdiEntryPoint> injectionsWithEventRouter = new ArrayList<FmCdiEntryPoint> (injections);
-		injectionsWithEventRouter.add(new FmCdiEntryPoint(FmEventRouter.class, eventRouter));
-		applyInjections  (injectionsWithEventRouter);
-	}
-
-	private void applyInjections(List<FmCdiEntryPoint> injections) {
-		FaceReflectionHelper reflectionHelpler = new FaceReflectionHelper (this);
-		reflectionHelpler.addUiInjections (this);
-	}
 
 	/**
-	 * Adds subscriber to event router<br>
-	 * using:
+	 * Builds bean instance with injections 
 	 * 
-	 * <pre>
-	 * public class SomeController extends FmBaseController {
-	 *    ...
-	 *   &#64;FmViewComponent
-	 *   VerticalLayout view
-	 *   
-	 *   @FmUi
-	 *   FacematicUI ui;
-	 *   
-	 *   public void init () {
-	 *   ...</pre>
-	 *   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ui.addSubscriber (this);</b><pre>   }
-	 * 
-	 *   public void handleEvent (SomeEvent ev) {<br>
-	 *      if (!VaadinUtil.isViewAlive (view)) {
-	 *          throw new InvalidSubscriberException ();
-	 *      }
-	 *      ...
-	 *   }
-	 *   ...
-	 *   
-	 *   public void doSomething () {
-	 *      eventRouter.fire (new SomeAnotherEvent ());
-	 *   }
-	 * }
-	 * </pre>
-	 * 
-	 * @param potentialSubscriber
+	 * @param clazz
+	 * @return
 	 */
-	public void addSubscriber (Object potentialSubscriber) {
-		eventRouter.addSubscriber(potentialSubscriber);
+	public Object getClassInstance(Class clazz) {
+		if (!isThereBeanManager())
+			return null;
+		
+		Set<Bean<?>> beans = beanManager.getBeans(clazz, new AnnotationLiteral<Any>() {});
+		if (beans == null) {
+			return null;
+		}
+		
+    	for (Bean<?> bean : beans) {
+    		if (clazz != bean.getBeanClass()) {
+    			continue;
+    		}
+    	   try {
+      	       Object instance = beanManager.getReference(bean, clazz, beanManager.createCreationalContext(bean));
+      	       return instance;
+    	   } catch (Exception e) {
+    		    // skip
+    	   }
+    	}
+		return null;
 	}
+	
 
-	public Object fireEvent (IEvent event) throws IllegalAccessException {
-		return eventRouter.fire(event);
-	}
-	
-	
-	
+	/**
+	 * Checks for BeanManager existence 
+	 * @return
+	 */
+	private boolean isThereBeanManager() {
+    	
+        if (beanManager == null) {
+        	if (beanManagerDoesNotExists) {
+        		return false;
+        	}
+        	
+            try {
+                InitialContext initialContext = new InitialContext();
+                beanManager = (BeanManager) initialContext.lookup(BEAN_MANAGER_URI);
+            } catch (NamingException e) {
+                beanManagerDoesNotExists = true;
+            }
+        }
+        
+        return !beanManagerDoesNotExists;
+    }
 
 }
