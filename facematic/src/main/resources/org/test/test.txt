@@ -1,0 +1,25 @@
+public class MainController implements FmBaseController {
+    @Inject	
+    @FmUI
+    FacematicUI ui;
+
+    @FmViewComponent(name="myButton")
+    Button myButton;
+
+
+    @FmViewComponent(name="view")
+    VerticalLayout view;
+
+	
+	@Override
+	public void init () {
+	   // TODO add your code here
+	}
+	
+
+    @FmReaction
+    public void myButtonOnClick (com.vaadin.ui.Button.ClickEvent event) {
+     // TODO add your code here 
+    }
+}
+

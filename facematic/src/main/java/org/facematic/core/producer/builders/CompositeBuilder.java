@@ -13,18 +13,32 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * @author "Stanislav Lipchansky"
+ *
+ */
 public class CompositeBuilder extends ComponentBuilder {
 
+	/**
+	 * @author "Stanislav Lipchansky"
+	 *
+	 */
 	enum Locations {
 		RESOURCE, FILE, URL
 	}
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#getBuildingClass()
+	 */
 	@Override
 	public Class getBuildingClass() {
 		return Composite.class;
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#build(org.facematic.core.producer.FaceProducer, java.lang.Object, org.dom4j.Element)
+	 */
 	@Override
 	public void build(FaceProducer builder, Object oComponent, Element configuration) {
 		super.build(builder, oComponent, configuration);
@@ -41,6 +55,11 @@ public class CompositeBuilder extends ComponentBuilder {
 	
 
 	
+	/**
+	 * @param builder
+	 * @param firstNested
+	 * @return
+	 */
 	protected Object prepareInnerComponent(FaceProducer builder, Element firstNested) {
 		String sLocation = firstNested.attributeValue("location");
 		String path = firstNested.attributeValue("path");

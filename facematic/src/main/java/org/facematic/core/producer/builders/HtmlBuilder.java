@@ -15,13 +15,23 @@ import org.facematic.core.ui.custom.Html;
 
 import com.vaadin.ui.Label;
 
+/**
+ * @author "Stanislav Lipchansky"
+ *
+ */
 public class HtmlBuilder extends ComponentBuilder {
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#getBuildingClass()
+	 */
 	@Override
 	public Class getBuildingClass() {
 		return Html.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#build(org.facematic.core.producer.FaceProducer, java.lang.Object, org.dom4j.Element)
+	 */
 	@Override
 	public void build(FaceProducer builder, Object oComponent,
 			Element configuration) {
@@ -39,6 +49,10 @@ public class HtmlBuilder extends ComponentBuilder {
 		((Label) oComponent).setValue(text);
 	}
 
+	/**
+	 * @param configuration
+	 * @return
+	 */
 	public String format(Element configuration) {
 		OutputFormat format = OutputFormat.createPrettyPrint();
 		StringWriter swriter = new StringWriter();

@@ -18,7 +18,6 @@ import org.facematic.core.producer.builders.PanelBuilder;
 import org.facematic.core.producer.builders.SelectBuilder;
 import org.facematic.core.producer.builders.TabSheetBuilder;
 import org.facematic.core.producer.builders.TableBuilder;
-import org.facematic.core.annotations.FmUI;
 import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.ui.DummyFacematicUi;
 import org.facematic.core.ui.FacematicUI;
@@ -26,24 +25,22 @@ import org.facematic.core.ui.custom.Composite;
 import org.facematic.core.ui.custom.Html;
 import org.facematic.utils.GroovyEngine;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field.ValueChangeEvent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 /**
- * @author stas
- * 
+ * @author "Stanislav Lipchansky"
+ *
  */
 public class FaceProducer implements Serializable {
 
 	public interface NodeWatcher {
 		void putView(String name, Object view);
 		void putController(String name, Object controller);
-		void addMethod(String name, Class parameterType);
+		void setListener(String name, Class parameterType, Class producerClass, String producerName, String producerCaption, String eventName);
 	}
 
 	// TODO replace it with standard Proxy !!!
@@ -51,7 +48,7 @@ public class FaceProducer implements Serializable {
 		private Object obj;
 		Method putView;
 		Method putController;
-		Method addMethod;
+		Method setListener;
 
 		public NodeWatcherProxy(Object obj) throws NoSuchMethodException,
 				SecurityException {
@@ -59,7 +56,7 @@ public class FaceProducer implements Serializable {
 			Class clazz = obj.getClass();
 			putView = clazz.getMethod("putView", String.class, Object.class);
 			putController = clazz.getMethod("putController", String.class, Object.class);
-			addMethod= clazz.getMethod("addMethod", String.class, Class.class);
+			setListener= clazz.getMethod("setListener", String.class, Class.class, Class.class, String.class, String.class, String.class);
 		}
 
 		public void putView(String name, Object view) {
@@ -80,9 +77,9 @@ public class FaceProducer implements Serializable {
 		}
 
 		@Override
-		public void addMethod(String name, Class parameterType) {
+		public void setListener(String name, Class parameterType, Class producerClass, String producerName, String producerCaption, String eventName) {
 			try {
-				addMethod.invoke(obj, name, parameterType);
+				setListener.invoke(obj, name, parameterType, producerClass, producerName, producerCaption, eventName);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
@@ -503,12 +500,11 @@ public class FaceProducer implements Serializable {
 	 * @param parameterType 
 	 * @param value
 	 */
-	public void addMethod(String name, Class parameterType) {
+	public void setListener(String name, Class parameterType, Class producerClass, String producerName, String producerCaption, String eventName) {
 		if (structureWatcher != null) {
-			structureWatcher.addMethod(name, parameterType);
+			structureWatcher.setListener(name, parameterType, producerClass, producerName, producerCaption, eventName);
 		}
 	}
-	
 
 
 
@@ -535,6 +531,9 @@ public class FaceProducer implements Serializable {
 		this.customClassLoader = customClassLoader;
 	}
 
+	/**
+	 * @return
+	 */
 	public Object getControllerInstance() {
 		return controllerInstance;
 	}

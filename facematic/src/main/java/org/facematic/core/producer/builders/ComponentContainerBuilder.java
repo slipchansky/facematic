@@ -9,13 +9,23 @@ import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractComponentContainer;
 
+/**
+ * @author "Stanislav Lipchansky"
+ *
+ */
 public class ComponentContainerBuilder extends ComponentBuilder {
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#getBuildingClass()
+	 */
 	public Class getBuildingClass () {
 		return AbstractComponentContainer.class;
 	}
 		
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#build(org.facematic.core.producer.FaceProducer, java.lang.Object, org.dom4j.Element)
+	 */
 	@Override
 	public void build(FaceProducer builder, Object viewInstance, Element configuration) {
 		super.build(builder, viewInstance, configuration);
@@ -36,6 +46,11 @@ public class ComponentContainerBuilder extends ComponentBuilder {
 	}
 
 
+	/**
+	 * @param builder
+	 * @param oComponent
+	 * @param node
+	 */
 	private void buildNestedComponent(FaceProducer builder, Object oComponent, Element node) {
 		try {
 			Object inner = builder.build(node);

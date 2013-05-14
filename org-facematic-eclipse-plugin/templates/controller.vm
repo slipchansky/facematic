@@ -7,16 +7,11 @@ import org.facematic.core.annotations.FmReaction;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.ui.FacematicUI;
-
 import com.vaadin.ui.Component;
-
-${GENERATED_CODE_BEGIN}
 
 
 @FmView(name="${viewPackage}.$view")
 public class ${controller} implements FmBaseController {
-	
-${GENERATED_CODE_END}
 
     @Inject	
     @FmUI

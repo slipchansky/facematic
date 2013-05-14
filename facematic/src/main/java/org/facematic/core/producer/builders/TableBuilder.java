@@ -12,13 +12,23 @@ import org.facematic.core.producer.FaceProducer;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Table;
 
+/**
+ * @author "Stanislav Lipchansky"
+ *
+ */
 public class TableBuilder extends SelectBuilder {
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.SelectBuilder#getBuildingClass()
+	 */
 	@Override
 	public Class getBuildingClass() {
 		return Table.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.SelectBuilder#build(org.facematic.core.producer.FaceProducer, java.lang.Object, org.dom4j.Element)
+	 */
 	@Override
 	public void build(FaceProducer builder, Object oComponent,	Element configuration) {
 		super.build(builder, oComponent, configuration);
@@ -28,6 +38,11 @@ public class TableBuilder extends SelectBuilder {
 
 	}
 
+	/**
+	 * @param builder
+	 * @param table
+	 * @param configuration
+	 */
 	private void buildTable(FaceProducer builder, Table table,
 			Element configuration) {
 		
@@ -47,6 +62,12 @@ public class TableBuilder extends SelectBuilder {
 		}
 	}
 
+	/**
+	 * @param builder
+	 * @param table
+	 * @param configuration
+	 * @param col
+	 */
 	private void addColumnToTable(FaceProducer builder, Table table,
 			Element configuration, Element col) {
 		
@@ -76,8 +97,8 @@ public class TableBuilder extends SelectBuilder {
 		Table.Align columnAlignment = getColumnAlignment(aColumnAlignment);
 
 		Resource columnIcon = null;
-		// TODO придумать механизм описания рсурса и вынести его на уровень
-		// анстракции
+		// TODO придумать механизм описания ресурса и вынести его на уровень
+		// абстракции
 		/**
 		 * if (aColumnIcon != null) { columnIcon = new Resource() {
 		 * 
@@ -101,6 +122,10 @@ public class TableBuilder extends SelectBuilder {
 		setColumnWidth(id, table, col);
 	}
 
+	/**
+	 * @param sType
+	 * @return
+	 */
 	private Class getColumnType(String sType) {
 		Class type = null;
 		try {
@@ -121,6 +146,10 @@ public class TableBuilder extends SelectBuilder {
 		return type;
 	}
 
+	/**
+	 * @param sType
+	 * @return
+	 */
 	private String clarifyTypeName(String sType) {
 		if (sType.toLowerCase().equals("int")
 				|| sType.toLowerCase().equals("integer"))
@@ -134,6 +163,11 @@ public class TableBuilder extends SelectBuilder {
 		return sType;
 	}
 
+	/**
+	 * @param aDefaultValue
+	 * @param sType
+	 * @return
+	 */
 	private Object getDefaultValue(Attribute aDefaultValue, String sType) {
 		Object defaultValue = null;
 		if (aDefaultValue != null && sType != null) {
@@ -143,6 +177,10 @@ public class TableBuilder extends SelectBuilder {
 		return defaultValue;
 	}
 
+	/**
+	 * @param aColumnAlignment
+	 * @return
+	 */
 	private Table.Align getColumnAlignment(Attribute aColumnAlignment) {
 		if (aColumnAlignment != null) {
 			try {
@@ -154,6 +192,11 @@ public class TableBuilder extends SelectBuilder {
 		return null;
 	}
 
+	/**
+	 * @param id
+	 * @param table
+	 * @param col
+	 */
 	private void setColumnWidth(String id, Table table, Element col) {
 		Attribute aWidth = col.attribute("width");
 		Integer width = null;
@@ -169,6 +212,11 @@ public class TableBuilder extends SelectBuilder {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param table
+	 * @param col
+	 */
 	private void setColumnFooter(String id, Table table, Element col) {
 		Attribute aFooter = col.attribute("footer");
 		if (aFooter != null) {
@@ -176,6 +224,11 @@ public class TableBuilder extends SelectBuilder {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param table
+	 * @param col
+	 */
 	private void setColumnExpandRatio(String id, Table table, Element col) {
 		Attribute aExpandRatio = col.attribute("expandRatio");
 		Float expandRatio = null;
@@ -191,6 +244,11 @@ public class TableBuilder extends SelectBuilder {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param table
+	 * @param col
+	 */
 	private void setColumnCollapsible(String id, Table table, Element col) {
 		Boolean collapsible = getBool(col.attribute("collapsible"));
 		if (collapsible != null) {
@@ -198,6 +256,11 @@ public class TableBuilder extends SelectBuilder {
 		}
 	}
 
+	/**
+	 * @param id
+	 * @param table
+	 * @param col
+	 */
 	private void setColumnCollapsed(String id, Table table, Element col) {
 		Boolean collapsed = getBool(col.attribute("collapsed"));
 		if (collapsed != null) {
@@ -205,6 +268,10 @@ public class TableBuilder extends SelectBuilder {
 		}
 	}
 	
+	/**
+	 * @param attr
+	 * @return
+	 */
 	private Boolean getBool (Attribute attr) {
 		if (attr == null) 
 			return null;
@@ -216,6 +283,11 @@ public class TableBuilder extends SelectBuilder {
 		return null;
 	}
 
+	/**
+	 * @param type
+	 * @param sDefaultValue
+	 * @return
+	 */
 	private Object prepareDefaultValue(String type, String sDefaultValue) {
 		Object defaultValue = null;
 		if ("integer".equals(type.toLowerCase())

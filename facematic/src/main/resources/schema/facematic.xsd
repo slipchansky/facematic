@@ -530,9 +530,7 @@
 	<complexType name="ButtonType">
 		<complexContent>
 			<extension base="c:ContentType">
-				<sequence>
-					<element name="onClick" type="c:EventListenerType"
-						maxOccurs="10" minOccurs="0">
+					<attribute name="onClick" type="string">
 						<annotation>
 							<documentation>
 								The name of controller method. You must implement method with such
@@ -540,8 +538,7 @@
 								(ClickEvent event) {...}.
 							</documentation>
 						</annotation>
-					</element>
-				</sequence>
+					</attribute>
 
 			</extension>
 		</complexContent>

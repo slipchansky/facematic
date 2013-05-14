@@ -3,13 +3,10 @@ package org.facematic.utils;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.jar.JarInputStream;
 
 /**
  * @author S.Lipchansky
@@ -51,9 +48,7 @@ public class StreamUtils {
 	      length++;
 	    }
 	    bos.flush();
-//	    bos.close ();
 	    bis.close ();
-
 	    return length;
 	}
 

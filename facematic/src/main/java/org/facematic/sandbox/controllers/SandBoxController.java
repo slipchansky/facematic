@@ -44,9 +44,6 @@ public class SandBoxController implements org.facematic.core.mvc.FmBaseControlle
 	@FmUI
 	FacematicUI ui;
 	
-//	@Inject
-//	String someString;
-	
 	
 	
 	String    compiledSource = "";
@@ -124,7 +121,7 @@ public class SandBoxController implements org.facematic.core.mvc.FmBaseControlle
 			}
 
 			@Override
-			public void addMethod(String name, Class parameterType) {
+			public void setListener(String name, Class parameterType, Class producerClass, String producerName, String producerCaption, String eventName) {
 				
 			}
 		});

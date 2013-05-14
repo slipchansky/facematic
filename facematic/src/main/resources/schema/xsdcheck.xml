@@ -34,11 +34,7 @@
 		</columns>
 	</Table>
 
-	<Button name="button" caption="mama">
-		<onClick call="test">
-	      
-	    </onClick>
-	</Button>
+	<Button name="button" caption="mama" onClick="test" />
 
 	<composite name="nested" location="RESOURCE" path="buttons" />
 	<composite name="more" location="RESOURCE" path="../moremarkup/buttons" />

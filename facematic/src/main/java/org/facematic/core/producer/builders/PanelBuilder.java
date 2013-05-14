@@ -8,13 +8,23 @@ import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Panel;
 
+/**
+ * @author "Stanislav Lipchansky"
+ *
+ */
 public class PanelBuilder extends ComponentBuilder {
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#getBuildingClass()
+	 */
 	@Override
 	public Class getBuildingClass() {
 		return Panel.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#build(org.facematic.core.producer.FaceProducer, java.lang.Object, org.dom4j.Element)
+	 */
 	@Override
 	public void build(FaceProducer builder, Object oComponent, Element configuration) {
 
@@ -29,6 +39,11 @@ public class PanelBuilder extends ComponentBuilder {
 		
 	}
 
+	/**
+	 * @param builder
+	 * @param configuration
+	 * @return
+	 */
 	protected Object prepareInnerComponent(FaceProducer builder, Element configuration) {
 		
 		Object inner = null;

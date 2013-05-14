@@ -6,53 +6,29 @@ import java.util.Map;
 import org.facematic.plugin.utils.JavaSourceCodeTools;
 
 public class FmStructureWatcher {
-	StringBuilder importsTextBuilder;
-	StringBuilder controllerTextBuilder;
 	Map<String, String> importedClasses = new HashMap();
 	String sourceCode = null;
 	private JavaSourceCodeTools sourceCodeHandler;
-
-	public FmStructureWatcher(String controllerName) {
-		importsTextBuilder = new StringBuilder(
-				"import org.facematic.core.annotations.FmViewComponent;\nimport org.facematic.core.annotations.FmController;\nimport org.facematic.core.mvc.FmBaseController;\n");
-		controllerTextBuilder = new StringBuilder("public class "
-				+ controllerName + " implements FmBaseController {\n");
-	}
+	
 
 	public void putView(String name, Object view) {
-		 
-		controllerTextBuilder.append("     @FmViewComponent(name=\"" + name
-				+ "\")\n");
-		controllerTextBuilder.append("     private "
-				+ view.getClass().getSimpleName()
-				+ (" " + name).replace('.', '_') + ";\n\n");
-		if (importedClasses.get(view.getClass().getCanonicalName()) == null) {
-			importsTextBuilder.append("import "
-					+ view.getClass().getCanonicalName() + ";\n");
-			importedClasses.put(view.getClass().getCanonicalName(), "");
-		}
+		sourceCodeHandler.addImport(view.getClass().getCanonicalName());
+		sourceCodeHandler.addField(name, view.getClass().getSimpleName(), "@FmViewComponent(name=\"" + name+ "\")");
 	}
+
 
 	public void putController(String name, Object controller) {
-		controllerTextBuilder.append("     @Inject\n");
-		controllerTextBuilder.append("     private "
-				+ controller.getClass().getSimpleName() + " "
-				+ name.replace('.', '_') + "Controller;\n\n");
-		if (importedClasses.get(controller.getClass().getCanonicalName()) == null) {
-			importsTextBuilder.append("import "
-					+ controller.getClass().getCanonicalName() + ";\n");
-			importedClasses.put(controller.getClass().getCanonicalName(), "");
-		}
+		sourceCodeHandler.addImport(controller.getClass().getCanonicalName());
+		sourceCodeHandler.addImport("javax.inject.Inject");
+		sourceCodeHandler.addField(name, controller.getClass().getSimpleName(), "@Inject");
+		
 	}
 	
-	public void addMethod(String name, Class parameterType) {
-		sourceCodeHandler.addMethod(name, parameterType, "event");
+	public void setListener(String name, Class parameterType, Class producerClass, String producerName, String producerCaption, String eventName) {
+		sourceCodeHandler.addImport (parameterType.getCanonicalName());
+		sourceCodeHandler.setListener(name, parameterType, "event", producerClass, producerName, producerCaption, eventName);
 	}
 	
-	public String getGeneratedSourceBlock () {
-		return importsTextBuilder+"\n\n"+controllerTextBuilder;
-	}
-
 	public void setSourceCode(String sourceCode) {
 		this.sourceCode = sourceCode;
 		sourceCodeHandler = JavaSourceCodeTools.getHandler(sourceCode);

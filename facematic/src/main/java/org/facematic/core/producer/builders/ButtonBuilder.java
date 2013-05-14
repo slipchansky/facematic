@@ -14,46 +14,49 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field.ValueChangeEvent;
 
+/**
+ * @author "Stanislav Lipchansky"
+ *
+ */
 public class ButtonBuilder extends ComponentBuilder {
+	
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#getBuildingClass()
+	 */
 	@Override
 	public Class getBuildingClass() {
 		return Button.class;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.facematic.core.producer.builders.ComponentBuilder#build(org.facematic.core.producer.FaceProducer, java.lang.Object, org.dom4j.Element)
+	 */
 	@Override
 	public void build(FaceProducer builder, Object viewInstance,
 			Element configuration) {
 		super.build(builder, viewInstance, configuration);
+		
+		String producerName = configuration.attributeValue("name");
+		String producerCaption = configuration.attributeValue("caption");
 
-		Element onClickNode = configuration.element("onClick");
-
-		// TODO Переделать(или расширить) с мепингом события на метод
-		// контроллера
-
-		if (onClickNode != null) {
-
-			String onClickMethodName = onClickNode.attributeValue("call");
-			if (onClickMethodName != null) {
-				addOnClickCall(builder, viewInstance, onClickMethodName);
-			}
-
-			final String onClickScript = onClickNode.getText();
-
-			final GroovyEngine engine = builder.getGroovyEngine();
-			Button button = (Button) viewInstance;
-			button.addClickListener(new Button.ClickListener() {
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					engine.evaluate(onClickScript);
-				}
-			});
+		String onClickMethodName = configuration.attributeValue("onClick");
+		
+		if (onClickMethodName != null) {
+		    addOnClickCall(builder, viewInstance, onClickMethodName, producerName, producerCaption);
 		}
 
 	}
 
+	/**
+	 * @param builder
+	 * @param viewInstance
+	 * @param onClickMethodName
+	 * @param producerName
+	 * @param producerCaption
+	 */
 	private void addOnClickCall(FaceProducer builder,
-			final Object viewInstance, String onClickMethodName) {
-		builder.addMethod(onClickMethodName, ClickEvent.class);
+			final Object viewInstance, String onClickMethodName, String producerName, String producerCaption) {
+		builder.setListener(onClickMethodName, ClickEvent.class, viewInstance.getClass(), producerName, producerCaption, "onClick");
 		
 		final Object controller = builder.getControllerInstance();
 		

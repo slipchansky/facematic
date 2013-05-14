@@ -411,27 +411,12 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 		
 		FaceProducerProxy producer = new FaceProducerProxy (projectClassLoader); 
 		
-		FmStructureWatcher watcher = new FmStructureWatcher(controllerName);
+		FmStructureWatcher watcher = new FmStructureWatcher();
 		watcher.setSourceCode (existingJavaSourceCode);
 		producer.setStructureWatcher(watcher);
 		producer.buildFromString (markup);
 		
 		existingJavaSourceCode = watcher.getModifiedSourceCode ();
-		String controllerJavaSourceCode = watcher.getGeneratedSourceBlock();
-		
-		
-		int startPos = existingJavaSourceCode.indexOf(GENERATED_CODE_BEGIN);
-		if (startPos<0) {
-			return;
-		}
-		startPos+=GENERATED_CODE_BEGIN.length()+1;
-		
-		int endPos = existingJavaSourceCode.indexOf(GENERATED_CODE_END);
-		if (endPos<0) {
-			return;
-		}
-		
-		existingJavaSourceCode = existingJavaSourceCode.substring(0, startPos)+controllerJavaSourceCode+existingJavaSourceCode.substring(endPos);
 		SynchronizableDocument ndoc = (SynchronizableDocument)doc;
 		ndoc.set(existingJavaSourceCode);
 		

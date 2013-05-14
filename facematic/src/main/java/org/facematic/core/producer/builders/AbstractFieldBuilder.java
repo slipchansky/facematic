@@ -20,12 +20,14 @@ public class AbstractFieldBuilder extends ComponentBuilder {
 	public void build(FaceProducer builder, final Object oComponent, Element configuration) {
 		super.build(builder, oComponent, configuration);
 		String onChangeMethodName = configuration.attributeValue("onChange");
+		String producerName = configuration.attributeValue("name");
+		String producerCaption = configuration.attributeValue("caption");
 		
 		final Object controller = builder.getControllerInstance();
 		
 		if (onChangeMethodName != null && controller != null) {
 			
-			builder.addMethod(onChangeMethodName, ValueChangeEvent.class);
+			builder.setListener(onChangeMethodName, ValueChangeEvent.class, oComponent.getClass(), producerName, producerCaption, "onChange");
 			// Try to add listenerMethod (ValueChangeEvent event); 
 			try {
 				final Method onChangeMethod = controller.getClass().getMethod(onChangeMethodName, ValueChangeEvent.class);
