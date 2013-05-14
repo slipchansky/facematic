@@ -6,6 +6,10 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Properties;
 
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.servlet.VelocityServlet;
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -15,6 +19,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.facematic.facematic.editors.FmMvcEditor;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -47,7 +52,13 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		logger = Activator.getDefault().getLog();		
+		logger = Activator.getDefault().getLog();
+		//ServiceReference<?> velocity = context.getServiceReference(VelocityContext.class.getName());
+		//Bundle velo = context.getBundle("org.apache.velocity");
+		Object engine = context.getServiceReference("org.apache.velocity.app.VelocityEngine");
+		
+		int k = 0;
+		k++;
 	}
 
 	/*

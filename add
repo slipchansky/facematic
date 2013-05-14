@@ -1,1 +1,2 @@
 git add . -v
+git add -u -v
