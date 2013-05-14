@@ -9,7 +9,12 @@ import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.apache.log4j.Logger;
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
+import org.facematic.core.producer.builders.TabSheetBuilder;
+
 import com.vaadin.ui.UI;
 
 /**
@@ -20,6 +25,8 @@ import com.vaadin.ui.UI;
  *
  */
 public abstract class FacematicUI extends UI {
+	private final static Logger logger = LoggerFactory.getLogger(FacematicUI.class);
+
 	private static final String BEAN_MANAGER_URI = "java:comp/BeanManager";
 	protected FaceProducer producer;
 	
@@ -38,11 +45,14 @@ public abstract class FacematicUI extends UI {
 	 * @return
 	 */
 	public Object getClassInstance(Class clazz) {
-		if (!isThereBeanManager())
+		if (!isThereBeanManager()) {
+			logger.trace ("Bean manager not found.");
 			return null;
+		}
 		
 		Set<Bean<?>> beans = beanManager.getBeans(clazz, new AnnotationLiteral<Any>() {});
 		if (beans == null) {
+			logger.trace ("BeanManager cannot get beans "+clazz.getCanonicalName());
 			return null;
 		}
 		
@@ -52,6 +62,7 @@ public abstract class FacematicUI extends UI {
     		}
     	   try {
       	       Object instance = beanManager.getReference(bean, clazz, beanManager.createCreationalContext(bean));
+      	       logger.trace ("BeanManager gave reference of "+clazz.getCanonicalName());
       	       return instance;
     	   } catch (Exception e) {
     		    // skip
@@ -76,6 +87,7 @@ public abstract class FacematicUI extends UI {
                 InitialContext initialContext = new InitialContext();
                 beanManager = (BeanManager) initialContext.lookup(BEAN_MANAGER_URI);
             } catch (NamingException e) {
+            	logger.trace("Could not find BeanManager at "+BEAN_MANAGER_URI);
                 beanManagerDoesNotExists = true;
             }
         }

@@ -1,7 +1,9 @@
 package org.facematic.core.producer.builders;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Element;
 
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractComponentContainer;
@@ -12,6 +14,7 @@ import com.vaadin.ui.TabSheet;
  *
  */
 public class TabSheetBuilder extends ComponentContainerBuilder {
+	private final static Logger logger = LoggerFactory.getLogger(TabSheetBuilder.class);
 	
 	/* (non-Javadoc)
 	 * @see org.facematic.core.producer.builders.ComponentContainerBuilder#getBuildingClass()

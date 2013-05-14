@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.ui,
  org.objectweb.asm;bundle-version="3.3.1",
  javax.annotation;bundle-version="1.0.0",
  javax.servlet;bundle-version="3.0.0",
- org.apache.velocity;bundle-version="1.5.0"
+ org.eclipse.ui.console
 Bundle-Vendor: SLIPCHANSKY
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
@@ -42,8 +42,11 @@ Bundle-ClassPath: .,
  lib/jetty-webapp-9.0.2.v20130417.jar,
  lib/jetty-xml-9.0.2.v20130417.jar,
  lib/dom4j-1.6.1.jar,
- lib/groovy-all-2.1.1.jar
-Bundle-Version: 1.0.0.1
+ lib/velocity-1.7.jar,
+ lib/commons-collections-3.2.1.jar,
+ lib/commons-lang-2.2.jar,
+ lib/commons-logging-1.1.1.jar
+Bundle-Version: 1.0.0.3
 Bundle-Name: Facematic
 Bundle-Activator: org.facematic.Activator
 Bundle-ManifestVersion: 2

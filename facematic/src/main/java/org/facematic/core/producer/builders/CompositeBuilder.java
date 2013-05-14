@@ -3,9 +3,11 @@ package org.facematic.core.producer.builders;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.custom.Composite;
 
@@ -18,7 +20,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  */
 public class CompositeBuilder extends ComponentBuilder {
-
+	private final static Logger logger = LoggerFactory.getLogger(CompositeBuilder.class);
 	/**
 	 * @author "Stanislav Lipchansky"
 	 *
@@ -72,7 +74,7 @@ public class CompositeBuilder extends ComponentBuilder {
 			try {
 				controller = builder.createClassInstance(controllerClassName);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("Could not create controllerInstance of "+controllerClassName, e);
 			}
 		}
 
@@ -84,7 +86,7 @@ public class CompositeBuilder extends ComponentBuilder {
 		try {
 			location = Locations.valueOf(sLocation);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Invalid markup location:"+sLocation);
 		}
 
 		switch (location) {
@@ -99,6 +101,7 @@ public class CompositeBuilder extends ComponentBuilder {
 			break;
 		case FILE:
 		case URL:
+			logger.error("URL, FILE resource lcation not implemented yet");
 			throw new RuntimeException("Not implemented yet");
 		}
 

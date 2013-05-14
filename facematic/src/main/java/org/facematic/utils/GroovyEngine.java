@@ -7,7 +7,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivilegedAction;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.log4j.Logger;
 import org.codehaus.groovy.control.CompilationFailedException;
+import org.facematic.core.logging.LoggerFactory;
+import org.facematic.fmweb.plugin.FmAppUIforPluginPurposes;
 
 import groovy.security.GroovyCodeSourcePermission;
 import groovy.text.SimpleTemplateEngine;
@@ -19,6 +23,8 @@ import groovy.lang.GroovyShell;
 import groovy.lang.Script;
 
 public class GroovyEngine {
+	private final static Logger logger = LoggerFactory.getLogger(GroovyEngine.class);
+	
     private static final String GROOVY_DEFAUL_CODEBASE = "/groovy/shell";
 	private Binding binding = new Binding ();
 	private Script script;

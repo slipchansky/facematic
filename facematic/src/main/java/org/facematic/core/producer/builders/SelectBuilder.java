@@ -1,7 +1,9 @@
 package org.facematic.core.producer.builders;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Element;
 
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractSelect;
 
@@ -10,6 +12,7 @@ import com.vaadin.ui.AbstractSelect;
  *
  */
 public class SelectBuilder extends AbstractFieldBuilder {
+	private final static Logger logger = LoggerFactory.getLogger(SelectBuilder.class);
 
 	/* (non-Javadoc)
 	 * @see org.facematic.core.producer.builders.AbstractFieldBuilder#getBuildingClass()

@@ -1,7 +1,9 @@
 package org.facematic.core.producer.builders;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Element;
 
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import org.dom4j.tree.DefaultAttribute;
@@ -9,6 +11,9 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public class BeanBuilder {
+	
+	private final static Logger logger = LoggerFactory.getLogger(BeanBuilder.class);
+	
 
 	public Class getBuildingClass () {
 		return Object.class;
@@ -25,9 +30,9 @@ public class BeanBuilder {
 		}
 			
 		for (DefaultAttribute attr : attributes) {
-			String name = attr.getName();
+			String attrname = attr.getName();
 			String value = attr.getValue();
-			name = "set"+name.substring(0, 1).toUpperCase()+name.substring(1);
+			String name = "set"+attrname.substring(0, 1).toUpperCase()+attrname.substring(1);
 			try {
 			    Method setter = instance.getClass().getMethod(name, String.class);
 			    setter.invoke(instance, value);
@@ -40,9 +45,12 @@ public class BeanBuilder {
 					try {
 						Method setter = instance.getClass().getMethod(name, Integer.TYPE);
 						setter.invoke(instance, new Integer (value));
-						} catch (Exception e2) {
-							// skip
+						} catch (NoSuchMethodException ensm) {
+							// just skip. there
+						} catch (Exception other) {
+							logger.warn("Could not set "+instance.getClass().getCanonicalName()+"."+attrname+"="+value); 
 						}
+					
 				}
 			}
 		}

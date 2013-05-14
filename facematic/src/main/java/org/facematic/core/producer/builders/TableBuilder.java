@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Table;
@@ -17,6 +19,7 @@ import com.vaadin.ui.Table;
  *
  */
 public class TableBuilder extends SelectBuilder {
+	private final static Logger logger = LoggerFactory.getLogger(TableBuilder.class);
 
 	/* (non-Javadoc)
 	 * @see org.facematic.core.producer.builders.SelectBuilder#getBuildingClass()
@@ -138,7 +141,7 @@ public class TableBuilder extends SelectBuilder {
 					type = Class.forName(sType);
 				} catch (Exception e3) {
 					// undefined type. skip
-					// TODO add logging
+					logger.error("Invalid column type "+sType);
 					
 				}
 			}
@@ -204,7 +207,7 @@ public class TableBuilder extends SelectBuilder {
 			try {
 				width = Integer.valueOf(aWidth.getValue());
 			} catch (Exception e) {
-				// skip
+				logger.warn("Invalid width value:"+aWidth.getValue());
 			}
 		}
 		if (width != null) {
@@ -236,7 +239,7 @@ public class TableBuilder extends SelectBuilder {
 			try {
 				expandRatio = Float.valueOf(aExpandRatio.getValue());
 			} catch (Exception e) {
-				// skip
+				logger.error ("Could not convert to float '"+aExpandRatio.getValue()+"'");
 			}
 		}
 		if (expandRatio != null) {

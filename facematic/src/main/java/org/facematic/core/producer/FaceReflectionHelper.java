@@ -8,9 +8,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.log4j.Logger;
 import org.facematic.core.annotations.FmUI;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.annotations.FmController;
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.servlet.FacematicServlet;
 import org.facematic.core.ui.FacematicUI;
 
@@ -28,6 +30,8 @@ interface FieldAnnotationMatcher<T extends Annotation> {
 }
 
 public class FaceReflectionHelper implements Serializable {
+	private static Logger logger = LoggerFactory.getLogger(FaceReflectionHelper.class);
+	
 	private static final String FIELD_MODIFIERS = "modifiers";
 	private Object instance;
 	private Field[] fields;
@@ -68,9 +72,9 @@ public class FaceReflectionHelper implements Serializable {
 		if (instance != null) {
 			Class<? extends Object> instanceClass = instance.getClass();
 			fields = instanceClass.getDeclaredFields();
-			for (Field f : fields) {
-				updateFieldModifiers(f);
-			}
+//			for (Field f : fields) {
+//				updateFieldModifiers(f);
+//			}
 		}
 	}
 
@@ -137,6 +141,7 @@ public class FaceReflectionHelper implements Serializable {
 				return field;
 			}
 		}
+		logger.trace("Annotated field not found @"+annotationClass.getSimpleName()+"("+value+")");
 		return null;
 
 	}
@@ -153,6 +158,7 @@ public class FaceReflectionHelper implements Serializable {
 			modifiers |= Modifier.PUBLIC;
 			modifiersField.setInt(field, modifiers);
 		} catch (Exception e) {
+			logger.error ("Could not open access to "+field.getClass().getCanonicalName()+"."+field.getName());
 			throw (new RuntimeException(e));
 		}
 
@@ -160,8 +166,10 @@ public class FaceReflectionHelper implements Serializable {
 
 	private void setFieldValue(Field field, Object value) {
 		try {
+			updateFieldModifiers(field); // moved from public FaceReflectionHelper(Object instance) becuuse of jrebel issues 
 			field.set(instance, value);
 		} catch (Exception e) {
+			//logger.error ("Could not set value "+field.getClass().getCanonicalName()+"."+field.getName()+"="+value);
 			throw (new RuntimeException(e));
 		}
 	}
@@ -200,7 +208,7 @@ public class FaceReflectionHelper implements Serializable {
 		try {
 			return field.get (instance);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error ("Could not get value from "+field.getClass().getCanonicalName()+"."+field.getName());
 			return null;
 		}
 	}

@@ -1,19 +1,27 @@
 package org.facematic;
 
+import java.awt.Color;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Properties;
 
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.servlet.VelocityServlet;
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
+
+//import org.eclipse.ui.console.ConsolePlugin;
+//import org.eclipse.ui.console.IConsole;
+//import org.eclipse.ui.console.MessageConsole;
+//import org.eclipse.ui.console.MessageConsoleStream;
+//import org.eclipse.ui.internal.util.BundleUtility;
+
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.internal.util.BundleUtility;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.facematic.facematic.editors.FmMvcEditor;
@@ -34,46 +42,64 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 
-	private static ILog logger;	
-	
-	
+	private static ILog logger;
+
+	private static MessageConsoleStream consoleOutputStream;
+
+	private static PrintWriter console;
+
 	/**
 	 * The constructor
 	 */
 	public Activator() {
-		
-		
+
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		
 		plugin = this;
 		logger = Activator.getDefault().getLog();
-		//ServiceReference<?> velocity = context.getServiceReference(VelocityContext.class.getName());
-		//Bundle velo = context.getBundle("org.apache.velocity");
-		Object engine = context.getServiceReference("org.apache.velocity.app.VelocityEngine");
-		
-		int k = 0;
-		k++;
+		try {
+			ServiceReference<?>[] services = Platform.getBundle(
+					"org.eclipse.ui.console").getRegisteredServices();
+			MessageConsole myConsole = new MessageConsole("Facematic Console",null);
+			ConsolePlugin.getDefault().getConsoleManager().addConsoles(new MessageConsole[] { myConsole });
+			ConsolePlugin.getDefault().getConsoleManager().showConsoleView(myConsole);
+			final MessageConsoleStream stream = myConsole.newMessageStream();
+			stream.setActivateOnWrite(true);
+			consoleOutputStream = stream;
+			console = new PrintWriter(consoleOutputStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
-		FmMvcEditor.shutDown ();
+		FmMvcEditor.shutDown();
 		plugin = null;
 		super.stop(context);
+		consoleOutputStream.close();
 	}
 
 	/**
 	 * Returns the shared instance
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -81,32 +107,52 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
+	 * Returns an image descriptor for the image file at the given plug-in
+	 * relative path
+	 * 
+	 * @param path
+	 *            the path
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
-	
-	public static URL getResourceURL (String path) {
-		 Bundle bundle = Platform.getBundle(PLUGIN_ID);
-	        if (!BundleUtility.isReady(bundle)) {
-				return null;
-			}
-	        URL url = BundleUtility.find(bundle, path);
-	        return url;
+
+	public static URL getResourceURL(String path) {
+		Bundle bundle = Platform.getBundle(PLUGIN_ID);
+		if (!BundleUtility.isReady(bundle)) {
+			return null;
+		}
+		URL url = BundleUtility.find(bundle, path);
+		return url;
 	}
 
-	public static void info (String message) {
-		logger.log (new Status(Status.INFO, Activator.PLUGIN_ID, Status.INFO, message, null));
+	public static synchronized void info(String message, Throwable th) {
+		logger.log(new Status(Status.INFO, Activator.PLUGIN_ID, Status.INFO,
+				message, null));
+
+		if (th != null) {
+			console.println("PLUGIN INFO:" + message);
+			th.printStackTrace(console);
+		}
+		console.flush();
 	}
-	
-	public static void error (String message, Throwable exception) {
-		logger.log (new Status(Status.ERROR, Activator.PLUGIN_ID, Status.INFO, message, exception));
+
+	public static void info(String message) {
+		info(message, null);
 	}
-	
-	
+
+	public static void error(String message, Throwable th) {
+		logger.log(new Status(Status.ERROR, Activator.PLUGIN_ID, Status.INFO,
+				message, th));
+		console.println("PLUGIN ERROR:  " + message);
+		if (th != null)
+			th.printStackTrace(console);
+		console.flush();
+	}
+
+	public static MessageConsoleStream getConsoleOutputStream() {
+		return consoleOutputStream;
+	}
+
 }

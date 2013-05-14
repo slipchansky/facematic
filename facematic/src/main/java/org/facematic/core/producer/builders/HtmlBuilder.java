@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.apache.log4j.Logger;
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
 import com.google.gwt.user.client.ui.HTML;
+
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.custom.Html;
 
@@ -20,6 +23,7 @@ import com.vaadin.ui.Label;
  *
  */
 public class HtmlBuilder extends ComponentBuilder {
+	private final static Logger logger = LoggerFactory.getLogger(HtmlBuilder.class);
 
 	/* (non-Javadoc)
 	 * @see org.facematic.core.producer.builders.ComponentBuilder#getBuildingClass()
@@ -42,7 +46,7 @@ public class HtmlBuilder extends ComponentBuilder {
 			try {
 				text = builder.getGroovyEngine().translate(text);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("Groovy could not translate\n"+text, e);
 			}
 		}
 		
@@ -62,7 +66,7 @@ public class HtmlBuilder extends ComponentBuilder {
 			writer.flush();
 			return swriter.getBuffer().toString();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Could not format html", e);
 		}
 		return "";
 	}

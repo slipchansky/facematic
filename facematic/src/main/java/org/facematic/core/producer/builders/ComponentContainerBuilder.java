@@ -3,8 +3,10 @@ package org.facematic.core.producer.builders;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Element;
 
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractComponentContainer;
@@ -14,6 +16,7 @@ import com.vaadin.ui.AbstractComponentContainer;
  *
  */
 public class ComponentContainerBuilder extends ComponentBuilder {
+	private final static Logger logger = LoggerFactory.getLogger(ComponentContainerBuilder.class);
 
 	/* (non-Javadoc)
 	 * @see org.facematic.core.producer.builders.ComponentBuilder#getBuildingClass()

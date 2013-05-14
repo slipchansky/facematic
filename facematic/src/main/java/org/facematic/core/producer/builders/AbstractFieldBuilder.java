@@ -2,14 +2,18 @@ package org.facematic.core.producer.builders;
 
 import java.lang.reflect.Method;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Element;
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
+import org.facematic.core.producer.FaceReflectionHelper;
 
 import com.vaadin.data.Property;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Field.ValueChangeEvent;
 
 public class AbstractFieldBuilder extends ComponentBuilder {
+	private static Logger logger = LoggerFactory.getLogger(AbstractFieldBuilder.class);
 
 	@Override
 	public Class getBuildingClass() {
@@ -24,6 +28,10 @@ public class AbstractFieldBuilder extends ComponentBuilder {
 		String producerCaption = configuration.attributeValue("caption");
 		
 		final Object controller = builder.getControllerInstance();
+		
+		if (onChangeMethodName != null && controller == null) {
+			logger.warn("There is no controller class for implementing listener method "+onChangeMethodName);
+		}
 		
 		if (onChangeMethodName != null && controller != null) {
 			
@@ -43,6 +51,7 @@ public class AbstractFieldBuilder extends ComponentBuilder {
 				});
 			} 
 			catch (NoSuchMethodException e) {
+				logger.info("Method "+controller.getClass()+"."+onChangeMethodName+" (ValueChangeEvent) not found");
 				// Try to add listenerMethod (Property property);
 				try {
 					final Method onChangeMethod = controller.getClass().getMethod(onChangeMethodName, Property.class);
@@ -57,7 +66,9 @@ public class AbstractFieldBuilder extends ComponentBuilder {
 						}
 					});
 				} catch (NoSuchMethodException nsm) {
+					logger.info("Method "+controller.getClass()+"."+onChangeMethodName+" (Property) not found");
 					// Try to add listenerMethod ();
+					
 					try {
 						try {
 							final Method onChangeMethod = controller.getClass().getMethod(onChangeMethodName);
@@ -72,15 +83,15 @@ public class AbstractFieldBuilder extends ComponentBuilder {
 								}
 							});
 						}catch (Exception eee) {
-							// skip
+							logger.info("Method "+controller.getClass()+".onChangeMethodName () not found");
 						}	
 					} catch (Exception ee) {
-						// skip
+						logger.warn("Unexpeted exception when trying to add Listener "+controller.getClass()+".onChangeMethodName", ee);
 					}
 				}
 			}
 			catch (Exception e) {
-				e.printStackTrace();
+				logger.warn("Unexpeted exception when trying to use Listener "+controller.getClass()+".onChangeMethodName", e);
 			}
 		}
 	}

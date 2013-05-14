@@ -2,8 +2,10 @@ package org.facematic.core.producer.builders;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Element;
 
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Panel;
@@ -13,6 +15,7 @@ import com.vaadin.ui.Panel;
  *
  */
 public class PanelBuilder extends ComponentBuilder {
+	private final static Logger logger = LoggerFactory.getLogger(PanelBuilder.class);
 
 	/* (non-Javadoc)
 	 * @see org.facematic.core.producer.builders.ComponentBuilder#getBuildingClass()
@@ -56,10 +59,8 @@ public class PanelBuilder extends ComponentBuilder {
 		
 		try {
 			inner = builder.build(firstNested);
-			if (inner != null) {
-			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Could not prepare inner component");
 		}
 		return inner;
 	}

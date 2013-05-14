@@ -1,11 +1,13 @@
 package org.facematic.core.producer.builders;
 
 
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
@@ -14,6 +16,7 @@ import org.dom4j.Element;
  *
  */
 public class ComponentBuilder extends BeanBuilder {
+	private final static Logger logger = LoggerFactory.getLogger(ComponentBuilder.class);
 	
 	/* (non-Javadoc)
 	 * @see org.facematic.core.producer.builders.BeanBuilder#getBuildingClass()

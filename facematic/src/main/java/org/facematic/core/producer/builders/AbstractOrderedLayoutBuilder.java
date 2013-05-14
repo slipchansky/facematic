@@ -3,8 +3,10 @@ package org.facematic.core.producer.builders;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
+import org.facematic.core.logging.LoggerFactory;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.AbstractComponent;
@@ -12,6 +14,7 @@ import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.AbstractOrderedLayout;
 
 public class AbstractOrderedLayoutBuilder extends ComponentContainerBuilder {
+	private final static Logger logger = LoggerFactory.getLogger(AbstractOrderedLayoutBuilder.class);
 
 	
 	

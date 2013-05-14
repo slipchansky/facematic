@@ -3,8 +3,10 @@ package org.facematic.core.producer.builders;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Element;
 
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.utils.GroovyEngine;
 
@@ -19,6 +21,7 @@ import com.vaadin.ui.Field.ValueChangeEvent;
  *
  */
 public class ButtonBuilder extends ComponentBuilder {
+	private final static Logger logger = LoggerFactory.getLogger(ButtonBuilder.class);
 	
 	/* (non-Javadoc)
 	 * @see org.facematic.core.producer.builders.ComponentBuilder#getBuildingClass()
@@ -60,6 +63,10 @@ public class ButtonBuilder extends ComponentBuilder {
 		
 		final Object controller = builder.getControllerInstance();
 		
+		if (onClickMethodName != null && controller==null) {
+			logger.warn("There is no controller class for implementing listener method "+onClickMethodName);
+		}
+		
 		if(controller==null) {
 			return;
 		}
@@ -85,6 +92,7 @@ public class ButtonBuilder extends ComponentBuilder {
 		} catch (NoSuchMethodException nsm) {
 			
 			// try to add clickListener ()
+			logger.warn("Method "+controller.getClass()+"."+onClickMethodName+" (Button.ClickEvent) not found");
 			try {
 			final Method onClickMethod = controller.getClass().getMethod(onClickMethodName);
 			((Button) viewInstance).addClickListener(new Button.ClickListener() {
@@ -98,10 +106,10 @@ public class ButtonBuilder extends ComponentBuilder {
 						}
 					});
 			} catch (Exception ee) {
-				// skip;
+				logger.warn("Method "+controller.getClass()+"."+onClickMethodName+" () not found");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.warn("Unexpected exception on using "+controller.getClass()+"."+onClickMethodName+" (...)", e);
 		}
 
 	}

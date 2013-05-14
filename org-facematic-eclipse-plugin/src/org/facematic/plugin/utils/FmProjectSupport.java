@@ -1,8 +1,6 @@
 package org.facematic.plugin.utils;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -22,12 +20,11 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.facematic.Activator;
 
 public class FmProjectSupport {
 	
-	GroovyEngine groovy = new GroovyEngine ();
+	VelocityEngine groovy = new VelocityEngine ();
 	private String projectName;
 	private URI location;
 	private boolean implement;
@@ -107,7 +104,7 @@ public class FmProjectSupport {
 	}
 
 	private  void fillProject() throws IOException, CoreException {
-		List<Entry> entries = getFakeEntries ();
+		List<Entry> entries = getProjectEntries ();
 		for (Entry e : entries ) {
 			if (e.isdir) {
 				createProjectFolder(e);
@@ -187,13 +184,11 @@ public class FmProjectSupport {
 		}
 	}
 
-	public  List<Entry> getFakeEntries () throws IOException {
+	public  List<Entry> getProjectEntries () throws IOException {
 		URL url = Activator.getResourceURL("templates/projects/fmfastbuild.zip");
 		InputStream in = url.openStream();
 		
-		//FileInputStream fis = new FileInputStream("Z:/!chuma/org-facematic-eclipse-plugin/templates/projects/fmfastbuild.zip");
 		List<Entry> entries = getTemplateEntries(in);
-		//fis.close();
 		in.close();
 		return entries;
 	}

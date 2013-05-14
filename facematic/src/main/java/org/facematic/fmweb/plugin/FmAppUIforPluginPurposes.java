@@ -1,6 +1,9 @@
 package org.facematic.fmweb.plugin;
 
+import org.apache.log4j.Logger;
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
+import org.facematic.core.ui.FacematicUI;
 
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.annotations.Theme;
@@ -16,6 +19,7 @@ import com.vaadin.ui.Label;
 @Theme("reindeer")
 @Widgetset("com.vaadin.DefaultWidgetSet") 
 public class FmAppUIforPluginPurposes extends org.facematic.core.ui.FacematicUI {
+	private final static Logger logger = LoggerFactory.getLogger(FmAppUIforPluginPurposes.class);
 	
     @Override
     protected void init(VaadinRequest request) {
@@ -35,7 +39,7 @@ public class FmAppUIforPluginPurposes extends org.facematic.core.ui.FacematicUI 
 			setContent(content);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
     }
 }

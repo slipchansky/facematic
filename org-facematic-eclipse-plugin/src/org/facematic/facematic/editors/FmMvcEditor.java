@@ -54,9 +54,10 @@ import org.facematic.Activator;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.facematic.editors.parts.FmJavaEditor;
 import org.facematic.facematic.editors.parts.FmXmlEditor;
-import org.facematic.plugin.utils.GroovyEngine;
+import org.facematic.plugin.utils.VelocityEngine;
 import org.facematic.plugin.utils.IJettyServer;
 import org.facematic.plugin.utils.JettyServerImpl;
+import org.facematic.plugin.utils.SocketUtil;
 import org.osgi.service.log.LogService;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -124,8 +125,6 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	public final static String GENERATED_CODE_BEGIN = "// GENERATED_CODE_BEGIN. Do not replace this comment!";
 	public final static String GENERATED_CODE_END = "// GENERATED_CODE_END. Do not replace this comment!";
 	
-	static int jettyPortPull = JETTY_PORT_PULL_STARTS_FROM;
-	
 	static Map<String, ClassLoader>      classLoadersForProjects  = new ConcurrentHashMap<String, ClassLoader> ();
 	static Map<String, IJettyServer> jettyServersForProjects  = new ConcurrentHashMap<String, IJettyServer> ();
 
@@ -149,7 +148,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	private IJettyServer server;
 	private Browser          browser;
 	private String webAppPath;
-	private GroovyEngine groovy = new GroovyEngine();
+	private VelocityEngine groovy = new VelocityEngine();
 	
 	 
 
@@ -384,7 +383,11 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	}
 	
 
+	/**
+	 * prepares java sourcecode 
+	 */
 	public void updateControllerSourceCode() {
+		
 	    try {
 			prepareProjectClassLoader ();
 		} catch (Exception e) {
@@ -426,9 +429,6 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	
 	private void prepareProjectClassLoader () throws Exception {
 		
-		//projectClassLoader  = classLoadersForProjects.get(project.getName());
-		//if (projectClassLoader != null) return;
-		
 		IJavaProject javaProject = JavaCore.create(project);
 		String[] classPathEntries = JavaRuntime.computeDefaultRuntimeClassPath(javaProject);
 		this.webAppPath = classPathEntries[0]+"/../../src/main/webapp/"; 
@@ -442,19 +442,12 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 		}
 		
 		
-//		urlList.add(org.eclipse.jetty.servlet.listener.IntrospectorCleaner.class.getClassLoader().getResource(""));
-//		urlList.add(org.eclipse.jetty.webapp.WebAppContext.class.getClassLoader().getResource(""));
-//		urlList.add(Servlet.class.getClassLoader().getResource(""));
-//		urlList.add(ServletContextHandler.class.getClassLoader().getResource(""));
-//		urlList.add(ServletHolder.class.getClassLoader().getResource(""));
-		
 		Activator.info("classLoader urls: "+urlList);
 		
 		
 		URL[] urls = (URL[]) urlList.toArray(new URL[urlList.size()]);
 		
 		projectClassLoader = new URLClassLoader(urls, Servlet.class.getClassLoader());
-		
 		
 		classLoadersForProjects.put(project.getName(), projectClassLoader);
 		
@@ -469,7 +462,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 		
 		try {
 			server = createJettyServerInstance ();
-			server.prepare (jettyPortPull++, projectClassLoader);
+			server.prepare (SocketUtil.getFreePort(JETTY_PORT_PULL_STARTS_FROM), projectClassLoader);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Activator.error ("Can't prepare jetty ", e);
