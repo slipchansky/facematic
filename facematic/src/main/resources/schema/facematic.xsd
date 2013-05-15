@@ -8,53 +8,78 @@
 			<extension base="c:ContentType">
 				<sequence minOccurs="0" maxOccurs="unbounded">
 					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:HtmlType" name="Html" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:HtmlType" name="html" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:ContentContainerType" name="hl" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:ContentContainerType" name="vl" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:ButtonType" name="Button" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:FieldType" name="TextField" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:LabelType" name="Label" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:LinkType" name="Link" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:EmbeddedType" name="Embedded" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:PopupDateFieldType" name="PopupDateField"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:InlineDateFieldType" name="InlineDateField"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:TextAreaType" name="TextArea" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:RichTextAreaType" name="RichTextArea"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:ListSelectType" name="ListSelect"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element name="ComboBox" type="c:ComboBoxType" maxOccurs="unbounded"
+						minOccurs="0">
+					</element>
 					<element type="c:TwinColSelectType" name="TwinColSelect"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:OptionGroupType" name="OptionGroup"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:SliderType" name="Slider" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:UploadType" name="Upload" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:FormLayoutType" name="FormLayout"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:TableType" name="Table" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:TreeType" name="Tree" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:PanelType" name="Panel" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:CompositeType" name="composite" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 				</sequence>
 				<attribute name="spacing" type="c:TrueFalseType"></attribute>
 				<attribute name="margin" type="c:TrueFalseType"></attribute>
@@ -331,53 +356,78 @@
 			<extension base="c:ContentType">
 				<choice minOccurs="1" maxOccurs="1">
 					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:ContentContainerType" name="hl" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:ContentContainerType" name="vl" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:ButtonType" name="Button" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:FieldType" name="TextField" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:LabelType" name="Label" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:HtmlType" name="Html" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:HtmlType" name="html" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:LinkType" name="Link" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:EmbeddedType" name="Embedded" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:PopupDateFieldType" name="PopupDateField"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:InlineDateFieldType" name="InlineDateField"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:TextAreaType" name="TextArea" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:RichTextAreaType" name="RichTextArea"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:ListSelectType" name="ListSelect"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element name="ComboBox" type="c:ComboBoxType" maxOccurs="unbounded"
+						minOccurs="0">
+					</element>
 					<element type="c:TwinColSelectType" name="TwinColSelect"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:OptionGroupType" name="OptionGroup"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:SliderType" name="Slider" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:UploadType" name="Upload" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:FormLayoutType" name="FormLayout"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
 					<element type="c:TableType" name="Table" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:TreeType" name="Tree" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:PanelType" name="Panel" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:CompositeType" name="composite" minOccurs="0"
-						maxOccurs="unbounded"></element>
+						maxOccurs="unbounded">
+					</element>
 				</choice>
 			</extension>
 		</complexContent>
@@ -413,8 +463,10 @@
 				<attribute name="onChange" type="string">
 					<annotation>
 						<documentation>
-							The name of controller method. You must implement method with this
-							name with parameter type of ValueChangeEvent. for example: public
+							The name of controller method. You must implement
+							method with this
+							name with parameter type of ValueChangeEvent. for
+							example: public
 							void onValueChange (ValueChangeEvent event) {...}.
 						</documentation>
 					</annotation>
@@ -478,6 +530,7 @@
 	<complexType name="LinkType">
 		<complexContent>
 			<extension base="c:PropertyType">
+				<attribute name="url" type="string"></attribute>
 				<attribute name="resource" type="string"></attribute>
 			</extension>
 		</complexContent>
@@ -530,18 +583,28 @@
 	<complexType name="ButtonType">
 		<complexContent>
 			<extension base="c:ContentType">
-					<attribute name="onClick" type="string">
-						<annotation>
-							<documentation>
-								The name of controller method. You must implement method with such
-								name in your controller. For example: public void onClick
-								(ClickEvent event) {...}.
-							</documentation>
-						</annotation>
-					</attribute>
+				<attribute name="onClick" type="string">
+					<annotation>
+						<documentation>
+							The name of controller method. You must implement
+							method with such
+							name in your controller. For example: public void
+							onClick
+							(ClickEvent event) {...}.
+						</documentation>
+					</annotation>
+				</attribute>
 
 			</extension>
 		</complexContent>
+	</complexType>
+
+	<complexType name="ItemType" mixed="true">
+		<sequence>
+			<element name="item" type="c:ItemType" maxOccurs="unbounded"
+				minOccurs="0" />
+		</sequence>
+		<attribute name="value" use="optional"></attribute>
 	</complexType>
 
 
@@ -549,7 +612,7 @@
 		<complexContent>
 			<extension base="c:FieldType">
 				<sequence>
-					<element name="item" type="string" maxOccurs="unbounded"
+					<element name="item" type="c:ItemType" maxOccurs="unbounded"
 						minOccurs="0" />
 				</sequence>
 				<attribute name="rows" type="integer" use="optional"></attribute>
@@ -623,6 +686,21 @@
 	<complexType name="UploadType">
 		<complexContent>
 			<extension base="c:FieldType">
+
+				<attribute name="saveTo" type="string">
+					<annotation>
+						<documentation>
+							To simplify the use of the component Upload, you can just specify the path to the directory in which to store all the uploaded files.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="buttonCaption" type="string"></attribute>
+				<attribute name="onFinished" type="string"></attribute>
+				<attribute name="onStarted" type="string"></attribute>
+				<attribute name="onProgress" type="string"></attribute>
+				<attribute name="onSucceeded" type="string"></attribute>
+				<attribute name="onFailed" type="string"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -868,15 +946,20 @@
 	<complexType name="TreeType">
 		<complexContent>
 			<extension base="c:ListSelectType">
-				<sequence>
-				</sequence>
-				<attribute name="lazyLoading" type="c:TrueFalseType" use="optional"></attribute>
-				<attribute name="dragMode" type="c:TreeDragModeType" use="optional"></attribute>
+				<sequence></sequence>
+				<attribute name="itemCaptionPropertyId" type="string"></attribute>
+				<attribute name="lazyLoading" type="c:TrueFalseType" use="optional">
+				</attribute>
+				<attribute name="dragMode" type="c:TreeDragModeType" use="optional">
+				</attribute>
 				<attribute name="multiselectMode" type="c:TreeMultiSelectModeType"
-					use="optional"></attribute>
+					use="optional">
+				</attribute>
 				<attribute name="newItemsAllowed" type="c:TrueFalseType"
-					use="optional"></attribute>
-				<attribute name="selectable" type="c:TrueFalseType" use="optional"></attribute>
+					use="optional">
+				</attribute>
+				<attribute name="selectable" type="c:TrueFalseType" use="optional">
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>

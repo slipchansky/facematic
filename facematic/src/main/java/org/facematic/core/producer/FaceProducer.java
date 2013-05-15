@@ -15,12 +15,16 @@ import org.facematic.core.producer.builders.CompositeBuilder;
 import org.facematic.core.producer.builders.ComponentBuilder;
 import org.facematic.core.producer.builders.ComponentContainerBuilder;
 import org.facematic.core.producer.builders.HtmlBuilder;
+import org.facematic.core.producer.builders.NvoItemBuilder;
 import org.facematic.core.producer.builders.PanelBuilder;
 import org.facematic.core.producer.builders.SelectBuilder;
 import org.facematic.core.producer.builders.TabSheetBuilder;
 import org.facematic.core.producer.builders.TableBuilder;
+import org.facematic.core.producer.builders.TreeBuilder;
+import org.facematic.core.producer.builders.UploadBuilder;
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.mvc.FmBaseController;
+import org.facematic.core.nvo.Item;
 import org.facematic.core.ui.DummyFacematicUi;
 import org.facematic.core.ui.FacematicUI;
 import org.facematic.core.ui.custom.Composite;
@@ -139,6 +143,7 @@ public class FaceProducer implements Serializable {
 				put("composite", Composite.class);
 				put("html", Html.class);
 				put("Html", Html.class);
+				put("item", Item.class);
 			}
 		};
 
@@ -146,17 +151,20 @@ public class FaceProducer implements Serializable {
 
 		// Register bean builders
 		static {
-			putBuilder(new BeanBuilder());
-			putBuilder(new ComponentBuilder());
-			putBuilder(new ComponentContainerBuilder());
-			putBuilder(new TabSheetBuilder());
-			putBuilder(new AbstractOrderedLayoutBuilder());
-			putBuilder(new ButtonBuilder());
-			putBuilder(new SelectBuilder());
-			putBuilder(new TableBuilder());
-			putBuilder(new PanelBuilder());
-			putBuilder(new CompositeBuilder());
-			putBuilder(new HtmlBuilder());
+			putBuilder (new BeanBuilder());
+			putBuilder (new ComponentBuilder());
+			putBuilder (new ComponentContainerBuilder());
+			putBuilder (new TabSheetBuilder());
+			putBuilder (new AbstractOrderedLayoutBuilder());
+			putBuilder (new ButtonBuilder());
+			putBuilder (new SelectBuilder());
+			putBuilder (new TableBuilder());
+			putBuilder (new PanelBuilder());
+			putBuilder (new CompositeBuilder());
+			putBuilder (new HtmlBuilder());
+			putBuilder (new NvoItemBuilder());
+			putBuilder (new TreeBuilder());
+			putBuilder (new UploadBuilder());
 		};
 
 		private static void putBuilder(BeanBuilder componentBuilder) {

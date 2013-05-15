@@ -20,11 +20,12 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.facematic.Activator;
 
 public class FmProjectSupport {
 	
-	VelocityEngine groovy = new VelocityEngine ();
+	VelocityEngine velocity = new VelocityEngine ();
 	private String projectName;
 	private URI location;
 	private boolean implement;
@@ -32,12 +33,23 @@ public class FmProjectSupport {
 	private IProject project;
 	
 	public FmProjectSupport (String projectName, URI location, Map<String, String> substs, boolean implement, ProjectPomHelper pom) {
-		this.groovy = groovy;
-		this.groovy.put(substs);
+		this.velocity.put(substs);
 		this.projectName = projectName;
 		this.location = location;
 		this.implement = implement;
 		this.pom = pom;
+	}
+	
+	public FmProjectSupport (IProject project) {
+		this.project = project;
+		this.projectName = project.getName();
+		this.implement = true;
+		
+		try {
+			this.location = new URI (project.getLocation().toFile().getAbsolutePath());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -124,13 +136,13 @@ public class FmProjectSupport {
 		
 	}
 
-	private  void createProjectFolder(Entry e) throws CoreException {
-		createProjectFolder (groovy.evaluateString(e.name));
+	private void createProjectFolder(Entry e) throws CoreException {
+		createProjectFolder (velocity.evaluateString(e.name));
 		
 	}
 
 	private  void createFile(Entry e) throws CoreException {
-		String fileName = groovy.evaluateString(e.name);
+		String fileName = velocity.evaluateString(e.name);
 		InputStream is = prepareByTemplate(e);
 		updateFile(fileName, is);
 	}
@@ -149,7 +161,7 @@ public class FmProjectSupport {
 	}
 
 	private  InputStream prepareByTemplate(Entry e) {
-		String result = groovy.evaluateString(e.body);
+		String result = velocity.evaluateString(e.body);
 		return new ByteArrayInputStream(result.getBytes());
 	}
 
@@ -166,8 +178,7 @@ public class FmProjectSupport {
 		return folder;
 	}
 
-	private  IFolder createProjectFolder(String path)
-			throws CoreException {
+	public  IFolder createProjectFolder(String path) throws CoreException {
 		IFolder etcFolders = project.getFolder(path);
 		return createFolder(etcFolders);
 	}

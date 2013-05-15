@@ -1,11 +1,14 @@
 package org.facematic.core.producer.builders;
 
 
+import java.lang.reflect.Method;
+
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Field.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
 import org.dom4j.Attribute;
@@ -41,5 +44,32 @@ public class ComponentBuilder extends BeanBuilder {
 		}
 		
 	}
+	
+	/**
+	 * Helps to get the methods (primarily event listener methods) in descendants  
+	 * 
+	 * @param producer
+	 * @param configuration 
+	 * @param methodName
+	 * @param methodAttrClass
+	 * @return
+	 */
+	protected Method  getMethod(Object source, FaceProducer producer, Element configuration, String attrName, Class methodAttrClass) {
+		String methodName = configuration.attributeValue(attrName);
+		if (methodName==null) return null;
+		if (methodName.trim().equals("")) return null;
+		Object controller = producer.getControllerInstance();
+		if (controller==null) return null;
+		String objectName    =  configuration.attributeValue("name");
+		String objectCaption =  configuration.attributeValue("caption");
+		producer.setListener(methodName, methodAttrClass, source.getClass(), objectName, objectCaption, attrName);
+		
+		
+		try {
+			return controller.getClass().getMethod(methodName, methodAttrClass);
+		} catch (Exception e) {
+			return null;
+		}
+	}	
 
 }

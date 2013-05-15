@@ -15,6 +15,7 @@ import org.dom4j.Node;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.facematic.utils.StreamUtils;
+import static org.facematic.Settings.*;
 
 /**
  * Helper for work with project POM file
@@ -24,11 +25,6 @@ import org.facematic.utils.StreamUtils;
  */
 public class ProjectPomHelper {
 	
-	private static final String VAADIN_VERSION = "7.0.3";
-	private static final String FACEMATIC_REPOSITORY = "https://github.com/slipchansky/facematic/raw/dev/repo/snapshots/";
-	private static final String CDI_VERSION = "[1,)";
-	private static final String SERVLET_API_VERSION = "3.0.1";
-	private static final String FACEMATIC_VERSION = "1.0.3-BETA";
 	private Document document;
 	private String groupId;
 	private String artifactId;
@@ -300,23 +296,4 @@ public class ProjectPomHelper {
 	
 
 
-	
-	public static void main(String[] args) throws IOException, DocumentException {
-		FileInputStream in = new FileInputStream("/home/stas/facematic/eartest/eartest/eartest-web/pom.xml");
-		//FileInputStream in = new FileInputStream("/home/stas/facematic/temp/pom.xml");
-		
-		String text = StreamUtils.getString(in);
-		in.close ();
-		ProjectPomHelper helper = new ProjectPomHelper (text);
-		
-		boolean isf = helper.isFacematic();
-		helper.addFacematicFeatures();
-		
-		String s = helper.getGroupId ();
-		s = helper.getArtifactId ();
-		s = helper.getVersion ();
-		String result = helper.getSource ();
-		int k = 0;
-		k++;
-	}
 }

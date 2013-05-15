@@ -54,6 +54,7 @@ import org.facematic.Activator;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.facematic.editors.parts.FmJavaEditor;
 import org.facematic.facematic.editors.parts.FmXmlEditor;
+import org.facematic.plugin.utils.FmProjectSupport;
 import org.facematic.plugin.utils.VelocityEngine;
 import org.facematic.plugin.utils.IJettyServer;
 import org.facematic.plugin.utils.JettyServerImpl;
@@ -149,6 +150,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	private Browser          browser;
 	private String webAppPath;
 	private VelocityEngine groovy = new VelocityEngine();
+	private FmProjectSupport projectSupport;
 	
 	 
 
@@ -248,6 +250,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 
 		IContainer container = file.getParent(); // /sss/src/main/resources/com/stas/views
 		project = (Project)file.getProject(); // /sss
+		projectSupport = new FmProjectSupport(project);
 		
 	    try {
 			prepareProjectClassLoader ();
@@ -295,6 +298,13 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 			String mvnPrefix, String ext, String templateName) {
 		String packagePath = packageName;
 		packagePath = packagePath.replace('.', '/');
+		
+		try {
+			projectSupport.createProjectFolder(packagePath);
+		} catch (CoreException e1) {
+			e1.printStackTrace();
+		}
+		
 		String sourceFileName = packagePath + '/' + artefactName + ext;
 
 		Path javaPath = new Path(sourceFileName);

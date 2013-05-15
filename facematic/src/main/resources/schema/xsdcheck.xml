@@ -1,42 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<content name="content" xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://facematic.org/fm facematic.xsd" sizeFull="true"	expandRatio="100"
-	>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm facematic.xsd"
+	sizeFull="true">
+
+	<Panel sizeFull="true">
+		<hl spacing="true" margin="true" width="100%">
+			<vl spacing="true" >
+				<Label value="Label component" />
+
+				<Html>
+					<b>Html</b>
+					component
+				</Html>
+
+				<TextField caption="TextField" inputPrompt="TextField" />
+
+				<Button caption="Button" />
+
+				<InlineDateField caption="InlineDateField"
+					inputPrompt="InlineDateField" />
+
+				<Link caption="Link " url="http://www.google.com" />
+
+				<ListSelect caption="ListSelect" width="250" height="50">
+					<item>One</item>
+					<item>Two</item>
+					<item>Three</item>
+				</ListSelect>
+
+				<OptionGroup caption="OptionGroup" height="50">
+					<item>One</item>
+					<item>Two</item>
+					<item>Three</item>
+				</OptionGroup>
+
+			</vl>
+			<vl spacing="true" >
+				<PopupDateField caption="PopupDateField" inputPrompt="PopupDateField" />
+				
+
+				<TextArea width="250" caption="TextArea" height="55"/>
+				
+
+				<RichTextArea width="250" height="100" caption="RichTextArea" />
+
+				<TwinColSelect caption="TwinColSelect" height="60">
+					<item>One</item>
+					<item>Two</item>
+					<item>Three</item>
+				</TwinColSelect>
+
+				<Upload caption="Upload" immediate="true" buttonCaption="Upload" onStarted="onStarted" onProgress="onProgress" onSucceeded="onSucceeded" onFailed="onFailed" onFinished="Finished" saveTo="/home/stas/!received"  />
+				
+				<ComboBox caption="ComboBox">
+					<item>One</item>
+					<item>Two</item>
+					<item>Three</item>
+				</ComboBox>
+				
+				<Tree caption="Tree" height="60" itemCaptionPropertyId="value">
+					<item value="One">
+					   <item value="a-One"></item>
+					   <item>b-One</item>
+					   <item>c-One</item>
+					</item>
+					<item value="Two"></item>
+					<item value="Three"></item>
+				</Tree>
+				
+			</vl>
+		</hl>
+	</Panel>
 
 
-    <html alignment="MIDDLE_LEFT" sizeFull="false" >
-        <img src="${context.logo}" />
-    </html>
-
-  <html>
-   <p>
-     Papa <p>
-      <b>Mama </b>
-      </p> Baba
-    </p>
-    
-    <table>
-       <tr>
-       <td >
-       <img src=""></img>
-       Mama <b>myla</b> ramu
-       <iframe width="420" height="315" src="http://www.youtube.com/embed/qwnV7FIUsSs" frameborder="0" allowfullscreen="1"></iframe>
-       </td>
-       </tr>
-    </table>
-   
-  </html>
-
-	<Table name="table" expandRatio="100" sizeFull="true" onChange="someMethod">
-		<columns>
-			<column id="firstName" header="First name" width="150" />
-			<column id="lastName" header="Last Name" expandRatio="100" />
-		</columns>
-	</Table>
-
-	<Button name="button" caption="mama" onClick="test" />
-
-	<composite name="nested" location="RESOURCE" path="buttons" />
-	<composite name="more" location="RESOURCE" path="../moremarkup/buttons" />
 
 </content>

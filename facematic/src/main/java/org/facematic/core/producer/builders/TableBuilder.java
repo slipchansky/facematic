@@ -76,7 +76,7 @@ public class TableBuilder extends SelectBuilder {
 		
 		Attribute aId = col.attribute("id");
 		if (aId == null) {
-			// TODO implement logging
+			logger.warn ("There is no property 'id' in column definition: "+col);
 			return;
 		}
 

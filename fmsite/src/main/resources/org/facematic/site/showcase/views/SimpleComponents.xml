@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content 	controller="org.facematic.site.showcase.controllers.SimpleComponents"
+	sizeFull="true">
+
+	<Panel sizeFull="true">
+		<hl spacing="true" margin="true" width="700">
+			<vl spacing="true" >
+				<Label value="Label component" />
+
+				<Html>
+					<b>Html</b>
+					<input type="button" value="ok" onclick="alert('mama')" />
+				</Html>
+
+				<TextField caption="TextField" inputPrompt="TextField" />
+
+				<Button caption="Button" />
+
+				<InlineDateField caption="InlineDateField"
+					inputPrompt="InlineDateField" />
+
+				<Link caption="Link " url="http://www.google.com" />
+
+				<ListSelect caption="ListSelect" width="250" height="50">
+					<item>One</item>
+					<item>Two</item>
+					<item>Three</item>
+				</ListSelect>
+
+				<OptionGroup caption="OptionGroup" height="50">
+					<item>One</item>
+					<item>Two</item>
+					<item>Three</item>
+				</OptionGroup>
+
+			</vl>
+			<vl spacing="true" >
+				<PopupDateField caption="PopupDateField" inputPrompt="PopupDateField" />
+				
+
+				<TextArea width="250" caption="TextArea" height="55"/>
+				
+
+				<RichTextArea width="250" height="100" caption="RichTextArea" />
+
+				<TwinColSelect caption="TwinColSelect" height="60">
+					<item>One</item>
+					<item>Two</item>
+					<item>Three</item>
+				</TwinColSelect>
+
+				<Upload name="upload" saveTo="/home/stas/!received" caption="Upload" immediate="true" buttonCaption="Upload" onStarted="onStarted" onProgress="onProgress" onSucceeded="onSucceeded" onFailed="onFailed" onFinished="Finished" >
+				</Upload>
+				
+				<ComboBox caption="ComboBox">
+					<item>One</item>
+					<item>Two</item>
+					<item>Three</item>
+				</ComboBox>
+				
+				<Tree caption="Tree" height="60" itemCaptionPropertyId="value">
+					<item value="One">
+					   <item value="a-One"></item>
+					   <item>b-One</item>
+					   <item>c-One</item>
+					</item>
+					<item value="Two"></item>
+					<item value="Three"></item>
+				</Tree>
+				
+			</vl>
+		</hl>
+	</Panel>
+
+
+
+</content>

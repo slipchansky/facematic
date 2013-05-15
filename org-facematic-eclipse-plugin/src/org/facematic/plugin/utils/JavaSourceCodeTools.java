@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+import static org.facematic.Settings.*;
 
 import org.facematic.utils.StreamUtils;
 
@@ -14,7 +15,6 @@ import org.facematic.utils.StreamUtils;
  * 
  */
 public class JavaSourceCodeTools {
-	final String INDENT = "    ";
 	private Map<String, String> existingMethods = new WeakHashMap<String, String>();
 	private Map<String, String> existingFields = new WeakHashMap<String, String>();
 	private Map<String, String> existingImports = new WeakHashMap<String, String>();
