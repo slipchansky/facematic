@@ -136,6 +136,7 @@ public class ProjectPomHelper {
 		addDependency    (dependencies, "org.facematic", "facematic", "${facematic.version}", "compile");
 		addDependency    (dependencies, "com.vaadin", "vaadin-client-compiled", "${vaadin.version}", null);
 		addDependency    (dependencies, "com.vaadin", "vaadin-themes", "${vaadin.version}", null);
+		addDependency    (dependencies, "com.vaadin", "vaadin-theme-compiler", "${vaadin.version}", null);
 		addDependency    (dependencies, "javax.servlet", "javax.servlet-api", SERVLET_API_VERSION, "provided");
 		addDependency    (dependencies, "javax.enterprise", "cdi-api", CDI_VERSION, "provided");
 		
@@ -176,17 +177,18 @@ public class ProjectPomHelper {
 	 * @return
 	 */
 	private String buildXml () {
-		OutputFormat format = OutputFormat.createPrettyPrint();
-		StringWriter swriter = new StringWriter();
-		XMLWriter writer = new XMLWriter(swriter, format);
-		try {
-			writer.write(document);
-			writer.flush();
-			return swriter.getBuffer().toString();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "";
+//		OutputFormat format = OutputFormat.createPrettyPrint();
+//		StringWriter swriter = new StringWriter();
+//		XMLWriter writer = new XMLWriter(swriter, format);
+//		try {
+//			writer.write(document);
+//			writer.flush();
+//			return swriter.getBuffer().toString();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return "";
+		return document.asXML();
 	}
 	
 	

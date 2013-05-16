@@ -142,4 +142,10 @@ public class SandBoxController implements org.facematic.core.mvc.FmBaseControlle
 				
 	}
 
+	@Override
+	public void prepareContext(FaceProducer producer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

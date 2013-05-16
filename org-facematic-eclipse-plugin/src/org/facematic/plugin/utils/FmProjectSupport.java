@@ -25,7 +25,7 @@ import org.facematic.Activator;
 
 public class FmProjectSupport {
 	
-	VelocityEngine velocity = new VelocityEngine ();
+	SimpleTemplateEngine velocity = new SimpleTemplateEngine ();
 	private String projectName;
 	private URI location;
 	private boolean implement;
@@ -147,7 +147,7 @@ public class FmProjectSupport {
 		updateFile(fileName, is);
 	}
 
-	private  void updateFile(String fileName,	InputStream is) throws CoreException {
+	public void updateFile(String fileName,	InputStream is) throws CoreException {
 		File file = (File) project.getFile(fileName);
 		if (!file.exists()) {
 			file.create(is, true, null);
@@ -159,6 +159,10 @@ public class FmProjectSupport {
 		} catch (IOException e1) {
 		}
 	}
+	
+	public void updateFile(String fileName,	String content) throws CoreException {
+		updateFile(fileName, new ByteArrayInputStream (content.getBytes()));
+	} 
 
 	private  InputStream prepareByTemplate(Entry e) {
 		String result = velocity.evaluateString(e.body);

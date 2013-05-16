@@ -60,10 +60,15 @@
 			<version>${FACEMATICVERSION}</version>
 		</dependency>
 
-		
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client-compiled</artifactId>
+			<version>${vaadin_version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-theme-compiler</artifactId>
 			<version>${vaadin_version}</version>
 		</dependency>
 		

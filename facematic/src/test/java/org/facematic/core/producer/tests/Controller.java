@@ -1,6 +1,7 @@
 package org.facematic.core.producer.tests;
 
 import org.facematic.core.mvc.FmBaseController;
+import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.annotations.FmController;
 import com.vaadin.ui.Component;
@@ -68,6 +69,15 @@ public class Controller implements FmBaseController {
 		// TODO Auto-generated method stub
 		int k = 0;
 		k++;
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.facematic.core.mvc.FmBaseController#prepareContext(org.facematic.core.producer.FaceProducer)
+	 */
+	@Override
+	public void prepareContext(FaceProducer producer) {
+		// TODO Auto-generated method stub
 		
 	}
 	

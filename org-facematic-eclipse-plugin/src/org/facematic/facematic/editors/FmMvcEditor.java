@@ -55,7 +55,7 @@ import org.facematic.core.producer.FaceProducer;
 import org.facematic.facematic.editors.parts.FmJavaEditor;
 import org.facematic.facematic.editors.parts.FmXmlEditor;
 import org.facematic.plugin.utils.FmProjectSupport;
-import org.facematic.plugin.utils.VelocityEngine;
+import org.facematic.plugin.utils.SimpleTemplateEngine;
 import org.facematic.plugin.utils.IJettyServer;
 import org.facematic.plugin.utils.JettyServerImpl;
 import org.facematic.plugin.utils.SocketUtil;
@@ -149,7 +149,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	private IJettyServer server;
 	private Browser          browser;
 	private String webAppPath;
-	private VelocityEngine groovy = new VelocityEngine();
+	private SimpleTemplateEngine groovy = new SimpleTemplateEngine();
 	private FmProjectSupport projectSupport;
 	
 	 

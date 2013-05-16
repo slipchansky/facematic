@@ -3,8 +3,12 @@ package org.facematic.wizards;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.internal.resources.Project;
 import org.eclipse.core.resources.IContainer;
@@ -28,6 +32,7 @@ import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
 import org.facematic.facematic.editors.FmMvcEditor;
 import org.facematic.plugin.utils.FmProjectSupport;
 import org.facematic.plugin.utils.ProjectPomHelper;
+import org.facematic.utils.StreamUtils;
 
 
 public class NewFacematicProjectWizard extends Wizard implements INewWizard, IExecutableExtension {
@@ -39,6 +44,7 @@ public class NewFacematicProjectWizard extends Wizard implements INewWizard, IEx
 	private String projectName;
 	private URI projectUri;
 	private ProjectPomHelper pom;
+	private IProject project;
 
 	public NewFacematicProjectWizard() {
 		setWindowTitle("New facematic project");
@@ -46,8 +52,8 @@ public class NewFacematicProjectWizard extends Wizard implements INewWizard, IEx
 
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		
-		pom = getMavenProject(selection.getFirstElement());
+		project = findProject (selection.getFirstElement());
+		pom = getMavenProject();
 		defineProject(pom);
 		
 		_pageTwo = new FmProjectWizardPage("Project options", this);
@@ -56,11 +62,40 @@ public class NewFacematicProjectWizard extends Wizard implements INewWizard, IEx
 		addPage (_pageTwo);
 		
 	}
+	
+	private void addResourceOnFacematicImplementation (FmProjectSupport support) {
+		File file = (File) project.getFile(".classpath");		
+		if (file == null) {
+			return;
+		}
+		try {
+			InputStream is = file.getContents();
+			String text = StreamUtils.getString(is);
+			is.close();
+			Document document = DocumentHelper.parseText(text);
+			List<Element> classpathentries = document.getRootElement().elements("classpathentry");
+			
+			for (Element e : classpathentries) {
+				if ("src/main/resources".equals(e.attributeValue("path")) && "src".equals(e.attributeValue("kind"))) {
+					return;
+				}
+			}
+			
+			Element classPath = document.getRootElement().addElement("classpathentry");
+			classPath.addAttribute("kind", "src");
+			classPath.addAttribute("path", "src/main/resources");
+			String classPathCode = document.asXML ();
+			support.updateFile(".classpath", classPathCode);
+			support.createProjectFolder("src/main/resources");
+			
+		} catch (Exception e) {
+		}
+		
+	}
 
-	private ProjectPomHelper getMavenProject(Object selection) {
-		IProject jprj = findProject (selection);
-		if (jprj==null) return null;
-		File file = (File) jprj.getFile("pom.xml");
+	private ProjectPomHelper getMavenProject() {
+		
+		File file = (File) project.getFile("pom.xml");
 		
 		if (file == null) {
 			return null;
@@ -70,8 +105,8 @@ public class NewFacematicProjectWizard extends Wizard implements INewWizard, IEx
 			InputStream is = file.getContents();
 			ProjectPomHelper pom = new ProjectPomHelper (is);
 			is.close();
-			this.projectName = jprj.getProject().getName();
-			IPath location = jprj.getProject().getLocation();
+			this.projectName = project.getProject().getName();
+			IPath location = project.getProject().getLocation();
 			java.io.File projectFile = location.toFile().getAbsoluteFile();
 			this.projectUri = projectFile.toURI();
 			
@@ -141,7 +176,11 @@ public class NewFacematicProjectWizard extends Wizard implements INewWizard, IEx
 
 		try {
 			FmProjectSupport support = new FmProjectSupport (name, location, substs, implementToExistingProject, this.pom);
+			
 			support.createProject();
+			if (implementToExistingProject) {
+				addResourceOnFacematicImplementation (support);
+			}
 			BasicNewProjectResourceWizard.updatePerspective(_configurationElement);
 		} catch (Exception e) {
 			e.printStackTrace();

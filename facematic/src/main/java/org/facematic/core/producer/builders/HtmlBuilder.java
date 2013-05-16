@@ -58,17 +58,7 @@ public class HtmlBuilder extends ComponentBuilder {
 	 * @return
 	 */
 	public String format(Element configuration) {
-		OutputFormat format = OutputFormat.createPrettyPrint();
-		StringWriter swriter = new StringWriter();
-		XMLWriter writer = new XMLWriter(swriter, format);
-		try {
-			writer.write(configuration);
-			writer.flush();
-			return swriter.getBuffer().toString();
-		} catch (IOException e) {
-			logger.error("Could not format html", e);
-		}
-		return "";
+		return org.facematic.utils.XmlUtil.getInnerContent(configuration); 
 	}
 
 }

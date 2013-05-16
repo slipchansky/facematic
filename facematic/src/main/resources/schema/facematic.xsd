@@ -158,6 +158,7 @@
 			<element type="c:CoreHtmlType" name="font" minOccurs="0"
 				maxOccurs="unbounded" />
 		</sequence>
+		<attribute name="class" type="string"></attribute>
 		<attribute name="style" type="string"></attribute>
 		<attribute name="width" type="string"></attribute>
 		<attribute name="height" type="string"></attribute>

@@ -22,6 +22,7 @@ import org.facematic.core.producer.builders.TabSheetBuilder;
 import org.facematic.core.producer.builders.TableBuilder;
 import org.facematic.core.producer.builders.TreeBuilder;
 import org.facematic.core.producer.builders.UploadBuilder;
+import org.facematic.core.annotations.FmView;
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.nvo.Item;
@@ -119,7 +120,6 @@ public class FaceProducer implements Serializable {
 	private NodeWatcher structureWatcher = null;
 
 	private GroovyEngine engine;
-	private Object context; // groovy execution context
 
 	private FacematicUI ui;
 
@@ -268,14 +268,6 @@ public class FaceProducer implements Serializable {
 		return ui;
 	}
 
-	/**
-	 * Assign
-	 * 
-	 * @param context
-	 */
-	public void setContext(Object context) {
-		this.context = context;
-	}
 
 	/**
 	 * Builds view-controller pair by given entire xml document
@@ -343,12 +335,74 @@ public class FaceProducer implements Serializable {
 		}
 		try {
 			controllerInstance = createClassInstance(controllerClassName);
+			if (controllerInstance != null) {
+				if (controllerInstance instanceof FmBaseController) {
+					try {
+					((FmBaseController)controllerInstance).prepareContext(this);
+					} catch (Exception e) {
+						logger.error("Could not prepare context. If you see this message in Facematic console, it is probably due to the fact that your code is not running in a work context. In this case, you can ignore this message.", e);
+					}
+				}
+			}
 		} catch (Exception e) {
 			logger.error("Can't instantinate controller: "
 					+ controllerClassName, e);
 		}
 	}
+	
+	/**
+	 * Gets view for specified controller class 
+	 * @param controllerClass
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> T getViewFor (Class controllerClass) throws Exception {
+		String viewName = null;
+		try {
+		   FmView viewAnnotation = (FmView) controllerClass.getAnnotation(FmView.class);
+		   if (viewAnnotation != null) {
+			   viewName = viewAnnotation.name();
+		   }
+		   
+		} catch (Exception e) {
+			// skip;
+		}
+		if (viewName==null) {
+			logger.warn("Class "+controllerClass.getCanonicalName()+" does not contain valid view name.");
+			viewName = controllerClass.getCanonicalName();
+			viewName = updateSuffix(viewName, "View", "Controller");
+			viewName = viewName.replace(".controllers.", ".views.");
+			logger.warn("Try to get fiew from " + viewName);
+		}
+		return buildFromResource(viewName);
+	}
+	
+	
+	/**
+	 * Gets view for assigned controller
+	 * @see FaceProducer#FaceProducer(Object, FacematicUI)
+	 * @see FaceProducer#FaceProducer(Object, FaceProducer, String)
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> T getView () throws Exception {
+		if (controllerInstance==null) {
+			logger.error("Controller instance does not exists.");
+			return null;
+		}
+		return getViewFor (controllerInstance.getClass());
+	}
 
+	private String updateSuffix(String original, final String validSuffix,
+			final String invalidSuffix) {
+		if (original.endsWith(invalidSuffix)) {
+			original = original.substring(0,
+					original.length() - invalidSuffix.length()) + validSuffix;
+		}
+		return original;
+	}
+	
 	/**
 	 * Build view-controller by xml description, saved as application resource
 	 * 
@@ -577,7 +631,6 @@ public class FaceProducer implements Serializable {
 	public GroovyEngine getGroovyEngine() {
 		if (this.engine == null) {
 			this.engine = new GroovyEngine();
-			engine.put("context", context);
 		}
 		return engine;
 	}
@@ -644,5 +697,22 @@ public class FaceProducer implements Serializable {
 	 */
 	public Object getControllerInstance() {
 		return controllerInstance;
+	}
+
+	/**
+	 * Add named variable to context
+	 * @param key
+	 * @param value
+	 */
+	public void put(String key, Object value) {
+		getGroovyEngine().put(key, value);
+	}
+	
+	/**
+	 * Add contents of map to context 
+	 * @param map
+	 */
+	public void putAll(Map map) {
+		getGroovyEngine().put(map);
 	}
 }

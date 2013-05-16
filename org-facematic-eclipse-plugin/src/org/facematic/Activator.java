@@ -1,24 +1,12 @@
 package org.facematic;
 
-import java.awt.Color;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.util.Properties;
 
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
-
-//import org.eclipse.ui.console.ConsolePlugin;
-//import org.eclipse.ui.console.IConsole;
-//import org.eclipse.ui.console.MessageConsole;
-//import org.eclipse.ui.console.MessageConsoleStream;
-//import org.eclipse.ui.internal.util.BundleUtility;
-
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
@@ -28,8 +16,6 @@ import org.facematic.facematic.editors.FmMvcEditor;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.log.LogService;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -52,7 +38,8 @@ public class Activator extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public Activator() {
-
+		int m = 0;
+		m++;
 	}
 
 	/*
@@ -79,8 +66,9 @@ public class Activator extends AbstractUIPlugin {
 			console = new PrintWriter(consoleOutputStream);
 		} catch (Exception e) {
 			e.printStackTrace();
+			error ("Unable to prepare facematic console", e);
 		}
-
+		
 	}
 
 	/*

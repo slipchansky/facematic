@@ -107,11 +107,31 @@ public class FmProjectWizardPage extends WizardPage  {
 	}
 	
 	private void updateArtefactNameDependentValues() {
-		String artefactName = artefactText.getText();
-		servletNameText.setText(artefactName.substring(0, 1).toUpperCase()+artefactName.substring(1).toLowerCase()+"Servlet");
-		uiNameText.setText(artefactName.substring(0, 1).toUpperCase()+artefactName.substring(1).toLowerCase()+"UI");
-		skinNameText.setText(artefactName.toLowerCase());
+		String artIfactName = artefactText.getText();
+		if (artIfactName == null) {
+			artIfactName = "noname";
+		}
+		artIfactName = updateArtifactName (artIfactName, "-");
+		artIfactName = updateArtifactName (artIfactName, "\\.");
+		
+		servletNameText.setText(artIfactName.substring(0, 1).toUpperCase()+artIfactName.substring(1)+"Servlet");
+		uiNameText.setText(artIfactName.substring(0, 1).toUpperCase()+artIfactName.substring(1)+"UI");
+		skinNameText.setText(artIfactName.toLowerCase());
 	}
+
+	private static String updateArtifactName(String artIfactName, String c) {
+		if (c==null || artIfactName==null)
+			return artIfactName;
+		String a[] = artIfactName.split(c);
+		if (a.length<2) return artIfactName;
+		artIfactName = a[0];
+		for (int i=1; i< a.length; i++) {
+			artIfactName+=a[i].substring(0, 1).toUpperCase()+a[i].substring(1);
+		}
+		
+		return artIfactName;
+	}
+	
 
 	public String getGROUPID () {
 		return groupText.getText ();
