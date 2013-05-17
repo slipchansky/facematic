@@ -4,14 +4,9 @@ target
 .faces-config.xml.jsfdia
 .idea
 *.iml
-*.bat
 /.svn/
 /*.svnignore
 /target/
 /VAADIN/
 rebel.xml
 nb*.xml
-add
-commit
-push
-pull

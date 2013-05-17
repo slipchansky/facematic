@@ -1,0 +1,4 @@
+cd ../..
+git pull origin dev
+cd control/linux
+chmod -R 777 .

@@ -1,2 +1,5 @@
+cd ../..
 git add . -v
 git add -u -v
+cd control/linux
+
