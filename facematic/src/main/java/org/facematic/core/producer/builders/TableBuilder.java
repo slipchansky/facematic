@@ -82,9 +82,13 @@ public class TableBuilder extends SelectBuilder {
 
 		Attribute aColumnAlignment = col.attribute("alignment");
 		Attribute aColumnIcon = col.attribute("icon");
-		Attribute aColumnHeader = col.attribute("header");
+		String columnHeader = col.attributeValue("header");
 		Attribute aDefaultValue = col.attribute("defaultValue");
 		Attribute aType = col.attribute("type");
+		String caption = col.attributeValue("caption");
+		if (columnHeader == null && caption != null) {
+			columnHeader = caption;
+		}
 
 		String sType = aType == null ? "String" : aType.getValue();
 		sType = clarifyTypeName(sType);
@@ -109,9 +113,7 @@ public class TableBuilder extends SelectBuilder {
 		 */
 
 		String id = aId.getValue();
-		table.addContainerProperty(id, type, defaultValue,
-				aColumnHeader == null ? null : aColumnHeader.getValue(),
-				columnIcon, columnAlignment);
+		table.addContainerProperty(id, type, defaultValue, columnHeader, columnIcon, columnAlignment);
 
 		
 		setColumnCollapsed(id, table, col);
