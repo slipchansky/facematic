@@ -8,7 +8,7 @@ import org.dom4j.Element;
 
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
-import org.facematic.utils.GroovyEngine;
+import org.facematic.utils.VelocityEngine;
 
 import com.vaadin.data.Property;
 import com.vaadin.ui.AbstractField;

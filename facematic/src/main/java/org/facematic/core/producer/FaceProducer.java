@@ -30,7 +30,8 @@ import org.facematic.core.ui.DummyFacematicUi;
 import org.facematic.core.ui.FacematicUI;
 import org.facematic.core.ui.custom.Composite;
 import org.facematic.core.ui.custom.Html;
-import org.facematic.utils.GroovyEngine;
+import org.facematic.utils.ITemplateEngine;
+import org.facematic.utils.VelocityEngine;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -119,7 +120,7 @@ public class FaceProducer implements Serializable {
 	private FaceProducer parent;
 	private NodeWatcher structureWatcher = null;
 
-	private GroovyEngine engine;
+	private ITemplateEngine engine;
 
 	private FacematicUI ui;
 
@@ -628,9 +629,9 @@ public class FaceProducer implements Serializable {
 	 * 
 	 * @return
 	 */
-	public GroovyEngine getGroovyEngine() {
+	public ITemplateEngine getTemplateEngine() {
 		if (this.engine == null) {
-			this.engine = new GroovyEngine();
+			this.engine = new VelocityEngine();
 		}
 		return engine;
 	}
@@ -705,7 +706,7 @@ public class FaceProducer implements Serializable {
 	 * @param value
 	 */
 	public void put(String key, Object value) {
-		getGroovyEngine().put(key, value);
+		getTemplateEngine().put(key, value);
 	}
 	
 	/**
@@ -713,6 +714,6 @@ public class FaceProducer implements Serializable {
 	 * @param map
 	 */
 	public void putAll(Map map) {
-		getGroovyEngine().put(map);
+		getTemplateEngine().put(map);
 	}
 }

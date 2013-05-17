@@ -18,6 +18,8 @@ import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Upload.StartedEvent;
 import org.facematic.core.nvo.UploadProgressEvent;
+import org.facematic.core.producer.FaceProducer;
+
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.FailedEvent;
 import com.vaadin.ui.Upload;
@@ -72,5 +74,11 @@ public class SimpleComponents implements FmBaseController {
      int k = 0;
      k++; 
     }
+
+
+	@Override
+	public void prepareContext(FaceProducer arg0) {
+		
+	}
 }
 

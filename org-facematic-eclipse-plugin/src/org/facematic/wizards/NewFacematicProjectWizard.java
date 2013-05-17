@@ -5,7 +5,6 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -17,11 +16,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.internal.core.CompilationUnit;
 import org.eclipse.jdt.internal.core.JavaProject;
-import org.eclipse.jdt.internal.core.PackageFragment;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -29,14 +25,17 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
-import org.facematic.facematic.editors.FmMvcEditor;
+import org.facematic.Settings;
 import org.facematic.plugin.utils.FmProjectSupport;
 import org.facematic.plugin.utils.ProjectPomHelper;
 import org.facematic.utils.StreamUtils;
+import static org.facematic.Constants.*;
 
 
 public class NewFacematicProjectWizard extends Wizard implements INewWizard, IExecutableExtension {
 
+	
+	
 	private WizardNewProjectCreationPage pageNewProject;
 	FmProjectWizardPage _pageTwo;
 	private IConfigurationElement _configurationElement;
@@ -94,7 +93,9 @@ public class NewFacematicProjectWizard extends Wizard implements INewWizard, IEx
 	}
 
 	private ProjectPomHelper getMavenProject() {
-		
+		if (project == null) {
+			return null;
+		}
 		File file = (File) project.getFile("pom.xml");
 		
 		if (file == null) {
@@ -160,18 +161,16 @@ public class NewFacematicProjectWizard extends Wizard implements INewWizard, IEx
 		URI location = getProjectLocation();
 		
 		Map<String, String> substs = new HashMap<String, String> () {{
-			put ("GROUPID",          _pageTwo.getGROUPID());
-			put ("GROUPDIR",         _pageTwo.getGROUPID_DIR());
-			put ("PROJECTNAME",      getProjectName());
-			put ("ARTEFACTNAME",      _pageTwo.getArtefactName());
-			put ("JAVAVERSION", "1.6");
-			put ("VERSION",          _pageTwo.getArtefactVersion ());
-			put ("FACEMATICVERSION", "2.0.0-SNAPSHOT");
-			put ("UICLASS",          _pageTwo.getUICLASS());
-			put ("THEMENAME",        _pageTwo.getTHEMENAME());
-			put ("SERVLETCLASS",     _pageTwo.getSERVLETCLASS());
-			put ("GENERATED_CODE_BEGIN", FmMvcEditor.GENERATED_CODE_BEGIN);
-			put ("GENERATED_CODE_END", FmMvcEditor.GENERATED_CODE_END);
+			put (CONTEXT_GROUPID,          _pageTwo.getGROUPID());
+			put (CONTEXT_GROUPDIR,         _pageTwo.getGROUPID_DIR());
+			put (CONTEXT_PROJECTNAME,      getProjectName());
+			put (CONTEXT_ARTIFACTNAME,      _pageTwo.getArtefactName());
+			put (CONTEXT_JAVAVERSION, "1.6");
+			put (CONTEXT_VERSION,          _pageTwo.getArtefactVersion ());
+			put (CONTEXT_FACEMATICVERSION, Settings.FACEMATIC_VERSION);
+			put (CONTEXT_UICLASS,          _pageTwo.getUICLASS());
+			put (CONTEXT_THEMENAME,        _pageTwo.getTHEMENAME());
+			put (CONTEXT_SERVLETCLASS,     _pageTwo.getSERVLETCLASS());
 		}};
 
 		try {

@@ -10,8 +10,6 @@ import org.dom4j.Element;
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.nvo.Item;
 import org.facematic.core.producer.FaceProducer;
-
-import com.google.gwt.user.client.ui.Tree;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.AbstractSelect;

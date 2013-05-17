@@ -105,8 +105,6 @@ public class ProjectPomHelper {
 			return false;
 		}
 		if (!haveDependency (dependencies, "org.facematic", "facematic")) return false;
-		if (!haveDependency (dependencies, "com.vaadin", "vaadin-client-compiled")) return false;
-		if (!haveDependency (dependencies, "com.vaadin", "vaadin-themes")) return false;
 		return true;
 	}
 	
@@ -128,20 +126,9 @@ public class ProjectPomHelper {
 			return;
 		}
 		
-		Element packaging = root.element ("packaging");
-		if (packaging==null) {
-			root.addElement("packaging").setText("war");
-		}
-		
 		addDependency    (dependencies, "org.facematic", "facematic", "${facematic.version}", "compile");
-		addDependency    (dependencies, "com.vaadin", "vaadin-client-compiled", "${vaadin.version}", null);
-		addDependency    (dependencies, "com.vaadin", "vaadin-themes", "${vaadin.version}", null);
-		addDependency    (dependencies, "com.vaadin", "vaadin-theme-compiler", "${vaadin.version}", null);
 		addDependency    (dependencies, "javax.servlet", "javax.servlet-api", SERVLET_API_VERSION, "provided");
-		addDependency    (dependencies, "javax.enterprise", "cdi-api", CDI_VERSION, "provided");
-		
 		updateRepository (repositories, "facematic", FACEMATIC_REPOSITORY);
-		updateProperty   (properties,   "vaadin.version", VAADIN_VERSION);
 		updateProperty   (properties,   "facematic.version", FACEMATIC_VERSION);
 		
 		this.source = buildXml (); 

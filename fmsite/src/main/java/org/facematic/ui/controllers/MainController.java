@@ -6,6 +6,7 @@ import org.facematic.core.annotations.FmView;
 import org.facematic.core.annotations.FmReaction;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.mvc.FmBaseController;
+import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.FacematicUI;
 
 import com.vaadin.annotations.JavaScript;
@@ -22,9 +23,14 @@ public class MainController implements FmBaseController {
     @Override
     public void init () {
       // TODO add your code here
-    	////ui.getJa executeJavaScript ("");
     	
     }
+
+    public void prepareContext (FaceProducer producer) {
+
+    }
+
+
 	
 }
 

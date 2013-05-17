@@ -5,13 +5,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import org.apache.log4j.Logger;
-import org.codehaus.groovy.control.CompilationFailedException;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
-
-import com.google.gwt.user.client.ui.HTML;
-
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.custom.Html;
@@ -44,7 +40,7 @@ public class HtmlBuilder extends ComponentBuilder {
 		String text = format(configuration);
 		if (text.indexOf('$') > 0) {
 			try {
-				text = builder.getGroovyEngine().translate(text);
+				text = builder.getTemplateEngine().translate(text);
 			} catch (Exception e) {
 				logger.error("Groovy could not translate\n"+text, e);
 			}
