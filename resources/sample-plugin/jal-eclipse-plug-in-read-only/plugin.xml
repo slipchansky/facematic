@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="JalBuilder"
+         name="JAL Project Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="org.felix.jal.eclipse.plugin.builder.JalBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="JalNature"
+         name="JAL Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.felix.jal.eclipse.plugin.builder.JalNature">
+         </run>
+      </runtime>
+      <builder
+            id="org.felix.jal.eclipse.plugin.JalBuilder">
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.felix.jal.eclipse.plugin.JalNaturecontribution"
+            nameFilter="*"
+            objectClass="org.eclipse.core.resources.IProject">
+         <action
+               class="org.felix.jal.eclipse.plugin.builder.ToggleNatureAction"
+               enablesFor="+"
+               id="org.felix.jal.eclipse.plugin.addRemoveNatureAction"
+               label="Add/Remove JAL Nature"
+               menubarPath="additions">
+         </action>
+      </objectContribution>
+      <viewerContribution
+            id="org.felix.jal.jaleditor.JalEditorPopup"
+            targetID="#TextEditorContext">
+            <action
+                label="Toggle Comment"
+                class="org.felix.jal.eclipse.plugin.ui.editors.DefaultRetargetEditorDelegate"
+                menubarPath="additions"
+                id="org.felix.jal.eclipse.plugin.ui.editors.ToggleCommentAction">
+            </action>            
+      </viewerContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+           <editor
+            name="Jal Editor"
+            extensions="jal"
+            icon="icons/jal.gif"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="org.felix.jal.eclipse.plugin.ui.editors.JalEditor"
+            id="org.felix.jal.eclipse.plugin.ui.editors.JalEditor">
+      </editor>
+      <editor
+            default="true"
+            id="org.felix.jal.eclipse.plugin.ui.editors.hex.HexEditor"
+            name="Hex Editor"
+            extensions="hex"
+            icon="icons/hex.png"            
+            class="org.felix.jal.eclipse.plugin.ui.editors.hex.HexEditor">
+      </editor>
+      <editor
+            default="true"
+            id="org.felix.jal.eclipse.plugin.ui.editors.asm.AsmEditor"
+            class="org.felix.jal.eclipse.plugin.ui.editors.asm.AsmEditor"
+            extensions="asm"
+            icon="icons/asm.png"
+            name="Asm Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.felix.jal.eclipse.plugin.ui.preferences.JalPreferencesPage"
+            id="org.felix.jal.eclipse.plugin.ui.preferences.JalPreferencesPage"
+            name="Jal">
+      </page>
+      <page
+            class="org.felix.jal.eclipse.plugin.ui.preferences.JalEditorPreferences"
+            id="org.felix.jal.eclipse.plugin.ui.preferences.JalEditorPreferences"
+            category="org.felix.jal.eclipse.plugin.ui.preferences.JalPreferencesPage"
+            name="Editor">
+      </page>
+      <page
+            class="org.felix.jal.eclipse.plugin.ui.preferences.ProgrammerPreferences"
+            id="org.felix.jal.eclipse.plugin.ui.preferences.ProgrammerPreferences"
+            category="org.felix.jal.eclipse.plugin.ui.preferences.JalPreferencesPage"
+            name="Programmers">
+      </page>
+      <page
+            class="org.felix.jal.eclipse.plugin.ui.preferences.BootloaderPreferences"
+            id="org.felix.jal.eclipse.plugin.ui.preferences.BootloaderPreferences"
+            category="org.felix.jal.eclipse.plugin.ui.preferences.JalPreferencesPage"
+            name="Bootloaders">
+      </page>
+      
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Jal Projects"
+            id="JalProject">
+      </category>         
+      <wizard
+            category="JalProject"
+            class="org.felix.jal.eclipse.plugin.ui.wizards.NewProjectWizard"
+            icon="icons/jal.gif"
+            id="org.felix.jal.eclipse.plugin.ui.wizards.NewProjectWizard"
+            name="Jal Project"
+            project="true">
+      </wizard>
+  </extension>
+   <extension
+         id="org.felix.jal.todomarker"
+         name="Jal Task"
+         point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.core.resources.taskmarker"/>
+      <persistent value="false">
+      </persistent>
+   </extension>
+   <extension
+         id="org.felix.jal.jalcompilerproblem"
+         name="Jal Problem"
+         point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.core.resources.problemmarker"/>
+      <persistent value="true"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.felix.jal.eclipse.plugin.actionSet"
+            label="Jal"
+            visible="true">
+         <menu
+               id="programmerMenu"
+               label="Pro&amp;grammer">
+            <separator
+                  name="programmerGroup">
+            </separator>
+         </menu>
+         <action
+               class="org.felix.jal.eclipse.plugin.actions.ProgWriteAction"
+               icon="icons/mcu-write.png"
+               id="org.felix.jal.eclipse.plugin.actions.ProgWriteAction"
+               label="&amp;Write"
+               menubarPath="programmerMenu/programmerGroup"
+               toolbarPath="programmerGroup"
+               tooltip="Write">
+         </action>
+         
+         <action
+               class="org.felix.jal.eclipse.plugin.actions.ProgReadAction"
+               icon="icons/mcu-read.png"
+               id="org.felix.jal.eclipse.plugin.actions.ProgReadAction"
+               label="&amp;Read"
+               menubarPath="programmerMenu/programmerGroup"
+               toolbarPath="programmerGroup"
+               tooltip="Read">
+         </action>       
+         
+         <action
+               class="org.felix.jal.eclipse.plugin.actions.ProgVerifyAction"
+               icon="icons/mcu-verify.png"
+               id="org.felix.jal.eclipse.plugin.actions.ProgVerifyAction"
+               label="&amp;Verify"
+               menubarPath="programmerMenu/programmerGroup"
+               toolbarPath="programmerGroup"
+               tooltip="Verify">
+         </action>               
+         
+         <action
+               class="org.felix.jal.eclipse.plugin.actions.ProgEraseAction"
+               icon="icons/mcu-clear.png"
+               id="org.felix.jal.eclipse.plugin.actions.ProgEraseAction"
+               label="&amp;Erase"
+               menubarPath="programmerMenu/programmerGroup"
+               toolbarPath="programmerGroup"
+               tooltip="Erase">
+         </action>
+         
+         <action
+               class="org.felix.jal.eclipse.plugin.actions.ProgAutodetectAction"
+               icon="icons/mcu-t.png"
+               id="org.felix.jal.eclipse.plugin.actions.ProgAutodetectAction"
+               label="&amp;Auto-detect"
+               menubarPath="programmerMenu/programmerGroup"
+               toolbarPath="programmerGroup"
+               tooltip="Auto-detect MCU">
+         </action>    
+
+         <action
+               class="org.felix.jal.eclipse.plugin.actions.ProgReleaseMCLRAction"
+               icon="icons/releng_gears.gif"
+               id="org.felix.jal.eclipse.plugin.actions.ProgReleaseMCLRAction"
+               label="&amp;Release MCLR"
+               menubarPath="programmerMenu/programmerGroup"
+               toolbarPath="programmerGroup"
+               tooltip="Release MCLR (run)">
+         </action>
+         
+         <menu
+               id="bootloaderMenu"
+               label="&amp;Bootloader">
+            <separator
+                  name="bootloaderGroup">
+            </separator>
+         </menu>
+         <action
+               class="org.felix.jal.eclipse.plugin.actions.BootloaderWriteAction"
+               icon="icons/mcu-bootwrite.png"
+               id="org.felix.jal.eclipse.plugin.actions.BootloaderWriteAction"
+               label="&amp;Write"
+               menubarPath="bootloaderMenu/bootloaderGroup"
+               toolbarPath="bootloaderGroup"
+               tooltip="Write">
+         </action>
+         <action
+               class="org.felix.jal.eclipse.plugin.actions.BootloaderReadAction"
+               icon="icons/mcu-bootread.png"
+               id="org.felix.jal.eclipse.plugin.actions.BootloaderReadAction"
+               label="&amp;Read"
+               menubarPath="bootloaderMenu/bootloaderGroup"
+               toolbarPath="bootloaderGroup"
+               tooltip="Read">
+         </action>
+         <action
+               class="org.felix.jal.eclipse.plugin.actions.BootloaderVerifyAction"
+               icon="icons/mcu-bootverify.png"
+               id="org.felix.jal.eclipse.plugin.actions.BootloaderVerifyAction"
+               label="&amp;Verify"
+               menubarPath="bootloaderMenu/bootloaderGroup"
+               toolbarPath="bootloaderGroup"
+               tooltip="Verify">
+         </action>
+                                              
+      </actionSet>
+      <actionSet
+            id="org.felix.jal.jaleditor.coding"
+            visible="true"
+            label="Jal Coding">
+            <menu
+                id="org.felix.jal.jaleditor.topLevelMenu.source"
+                label="Source"
+                path="edit">
+                <separator name="editGroup" />
+            </menu>
+            <action
+                definitionId="org.felix.jal.eclipse.ui.commands.ToggleComment"
+                label="Toggle Comment" enablesFor="+"
+                class="org.felix.jal.eclipse.plugin.ui.editors.DefaultRetargetEditorDelegate"
+                menubarPath="org.felix.jal.jaleditor.topLevelMenu.source/editGroup"
+                id="org.felix.jal.eclipse.plugin.ui.editors.ToggleCommentAction">
+            </action>            
+      </actionSet>
+   </extension>
+  
+	<extension
+            point="org.eclipse.ui.perspectives">
+        <perspective
+                name="Jal"
+                icon="icons/jal.gif"
+                class="org.felix.jal.eclipse.plugin.perspectives.JalPerspective"
+                id="org.felix.jal.eclipse.plugin.perspectives.JalPerspective">
+        </perspective>
+    </extension>  
+  
+	<extension point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+         markerType="org.felix.jal.jalcompilerproblem"
+         class="org.felix.jal.eclipse.plugin.ui.quickfix.QuickFixer">
+       </markerResolutionGenerator>
+   </extension>
+
+	<extension
+	      point="org.eclipse.ui.commands">
+	      <category
+             id="org.felix.jal.eclipse.plugin.ui.commands.source"
+             name="Jal Source">
+	      </category>
+	      <command
+             id="org.felix.jal.eclipse.ui.commands.ToggleComment"
+             name="Toggle Comment" 
+             categoryId="org.felix.jal.eclipse.plugin.ui.commands.source">
+	      </command>
+	</extension>
+	
+	<extension
+	      point="org.eclipse.ui.bindings">
+	      <key
+             contextId="org.eclipse.ui.contexts.window"
+             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+             commandId="org.felix.jal.eclipse.ui.commands.ToggleComment"
+             sequence="M1+M2+C">
+	      </key>
+	</extension>
+ <extension
+       point="org.eclipse.ui.views">
+      <category
+            name="Jal"
+            id="org.felix.jal.metrics">
+      </category>
+       <view
+             class="org.felix.jal.eclipse.plugin.ui.views.CompilerMetricsView"
+             id="org.felix.jal.metrics.compilermetrics"
+             name="Operation results" allowMultiple="false"
+             category="org.felix.jal.metrics">             
+       </view>
+ </extension>	
+
+</plugin>

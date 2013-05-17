@@ -1,0 +1,6 @@
+cd ../../facematic
+mvn clean install
+mvn -DaltDeploymentRepository=snapshot-repo::default::file:../repo/snapshots clean deploy
+rm ../../org-facematic/src/main/webapp/facematic.xsd
+cat src/main/resources/schema/facematic.xsd  > ../../org-facematic/src/main/webapp/facematic.xsd
+cd ../control/linux

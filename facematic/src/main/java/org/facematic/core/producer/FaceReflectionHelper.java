@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,12 +31,20 @@ interface FieldAnnotationMatcher<T extends Annotation> {
 	boolean match(Field field, T annotation, String value);
 }
 
+class A {
+	public int a, b, c;
+}
+
+class B extends A {
+	public int d, e, f;
+}
+
 public class FaceReflectionHelper implements Serializable {
 	private static Logger logger = LoggerFactory.getLogger(FaceReflectionHelper.class);
 	
 	private static final String FIELD_MODIFIERS = "modifiers";
 	private Object instance;
-	private Field[] fields;
+	private List<Field> fields = new ArrayList<Field> ();
 	 
 	private final static FieldAnnotationMatcher<FmController> controllerMatcher = new FieldAnnotationMatcher<FmController>() {
 		@Override
@@ -71,10 +81,11 @@ public class FaceReflectionHelper implements Serializable {
 		this.instance = instance;
 		if (instance != null) {
 			Class<? extends Object> instanceClass = instance.getClass();
-			fields = instanceClass.getDeclaredFields();
-//			for (Field f : fields) {
-//				updateFieldModifiers(f);
-//			}
+			
+			for (Class clazz=instanceClass;clazz!=Object.class; clazz = clazz.getSuperclass() ) {
+				Field [] fs = clazz.getDeclaredFields();
+				fields.addAll (Arrays.asList(fs));
+			}
 		}
 	}
 
@@ -212,5 +223,6 @@ public class FaceReflectionHelper implements Serializable {
 			return null;
 		}
 	}
-
+	
+	
 }
