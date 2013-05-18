@@ -47,7 +47,7 @@ public class SimpleTemplateEngine {
 	 * @return
 	 */
 	public String evaluateString(String body) {
-		if (body.indexOf('$')==0) return body;
+		if (body.indexOf('$')<0) return body;
 		StringBuilder result = new StringBuilder ();
 		StringBuilder nameBuilder = new StringBuilder ();
 		byte b [] = body.getBytes ();

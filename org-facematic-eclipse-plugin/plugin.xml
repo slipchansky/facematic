@@ -24,6 +24,13 @@
             name="Facematic Project"
             project="true">
       </wizard>
+      <wizard
+            category="org.facematic"
+            class="org.facematic.wizards.FacematicNewBeanFormWizard"
+            icon="icons/fm-vaadin.png"
+            id="org.facematic.wizards.FacematicNewBeanFormWizard"
+            name="Create Facematic BeanForm">
+      </wizard>
    </extension>
    
    <extension

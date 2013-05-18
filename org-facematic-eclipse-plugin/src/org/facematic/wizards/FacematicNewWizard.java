@@ -105,7 +105,7 @@ public class FacematicNewWizard extends Wizard implements INewWizard {
 			}
 		});
 		
-		monitor.worked(1);
+		monitor.worked(0);
 	}
 	
 

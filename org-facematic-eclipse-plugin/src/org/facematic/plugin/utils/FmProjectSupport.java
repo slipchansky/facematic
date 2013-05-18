@@ -46,7 +46,7 @@ public class FmProjectSupport {
 		this.implement = true;
 		
 		try {
-			this.location = new URI (project.getLocation().toFile().getAbsolutePath());
+			this.location = new URI (project.getLocation().toFile().getAbsolutePath().replace('\\', '/'));
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

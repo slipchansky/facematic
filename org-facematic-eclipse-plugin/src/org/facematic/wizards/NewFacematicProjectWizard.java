@@ -119,7 +119,7 @@ public class NewFacematicProjectWizard extends Wizard implements INewWizard, IEx
 		
 	}
 
-	private IProject findProject(Object selection) {
+	public static IProject findProject(Object selection) {
 		if (selection instanceof Project) {
 			return (Project)selection;
 		}

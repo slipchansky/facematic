@@ -294,8 +294,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	}
 
 
-	private File updateSourceFile(String packageName, String artefactName,
-			String mvnPrefix, String ext, String templateName) {
+	private File updateSourceFile(String packageName, String artefactName, String mvnPrefix, String ext, String templateName) {
 		String packagePath = packageName;
 		packagePath = packagePath.replace('.', '/');
 		
