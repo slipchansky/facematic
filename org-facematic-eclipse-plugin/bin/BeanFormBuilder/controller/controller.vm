@@ -1,0 +1,127 @@
+package ${controllerPackageName};
+
+import javax.inject.Inject;
+import org.apache.log4j.Logger;
+import org.facematic.core.logging.LoggerFactory;
+import org.facematic.core.annotations.FmController;
+import org.facematic.core.annotations.FmUI;
+import org.facematic.core.annotations.FmView;
+import org.facematic.core.annotations.FmReaction;
+import org.facematic.core.annotations.FmViewComponent;
+import org.facematic.core.mvc.FmBaseController;
+import org.facematic.core.producer.FaceProducer;
+import org.facematic.core.ui.FacematicUI;
+import org.facematic.utils.FormBinder;
+import com.vaadin.data.Validator;
+import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
+import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.TextField;
+import ${className};
+
+/**
+ *
+ */
+@FmView(name = "${viewQualifiedName}")
+public class ${controllerSimpleName} implements FmBaseController {
+
+	private static final Logger logger = LoggerFactory.getLogger(${controllerSimpleName}.class);
+	
+	protected FormBinder binder;  
+
+	@Inject
+	@FmUI
+	protected FacematicUI ui;
+	
+${formFields}
+
+	/**
+	 *
+	 */
+	@Override
+	public void prepareContext(FaceProducer producer) {
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public void init() {
+
+        binder = new FormBinder (this);
+        
+//      for example:
+//        
+//		email.addValidator(new Validator() {
+//			@Override
+//			public void validate(Object value) throws InvalidValueException {
+//				String email = (String) value;
+//				if (!isValidEmailAddress(email))
+//					throw new InvalidValueException(
+//							"Email адрес должен иметь вид name@dubdomain.domain");
+//
+//			}
+//			private boolean isValidEmailAddress(String email) {
+//				if (email == null) {
+//					return false;
+//				}
+//				try {
+//					InternetAddress emailAddr = new InternetAddress(email);
+//					emailAddr.validate();
+//				} catch (AddressException ex) {
+//					return false;
+//				}
+//				return true;
+//			}
+//		});
+
+		binder.bind (newEmpty${classSimpleName} ());
+	}
+	
+	
+
+	protected ${classSimpleName} newEmpty${classSimpleName} () {
+		${classSimpleName} instance = new ${classSimpleName}();
+//
+//      for example:
+//
+//		userBean.setEmail("");
+//		userBean.setFirstName("");
+//		userBean.setLastName("");
+//		userBean.setPassword("");
+//		userBean.setRole(UserRole.USER);
+
+		return instance;
+	}
+
+	public void editBean (${classSimpleName} bean) {
+		
+		if (bean == null) {
+			bean = newEmpty${classSimpleName}();
+		}
+		binder.bind (bean);
+	}
+
+	@FmReaction("Button.onClick")
+	public void save(ClickEvent event) {
+
+		if (!binder.isValid()) {
+			ui.showNotification("Wrong data entered", Notification.Type.ERROR_MESSAGE);
+			return;
+		}
+		
+		try {
+			binder.commit ();
+			doSaveAction  ();
+		} catch (CommitException e) {
+			ui.showNotification("Can't save data", Notification.Type.ERROR_MESSAGE);
+		}
+	}
+
+	protected void doSaveAction() {
+		// ${classSimpleName} result = service.merge ((${classSimpleName})binder.getBean ());
+	}
+}

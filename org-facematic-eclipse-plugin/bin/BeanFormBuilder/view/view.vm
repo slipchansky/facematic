@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://facematic.org/fm http://facematic.org/schema/facematic.xsd"
+    controller="${controllerQualifiedName}" >
+
+    <vl width="300">
+        <FormLayout name="${formSimpleName}" width="100%">
+${viewFields}
+        </FormLayout>
+
+		<Button caption="Save" width="150" onClick="save" alignment="BOTTOM_RIGHT"/>
+    </vl>
+
+</content>
