@@ -1,0 +1,32 @@
+package ${controllerPackageName};
+
+import org.apache.log4j.Logger;
+import org.facematic.core.annotations.FmView;
+import org.facematic.core.logging.LoggerFactory;
+import ${className};
+import ${editFormQualifiedName};
+
+@FmView(name = "${editViewQualifiedName}")
+public class  ${createFormSimpleName}  extends  ${editFormSimpleName} {
+	
+	private static final Logger logger = LoggerFactory.getLogger(${createFormSimpleName}.class);
+	
+    /**
+     *
+     */
+	@Override
+	public void init () {
+		super.init();
+		buttonDelete.setVisible(false);
+	}
+
+    /**
+     *
+     */
+	@Override
+	protected void doSaveAction() {
+		parent.create((${classSimpleName})binder.getBean());
+		binder.bind (newEmptyBean ());
+	}
+
+}

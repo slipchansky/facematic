@@ -13,7 +13,7 @@ import org.facematic.core.ui.FacematicUI;
 import com.vaadin.ui.Component;
 
 
-@FmView(name="${viewPackage}.$view")
+@FmView(name="${viewPackage}.${view}")
 public class ${controller} implements FmBaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(${controller}.class);

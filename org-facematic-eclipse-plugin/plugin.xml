@@ -8,13 +8,6 @@
             id="org.facematic">
       </category>
       <wizard
-            category="org.facematic"
-            class="org.facematic.wizards.FacematicNewWizard"
-            icon="icons/fm-vaadin.png"
-            id="org.facematic.wizards.FacematicNewWizard"
-            name="Create Facematic View+Controller">
-      </wizard>
-      <wizard
             canFinishEarly="false"
             class="org.facematic.wizards.NewFacematicProjectWizard"
             finalPerspective="org.eclipse.jst.j2ee.J2EEPerspective"
@@ -26,10 +19,24 @@
       </wizard>
       <wizard
             category="org.facematic"
-            class="org.facematic.wizards.FacematicNewBeanFormWizard"
+            class="org.facematic.wizards.FacematicNewWizard"
             icon="icons/fm-vaadin.png"
-            id="org.facematic.wizards.FacematicNewBeanFormWizard"
+            id="org.facematic.wizards.FacematicNewWizard"
+            name="Create Facematic View+Controller">
+      </wizard>
+      <wizard
+            category="org.facematic"
+            class="org.facematic.wizards.beanwizard.BeanForm.FacematicNewBeanFormWizard"
+            icon="icons/fm-vaadin.png"
+            id="org.facematic.wizards.beanwizard.BeanForm.FacematicNewBeanFormWizard"
             name="Create Facematic BeanForm">
+      </wizard>
+      <wizard
+            category="org.facematic"
+            class="org.facematic.wizards.beanwizard.BeanBrowseEdit.FacematicNewBeanBrowseEditWizard"
+            icon="icons/fm-vaadin.png"
+            id="org.facematic.wizards.beanwizard.BeanBrowseEdit.FacematicNewBeanBrowseEditWizard"
+            name="Create Facematic MasterDetail">
       </wizard>
    </extension>
    
