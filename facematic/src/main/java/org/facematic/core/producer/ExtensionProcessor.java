@@ -33,7 +33,7 @@ public class ExtensionProcessor {
 	 * @return
 	 * @throws Exception
 	 */
-	public Document processResource (String xml) throws Exception {
+	public Document processXml (String xml) throws Exception {
 		Element result = process (xml);
 		for (String key : placeholders.keySet()) {
 			Element e = placeholders.get(key);
@@ -41,6 +41,40 @@ public class ExtensionProcessor {
 		}
 		return new DefaultDocument(result);
 	}
+	
+	public Element processResource (String resourceName) throws Exception {
+		String xml = getXmlResource(resourceName);
+		Document doc = processXml (xml);
+		return doc.getRootElement();
+	}
+	
+	/**
+	 * @param xml
+	 * @return
+	 * @throws Exception
+	 */
+	private Element processFromResource (String resourceName) throws Exception {
+		String xml = getXmlResource(resourceName);
+		return  process (xml);
+	}
+
+	public String getXmlResource(String resourceName) {
+		String xml = org.facematic.utils.StreamUtils.getResourceAsString(resourceName);
+		if (xml == null) {
+			resourceName = resourceName.replaceAll("\\.", "/") + ".xml";
+			logger.info("Look for resource " + resourceName);
+			xml = org.facematic.utils.StreamUtils
+					.getResourceAsString(resourceName);
+
+		}
+
+		if (xml == null) {
+			logger.error("Cannot find resource " + resourceName);
+			return null;
+		}
+		return xml;
+	}
+	
 
 	private Element process(String xml) throws Exception {
 
@@ -62,7 +96,7 @@ public class ExtensionProcessor {
 			return root;
 		}
 
-		Element zuper = process(root.attributeValue("base"));
+		Element zuper = processFromResource(root.attributeValue("base"));
 
 		Element extension = root;
 		root = zuper;
@@ -80,7 +114,8 @@ public class ExtensionProcessor {
 			Element inner = processString(implement.asXML());
 			for (Element e : (List<Element>) inner.elements()) {
 				e.getParent().remove(e);
-				placeholder.getParent().add(e);
+				List elements = placeholder.getParent().elements();
+				elements.add(elements.indexOf(placeholder), e);
 			}
 		}
 		
@@ -112,22 +147,22 @@ public class ExtensionProcessor {
 	}
 
 	
-//	static String format(Element root) throws IOException {
-//		Document document = new DefaultDocument(root);
-//		Writer out = new StringWriter();
-//
-//		// Pretty print the document to System.out
-//		OutputFormat format = OutputFormat.createPrettyPrint();
-//		XMLWriter writer = new XMLWriter(out, format);
-//		writer.write(document);
-//
-//		return out.toString();
-//	}
+	static String format(Element root) throws IOException {
+		Document document = new DefaultDocument(root);
+		Writer out = new StringWriter();
 
-//	public static void main(String[] args) throws Exception {
-//		ExtensionProcessor processor = new ExtensionProcessor();
-//		Element root = processor.processResource("schema/extension.xml");
-//		System.out.println(format(root));
-//	}
+		// Pretty print the document to System.out
+		OutputFormat format = OutputFormat.createPrettyPrint();
+		XMLWriter writer = new XMLWriter(out, format);
+		writer.write(document);
+
+		return out.toString();
+	}
+	
+	public static void main(String[] args) throws Exception {
+		ExtensionProcessor processor = new ExtensionProcessor();
+		Element root = processor.processResource("schema/extension.xml");
+		System.out.println(format(root));
+	}
 
 }

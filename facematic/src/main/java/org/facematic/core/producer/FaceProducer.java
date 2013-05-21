@@ -443,7 +443,7 @@ public class FaceProducer implements Serializable {
 			return null;
 		}
 		//Document document = DocumentHelper.parseText(xml);
-		Document  document = new ExtensionProcessor().processResource(xml);
+		Document  document = new ExtensionProcessor().processXml(xml);
 		return (T) build(document);
 	}
 
