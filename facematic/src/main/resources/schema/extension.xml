@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<extension xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm facematic.xsd" base="schema/base.xml" controller="extensionController">
+  
+  <implement placeholder="sub1">
+    <Button caption="Sub1 button"/>
+  </implement>
+  
+  <implement placeholder="sub2">
+    <Button caption="Sub2 button"/>
+    <Button caption="Sub2-1 button"/>
+    <Button caption="Sub2-2 button"/>
+  </implement>
+  
+  <implement placeholder="sub3">
+  <html>Sub3</html>
+  </implement>
+
+</extension>

@@ -2,8 +2,9 @@
 
 <content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://facematic.org/fm facematic.xsd"
-	sizeFull="true">
+	>
 
+    
 	<Panel sizeFull="true">
 		<hl spacing="true" margin="true" width="100%">
 			<vl spacing="true" >
@@ -72,6 +73,8 @@
 			</vl>
 		</hl>
 	</Panel>
+	
+	
 
 
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<extension xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm facematic.xsd" base="schema/super.xml" controller="baseController">
+	
+	<subst name="test" value="Mama"/>
+	
+	<implement placeholder="sub1" >
+	<vl>
+	   <ComboBox></ComboBox>
+	   <Label/>
+	   <Link/>
+       <placeholder name="sub3"/>
+	</vl>   
+	</implement>
+  
+
+</extension>

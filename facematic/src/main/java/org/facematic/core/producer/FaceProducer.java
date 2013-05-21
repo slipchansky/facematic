@@ -415,8 +415,7 @@ public class FaceProducer implements Serializable {
 	 */
 	public <T> T buildFromResource(String resourceName) throws Exception {
 		logger.info("Build from resource " + resourceName);
-		String xml = org.facematic.utils.StreamUtils
-				.getResourceAsString(resourceName);
+		String xml = org.facematic.utils.StreamUtils.getResourceAsString(resourceName);
 		if (xml == null) {
 			resourceName = resourceName.replaceAll("\\.", "/") + ".xml";
 			logger.info("Look for resource " + resourceName);
@@ -443,7 +442,8 @@ public class FaceProducer implements Serializable {
 		if (xml == null) {
 			return null;
 		}
-		Document document = DocumentHelper.parseText(xml);
+		//Document document = DocumentHelper.parseText(xml);
+		Document  document = new ExtensionProcessor().processResource(xml);
 		return (T) build(document);
 	}
 

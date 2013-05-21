@@ -80,6 +80,8 @@
 					<element type="c:CompositeType" name="composite" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
+					<element type="c:PlaceHolderType" name="placeholder"
+						minOccurs="0" maxOccurs="unbounded" />
 				</sequence>
 				<attribute name="spacing" type="c:TrueFalseType"></attribute>
 				<attribute name="margin" type="c:TrueFalseType"></attribute>
@@ -429,6 +431,8 @@
 					<element type="c:CompositeType" name="composite" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
+					<element type="c:PlaceHolderType" name="placeholder"
+						minOccurs="0" maxOccurs="unbounded" />
 				</choice>
 			</extension>
 		</complexContent>
@@ -452,6 +456,23 @@
 			</extension>
 		</complexContent>
 	</complexType>
+
+	<complexType name="ExtensionCompositeType">
+		<complexContent>
+			<extension base="c:CompositeType">
+				<attribute name="placeholder" type="string" use="required"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="PlaceHolderType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<attribute name="controller" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
 	<complexType name="EventListenerType" mixed="true">
 		<attribute name="call" type="string"></attribute>
 	</complexType>
@@ -616,6 +637,7 @@
 					<element name="item" type="c:ItemType" maxOccurs="unbounded"
 						minOccurs="0" />
 				</sequence>
+				<attribute name="enum" type="string"></attribute>
 				<attribute name="rows" type="integer" use="optional"></attribute>
 				<attribute name="nullSelectionAllowed" type="c:TrueFalseType"
 					use="optional"></attribute>
@@ -691,7 +713,9 @@
 				<attribute name="saveTo" type="string">
 					<annotation>
 						<documentation>
-							To simplify the use of the component Upload, you can just specify the path to the directory in which to store all the uploaded files.
+							To simplify the use of the component Upload, you
+							can just specify the path to the directory in which to store all
+							the uploaded files.
 						</documentation>
 					</annotation>
 				</attribute>
@@ -965,6 +989,121 @@
 		</complexContent>
 	</complexType>
 
+	<complexType name="SubstituteType">
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="value" type="string" use="required"></attribute>
+	</complexType>
+
+
+	<complexType name="ExtensionImplementType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element type="c:SubstituteType" name="subst" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+						Not implemented yet
+					</documentation>
+				</annotation>
+			</element>
+			<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:HtmlType" name="Html" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:HtmlType" name="html" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:ContentContainerType" name="hl" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:ContentContainerType" name="vl" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:ButtonType" name="Button" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:FieldType" name="TextField" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:LabelType" name="Label" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:LinkType" name="Link" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:EmbeddedType" name="Embedded" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:PopupDateFieldType" name="PopupDateField"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:InlineDateFieldType" name="InlineDateField"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:TextAreaType" name="TextArea" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:RichTextAreaType" name="RichTextArea"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:ListSelectType" name="ListSelect" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element name="ComboBox" type="c:ComboBoxType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element type="c:TwinColSelectType" name="TwinColSelect"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:OptionGroupType" name="OptionGroup"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:SliderType" name="Slider" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:UploadType" name="Upload" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:FormLayoutType" name="FormLayout" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:TableType" name="Table" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:TreeType" name="Tree" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:PanelType" name="Panel" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:CompositeType" name="composite" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:PlaceHolderType" name="placeholder"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="placeholder" use="required"></attribute>
+	</complexType>
+
+
+	<complexType name="ExtensionType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element type="c:SubstituteType" name="subst" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+						Not implemented yet
+					</documentation>
+				</annotation>
+			</element>
+			<element type="c:ExtensionImplementType" name="implement"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="base" type="string" use="required"></attribute>
+		<attribute name="controller" type="string"></attribute>
+		<attribute name="spacing" type="c:TrueFalseType"></attribute>
+		<attribute name="margin" type="c:TrueFalseType"></attribute>
+	</complexType>
+
 
 	<complexType name="RootContentType">
 		<complexContent>
@@ -974,8 +1113,10 @@
 		</complexContent>
 	</complexType>
 
+
 	<element name="hl" type="c:RootContentType"></element>
 	<element name="vl" type="c:RootContentType"></element>
 	<element name="content" type="c:RootContentType"></element>
+	<element name="extension" type="c:ExtensionType"></element>
 
 </schema>

@@ -1,5 +1,6 @@
 package org.facematic.core.producer.builders;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -11,8 +12,10 @@ import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.nvo.Item;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.data.Container;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.AbstractSelect;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.ListSelect;
 
 /**
@@ -45,20 +48,52 @@ public class SelectBuilder extends AbstractFieldBuilder {
 	@Override
 	public void build(FaceProducer builder, final Object oComponent,
 			Element configuration) {
-		super.build(builder, oComponent, configuration);
 
 		AbstractSelect select = (AbstractSelect) oComponent;
-		List<Item> items = NvoItemBuilder.buildItems(builder, configuration);
-		if (items != null && items.size() > 0) {
-			addContainerDataSource(select, items);
-			
-			
+		String enumName = configuration.attributeValue("enum");
+		if (!addEnumDataSource(select, enumName)) {
+			List<Item> items = NvoItemBuilder
+					.buildItems(builder, configuration);
+			if (items != null && items.size() > 0) {
+				addContainerDataSource(select, items);
+			}
+		}
+		super.build(builder, oComponent, configuration);
+	}
+
+	private boolean addEnumDataSource(AbstractSelect select, String enumName) {
+		if (enumName == null) {
+			return false;
+		}
+
+		String original = enumName;
+		String a[] = enumName.split("/");
+		String enumField = null;
+		if (a.length == 2) {
+			enumField = a[1];
+			enumName = a[0];
+		}
+		try {
+			Class enumClass = Class.forName(enumName);
+			BeanItemContainer indexedContainer = new BeanItemContainer(
+					enumClass, Arrays.asList(enumClass.getEnumConstants()));
+			select.setContainerDataSource(indexedContainer);
+			if (enumField != null)
+				select.setItemCaptionPropertyId(enumField);
+			if (select instanceof ComboBox)
+				((ComboBox) select).setTextInputAllowed(false);
+			return true;
+		} catch (ClassNotFoundException e) {
+			logger.warn("Enum " + enumName + " not found");
+			return false;
+		} catch (Exception ee) {
+			logger.warn("Can't implement enum datasource: " + original);
+			return false;
 		}
 	}
 
-	protected void addContainerDataSource(AbstractSelect select, List<Item> options) {
-		
-		
+	protected void addContainerDataSource(AbstractSelect select,
+			List<Item> options) {
 		final Container container = new IndexedContainer();
 		for (Item item : options) {
 			container.addItem(item.toString());
