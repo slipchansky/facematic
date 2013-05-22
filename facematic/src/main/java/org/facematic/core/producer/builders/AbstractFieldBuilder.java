@@ -7,8 +7,10 @@ import org.dom4j.Element;
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.producer.FaceReflectionHelper;
+import org.facematic.utils.BeanConverter;
 
 import com.vaadin.data.Property;
+import com.vaadin.data.util.converter.Converter;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Field.ValueChangeEvent;
 
@@ -26,12 +28,16 @@ public class AbstractFieldBuilder extends ComponentBuilder {
 		String onChangeMethodName = configuration.attributeValue("onChange");
 		String producerName = configuration.attributeValue("name");
 		String producerCaption = configuration.attributeValue("caption");
+		AbstractField field = (AbstractField)oComponent;
+		
 		
 		final Object controller = builder.getControllerInstance();
+		
 		
 		if (onChangeMethodName != null && controller == null) {
 			logger.warn("There is no controller class for implementing listener method "+onChangeMethodName);
 		}
+		
 		
 		if (onChangeMethodName != null && controller != null) {
 			
@@ -49,7 +55,8 @@ public class AbstractFieldBuilder extends ComponentBuilder {
 						}
 					}
 				});
-			} 
+			}
+			
 			catch (NoSuchMethodException e) {
 				logger.info("Method "+controller.getClass()+"."+onChangeMethodName+" (ValueChangeEvent) not found");
 				// Try to add listenerMethod (Property property);
@@ -95,4 +102,5 @@ public class AbstractFieldBuilder extends ComponentBuilder {
 			}
 		}
 	}
+
 }

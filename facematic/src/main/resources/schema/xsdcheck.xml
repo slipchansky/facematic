@@ -54,7 +54,7 @@
 
 				<Upload caption="Upload" immediate="true" buttonCaption="Upload" onStarted="onStarted" onProgress="onProgress" onSucceeded="onSucceeded" onFailed="onFailed" onFinished="Finished" saveTo="/home/stas/!received"  />
 				
-				<ComboBox caption="ComboBox">
+				<ComboBox caption="ComboBox" beanClass="com.test.MyClass" beanIdField="id" beanCaptionField="value">
 					<item>One</item>
 					<item>Two</item>
 					<item>Three</item>

@@ -8,6 +8,8 @@
 	<placeholder name="sub1" />
 	
 	<placeholder name="sub2" />
+	
+	<subst name="Test">Mama rama</subst>
   
 
 </content>

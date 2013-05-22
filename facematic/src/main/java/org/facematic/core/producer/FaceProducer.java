@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.facematic.core.producer.builders.AbstractOrderedLayoutBuilder;
+import org.facematic.core.producer.builders.AbstractTextFieldBuilder;
 import org.facematic.core.producer.builders.BeanBuilder;
 import org.facematic.core.producer.builders.ButtonBuilder;
 import org.facematic.core.producer.builders.CompositeBuilder;
@@ -166,6 +167,7 @@ public class FaceProducer implements Serializable {
 			putBuilder (new NvoItemBuilder());
 			putBuilder (new TreeBuilder());
 			putBuilder (new UploadBuilder());
+			putBuilder (new AbstractTextFieldBuilder());
 		};
 
 		private static void putBuilder(BeanBuilder componentBuilder) {

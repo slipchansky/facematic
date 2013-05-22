@@ -16,5 +16,7 @@
   <implement placeholder="sub3">
   <html>Sub3</html>
   </implement>
+  
+  <subst name="Test">Kuku</subst>
 
 </extension>

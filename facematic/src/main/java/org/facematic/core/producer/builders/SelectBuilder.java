@@ -11,9 +11,12 @@ import org.dom4j.Element;
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.nvo.Item;
 import org.facematic.core.producer.FaceProducer;
+import org.facematic.utils.BeanConverter;
+
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.data.util.converter.Converter;
 import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.ListSelect;
@@ -23,8 +26,7 @@ import com.vaadin.ui.ListSelect;
  * 
  */
 public class SelectBuilder extends AbstractFieldBuilder {
-	private final static Logger logger = LoggerFactory
-			.getLogger(SelectBuilder.class);
+	private final static Logger logger = LoggerFactory.getLogger(SelectBuilder.class);
 
 	/*
 	 * (non-Javadoc)
@@ -50,6 +52,21 @@ public class SelectBuilder extends AbstractFieldBuilder {
 			Element configuration) {
 
 		AbstractSelect select = (AbstractSelect) oComponent;
+		
+		String beanClass, beanIdField, beanCaptionField;
+		beanClass = configuration.attributeValue("beanClass");
+		beanIdField = configuration.attributeValue("beanIdField");
+		beanCaptionField = configuration.attributeValue("beanCaptionField");
+		
+		if (beanClass != null) {
+			addConverter (select, beanClass, beanIdField, beanCaptionField);
+		}
+		
+		if (beanCaptionField != null) {
+			select.setItemCaptionPropertyId(beanCaptionField);
+		}
+		
+		
 		String enumName = configuration.attributeValue("enum");
 		if (!addEnumDataSource(select, enumName)) {
 			List<Item> items = NvoItemBuilder
@@ -100,5 +117,21 @@ public class SelectBuilder extends AbstractFieldBuilder {
 		}
 		select.setContainerDataSource(container);
 	}
+	
+	private void addConverter(AbstractSelect field, String beanClass, String beanIdField, String beanCaptionField) {
+		Class clazz;
+		try {
+			clazz = Class.forName(beanClass);
+		} catch (ClassNotFoundException e) {
+			return;
+		}
+		if (beanIdField==null || "".equals(beanIdField.trim())) {
+			beanIdField = "id";
+		}
+		
+		Converter converter = new BeanConverter (clazz, beanIdField);
+		field.setConverter (converter);
+	}
+	
 
 }

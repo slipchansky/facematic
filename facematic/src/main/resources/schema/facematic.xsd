@@ -50,6 +50,10 @@
 					<element type="c:ListSelectType" name="ListSelect"
 						minOccurs="0" maxOccurs="unbounded">
 					</element>
+
+					<element type="c:FieldType" name="CheckBox" minOccurs="0"
+						maxOccurs="unbounded" />
+
 					<element name="ComboBox" type="c:ComboBoxType" maxOccurs="unbounded"
 						minOccurs="0">
 					</element>
@@ -684,6 +688,9 @@
 					use="optional"></attribute>
 				<attribute name="newItemsAllowed" type="c:TrueFalseType"
 					use="optional"></attribute>
+				<attribute name="beanClass" type="string" use="optional"></attribute>
+				<attribute name="beanIdField" type="string" use="optional"></attribute>
+				<attribute name="beanCaptionField" type="string" use="optional"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -989,9 +996,9 @@
 		</complexContent>
 	</complexType>
 
-	<complexType name="SubstituteType">
+	<complexType name="SubstituteType" mixed="true">
 		<attribute name="name" type="string" use="required"></attribute>
-		<attribute name="value" type="string" use="required"></attribute>
+		<attribute name="value" type="string" use="optional"></attribute>
 	</complexType>
 
 
@@ -1108,6 +1115,16 @@
 	<complexType name="RootContentType">
 		<complexContent>
 			<extension base="c:ContentContainerType">
+				<sequence minOccurs="0" maxOccurs="unbounded">
+					<element type="c:SubstituteType" name="subst" minOccurs="0"
+						maxOccurs="unbounded">
+						<annotation>
+							<documentation>
+								Not implemented yet
+							</documentation>
+						</annotation>
+					</element>
+				</sequence>
 				<attribute name="controller" type="string"></attribute>
 			</extension>
 		</complexContent>

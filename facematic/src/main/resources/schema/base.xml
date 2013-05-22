@@ -14,5 +14,6 @@
 	</vl>   
 	</implement>
   
+  <subst name="Test">Baba kaka</subst>
 
 </extension>

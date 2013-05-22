@@ -48,5 +48,9 @@ public class VelocityEngine implements ITemplateEngine {
 		Velocity.evaluate(ctx, w, "velocity", code);
 		return w.toString();
     }
-    
+
+
+	public void setBinding(Map<String, Object> binding) {
+		this.binding = binding;
+	}
 }
