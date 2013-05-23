@@ -1,5 +1,7 @@
 package org.facematic.utils;
 
+import java.io.UnsupportedEncodingException;
+
 import org.dom4j.Element;
 
 /**
@@ -16,20 +18,18 @@ public class XmlUtil {
 	 */
 	public static String getInnerContent (Element element) {
 		String outer = element.asXML();
-		byte [] bytes = outer.getBytes();
-		int from = 1; 
-		for (;from < bytes.length; from++) {
-			if (bytes[from]=='>') {
-				break;
-			}
+		return innerXmlTextContent (outer);
+	}
+	
+	
+	private static String innerXmlTextContent(String outer) {
+		int openPos = outer.indexOf('>')+1;
+		int closePos = outer.lastIndexOf('<');
+		try {
+		    return outer.substring(openPos, closePos);
+		} catch (Exception e) {
+			return null;
 		}
-		from++;
-		int to = bytes.length-1;
-		for (;to>from;to--) {
-			if (bytes[to]=='<') {
-				return outer.substring(from, to);
-			}
-		}
-		return outer;
-	}	
+	}
+
 }

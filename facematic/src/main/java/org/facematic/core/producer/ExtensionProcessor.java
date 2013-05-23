@@ -196,4 +196,15 @@ public class ExtensionProcessor {
 		System.out.println(System.currentTimeMillis() - start);
 	}
 
+	public Map<String, Object> getSubstitutions() {
+		return substitutions;
+	}
+	
+	public void putSubstitutions (Map<String, Object> substs) {
+		if (substs != null)
+		substitutions.putAll (substs);
+	}
+
+	
+	
 }

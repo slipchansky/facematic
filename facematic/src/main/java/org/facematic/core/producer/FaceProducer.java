@@ -124,6 +124,7 @@ public class FaceProducer implements Serializable {
 	private ITemplateEngine engine;
 
 	private FacematicUI ui;
+	private Map<String, Object> viewSubstitutions = null;
 
 	private final static Map<String, String> substs = new HashMap<String, String>() {
 		{
@@ -242,6 +243,9 @@ public class FaceProducer implements Serializable {
 		this.controllerInstance = controllerInstance;
 		this.prefix = parentNamePrefix;
 		this.parent = parent;
+		if (parent.viewSubstitutions != null) {
+			viewSubstitutions = new HashMap (parent.viewSubstitutions);
+		}
 	}
 
 	/**
@@ -287,7 +291,7 @@ public class FaceProducer implements Serializable {
 			if (view instanceof Component) {
 				addView("view", (Component) view);
 			}
-			if (controllerInstance != null) {
+			if (controllerInstance != null && ( parent==null || parent.controllerInstance!=controllerInstance )) {
 				if (controllerInstance instanceof FmBaseController) {
 					((FmBaseController) controllerInstance).init();
 				}
@@ -303,13 +307,23 @@ public class FaceProducer implements Serializable {
 		if (controllerInstance == null) {
 			createControllerInstance(root);
 		}
+		if (controllerInstance == null) {
+			if (parent != null)
+				controllerInstance = parent.controllerInstance;
+		} 
 		reflectionHelper = new FaceReflectionHelper(controllerInstance);
 		reflectionHelper.addUiInjections(ui);
 
-		if (parent != null && controllerInstance != null && prefix != null) {
-			parent.addController(prefix, controllerInstance);
+		if (parent != null && controllerInstance != null && controllerInstance != parent.controllerInstance) {
 			addController("parent", parent.controllerInstance);
+			if (prefix != null )
+			   parent.addController(prefix, controllerInstance);
 		}
+		
+//		if (parent != null)
+//		if (parent.controllerInstance != null && controllerInstance != null && parent.controllerInstance != controllerInstance)
+		    
+		
 	}
 
 	/**
@@ -445,7 +459,10 @@ public class FaceProducer implements Serializable {
 			return null;
 		}
 		//Document document = DocumentHelper.parseText(xml);
-		Document  document = new ExtensionProcessor().processXml(xml);
+		ExtensionProcessor extensionProcessor = new ExtensionProcessor();
+		extensionProcessor.putSubstitutions(viewSubstitutions);
+		Document  document = extensionProcessor.processXml(xml);
+		this.viewSubstitutions = extensionProcessor.getSubstitutions();
 		return (T) build(document);
 	}
 
@@ -645,9 +662,17 @@ public class FaceProducer implements Serializable {
 	 * @param value
 	 */
 	public void addView(String name, Component value) {
+		if (name.equals("view"))
+		if (parent != null) {
+			// avoid reset "view" field from uncontrolled composite 
+			if (parent.controllerInstance == controllerInstance) {
+				return;
+			}
+		}
 		if (structureWatcher != null) {
 			structureWatcher.putView(name, value);
 		}
+		
 		reflectionHelper.putView(name, value);
 		if (parent != null) {
 			parent.addView(prefix + '.' + name, value);
