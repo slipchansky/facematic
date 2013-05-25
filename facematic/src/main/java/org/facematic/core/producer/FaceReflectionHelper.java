@@ -6,11 +6,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
+import org.facematic.core.annotations.FmSiblingControllers;
 import org.facematic.core.annotations.FmUI;
 import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.annotations.FmController;
@@ -31,13 +33,6 @@ interface FieldAnnotationMatcher<T extends Annotation> {
 	boolean match(Field field, T annotation, String value);
 }
 
-class A {
-	public int a, b, c;
-}
-
-class B extends A {
-	public int d, e, f;
-}
 
 public class FaceReflectionHelper implements Serializable {
 	private static Logger logger = LoggerFactory.getLogger(FaceReflectionHelper.class);
@@ -52,6 +47,14 @@ public class FaceReflectionHelper implements Serializable {
 			return (annotation.name().equals(value) || field.getName().equals(value));
 		}
 	};
+	
+	private final static FieldAnnotationMatcher<FmSiblingControllers> siblingControllersMatcher = new FieldAnnotationMatcher<FmSiblingControllers>() {
+		@Override
+		public boolean match(Field field, FmSiblingControllers annotation, String value) {
+			return true;
+		}
+	};
+	
 
 	private final static FieldAnnotationMatcher<FmViewComponent> viewComponentMatcher = new FieldAnnotationMatcher<FmViewComponent>() {
 		@Override
@@ -144,6 +147,7 @@ public class FaceReflectionHelper implements Serializable {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private Field findAnnotatedField(String value, FieldAnnotationMatcher matcher, Class<? extends Annotation> annotationClass) {
 		for (Field field : fields) {
+			
 			Annotation a = field.getAnnotation(annotationClass);
 			if (a == null) {
 				continue;
@@ -152,7 +156,7 @@ public class FaceReflectionHelper implements Serializable {
 				return field;
 			}
 		}
-		logger.trace("Annotated field not found @"+annotationClass.getSimpleName()+"("+value+")");
+		logger.debug("Annotated field not found @"+annotationClass.getSimpleName()+"("+value+")");
 		return null;
 
 	}
@@ -222,6 +226,23 @@ public class FaceReflectionHelper implements Serializable {
 			logger.error ("Could not get value from "+field.getClass().getCanonicalName()+"."+field.getName());
 			return null;
 		}
+	}
+
+	public void addSiblingControllers(List<Object> siblingControllers) {
+		logger.trace("-----------------------"+instance.getClass()+"------------------------------------");
+		if (siblingControllers.size()==0) {
+			return;
+		}
+		Field siblingField = findAnnotatedField("siblingControllers", siblingControllersMatcher, FmSiblingControllers.class);
+		if (siblingField==null) {
+			return;
+		}
+			
+		if (! (Collection.class.isAssignableFrom(siblingField.getType()) ) ){
+			logger.error ("can't assign siblingControllers to field of type "+siblingField.getType());
+		}
+		updateFieldModifiers(siblingField);
+		setFieldValue(siblingField, siblingControllers);
 	}
 	
 	

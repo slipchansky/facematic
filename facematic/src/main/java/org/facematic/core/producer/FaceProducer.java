@@ -4,8 +4,10 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.facematic.core.producer.builders.AbstractOrderedLayoutBuilder;
@@ -125,6 +127,7 @@ public class FaceProducer implements Serializable {
 
 	private FacematicUI ui;
 	private Map<String, Object> viewSubstitutions = null;
+	private List<Object> siblingControllers = new ArrayList<Object> ();
 
 	private final static Map<String, String> substs = new HashMap<String, String>() {
 		{
@@ -291,16 +294,29 @@ public class FaceProducer implements Serializable {
 			if (view instanceof Component) {
 				addView("view", (Component) view);
 			}
-			if (controllerInstance != null && ( parent==null || parent.controllerInstance!=controllerInstance )) {
+			if (controllerInstance != null && (parent==null || parent.controllerInstance!=controllerInstance )) {
+				
+				if (controllerInstance.getClass().getSimpleName().equals("QuestionCreate"))
+					root = root;
+				updateSiblingControllersField ();
+				
 				if (controllerInstance instanceof FmBaseController) {
 					((FmBaseController) controllerInstance).init();
 				}
+				
+				
+				
 			}
 			return (T) view;
 		} catch (Exception e) {
 			logger.error("Component building throws exception", e);
 			throw e;
 		}
+	}
+
+	private void updateSiblingControllersField() {
+		reflectionHelper.addSiblingControllers (siblingControllers);
+		
 	}
 
 	private void prepareBuildingEnvironment(Element root) {
@@ -318,6 +334,9 @@ public class FaceProducer implements Serializable {
 			addController("parent", parent.controllerInstance);
 			if (prefix != null )
 			   parent.addController(prefix, controllerInstance);
+			
+			if (parent.siblingControllers.indexOf(controllerInstance) < 0)
+				parent.siblingControllers.add(controllerInstance);
 		}
 		
 //		if (parent != null)
