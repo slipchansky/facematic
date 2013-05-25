@@ -12,6 +12,11 @@ public class ManagedContainerItem<TYPE> {
 	public ManagedContainerItem (TYPE bean, ManagedContainer container) {
 		this.bean = bean;
 		this.controls = new RowControls(this, container);
+		if (bean==null) {
+			controls.hideAction(Action.DELETE);
+			controls.hideAction(Action.UP);
+			controls.hideAction(Action.DOWN);
+		}
 	}
 	
 	public TYPE getBean() {

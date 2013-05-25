@@ -11,7 +11,7 @@ import com.vaadin.ui.themes.Reindeer;
 public class Composite extends VerticalLayout {
 	
 	public Composite () {
-		this.setStyleName(Reindeer.PANEL_LIGHT);
+		super ();
 	}
 	
 

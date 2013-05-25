@@ -19,9 +19,8 @@ import org.facematic.util.data.managedcontainer.ContainerManager;
 import org.facematic.util.data.managedcontainer.ManagedContainer;
 import org.facematic.util.data.managedcontainer.ManagedContainerItem;
 import org.facematic.utils.FacematicUtils;
-
-
 import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.VaadinPropertyDescriptor;
@@ -29,46 +28,47 @@ import com.vaadin.ui.Table;
 
 /**
  * @author "Stanislav Lipchansky"
-<pre>
-public class Test implements FmBaseController, ContainerManager {
- ...
-      FmManagedContainer ds = new FmManagedContainer(SomeBean.class, data);
-      ds.bind(table);
-      ds.setManager(this);
- }
-
-	public void edit(ManagedContainerItem bean) {
-	    editor.setValue(bean.getBean());
-	}
-
-	public void clear() {
-	     editor.setValue(null);
-	}
-
-	public void delete(ManagedContainerItem bean) {
-	}
-
-	public boolean canMove() {
-		return true;
-	}
-
-	public boolean canDelete() {
-		return false;
-	}
-
-	public boolean canEdit() {
-		return false;
-	}
-
-</pre> 
-
+ * 
+ *         <pre>
+ * public class Test implements FmBaseController, ContainerManager {
+ *  ...
+ *       FmManagedContainer ds = new FmManagedContainer(SomeBean.class, data);
+ *       ds.bind(table);
+ *       ds.setManager(this);
+ *  }
+ * 
+ * 	public void edit(ManagedContainerItem bean) {
+ * 	    editor.setValue(bean.getBean());
+ * 	}
+ * 
+ * 	public void clear() {
+ * 	     editor.setValue(null);
+ * 	}
+ * 
+ * 	public void delete(ManagedContainerItem bean) {
+ * 	}
+ * 
+ * 	public boolean canMove() {
+ * 		return true;
+ * 	}
+ * 
+ * 	public boolean canDelete() {
+ * 		return false;
+ * 	}
+ * 
+ * 	public boolean canEdit() {
+ * 		return false;
+ * 	}
+ * </pre>
+ * 
  * 
  * @param <BEANTYPE>
  */
-public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContainerItem> {
-	
+public class ManagedContainer<BEANTYPE> extends
+		BeanItemContainer<ManagedContainerItem> {
 
-	private static final Logger logger = LoggerFactory.getLogger(ManagedContainer.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(ManagedContainer.class);
 
 	ContainerManager<BEANTYPE> manager = null;
 
@@ -79,11 +79,11 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 			super();
 			propertyDescriptor = d;
 		}
-		
+
 		public Class getPropertyType() {
 			return propertyDescriptor.getPropertyType();
 		}
-		
+
 		public Method getGetter() {
 			return propertyDescriptor.getReadMethod();
 		}
@@ -91,7 +91,6 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 		public Method getSetter() {
 			return propertyDescriptor.getWriteMethod();
 		}
-
 
 		public Object get(Object instance) {
 			try {
@@ -114,6 +113,7 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 	Map<String, Accessor> accessors = new HashMap();
 	private Class beanClass;
 	private Table table;
+	private ManagedContainerItem createItem;
 
 	public ManagedContainer(Class beanClass, Collection<BEANTYPE> collection)
 			throws IllegalArgumentException {
@@ -128,6 +128,8 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 		super(type);
 		this.beanClass = type;
 		prepareModel(type);
+		implementCreate();
+		
 	}
 
 	/**
@@ -135,30 +137,62 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 	 */
 	public void setData(Collection<BEANTYPE> collection) {
 		List<ManagedContainerItem> data = new ArrayList<ManagedContainerItem>();
+		removeAllItems();
 		for (BEANTYPE o : collection) {
-			ManagedContainerItem<BEANTYPE> bean = new ManagedContainerItem<BEANTYPE>(o, this);
+			ManagedContainerItem<BEANTYPE> bean = new ManagedContainerItem<BEANTYPE>(
+					o, this);
 			if (manager == null)
 				bean.getControls().hideAction(Action.EDIT);
 			data.add(bean);
 		}
 		addAll(data);
+		implementCreate();
+	}
+
+	private void implementCreate() {
+		try {
+			if (manager == null) {
+				return;
+			}
+			if (!manager.canCreate()) {
+				return;
+			}
+
+			if (createItem != null && createItem.getBean() != null) {
+				applyManagerActions(createItem);
+			}
+
+			if (createItem == null || createItem.getBean() != null) {
+				createItem = new ManagedContainerItem<BEANTYPE>(null, this);
+				logger.trace("if (createItem == null || createItem.getBean()!=null)");
+			}
+
+			if (indexOfId(createItem) >= 0) {
+				super.removeItem (createItem);
+				createItem.setBean(null);
+			}
+
+			addItem(createItem);
+		} catch (Exception e) {
+			logger.error("", e);
+		}
+
 	}
 
 	/**
 	 * @param beanClass
 	 */
 	private void prepareModel(Class beanClass) {
-		accessors = getPropertyAccessors (beanClass);
-		accessors.putAll(getPropertyAccessors (ManagedContainerItem.class));
+		accessors = getPropertyAccessors(beanClass);
+		accessors.putAll(getPropertyAccessors(ManagedContainerItem.class));
 	}
 
-	
 	/**
 	 * @param beanClass
 	 * @return
 	 */
 	private Map<String, Accessor> getPropertyAccessors(Class beanClass) {
-		Map<String, Accessor> accessors = new HashMap<String, Accessor> ();
+		Map<String, Accessor> accessors = new HashMap<String, Accessor>();
 		try {
 			BeanInfo info = Introspector.getBeanInfo(beanClass);
 			PropertyDescriptor[] descriptors = info.getPropertyDescriptors();
@@ -166,16 +200,19 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 				if ("class".equals(d.getName())) {
 					continue;
 				}
-				accessors.put(d.getName(), new Accessor (d));
+				accessors.put(d.getName(), new Accessor(d));
 			}
-			
+
 		} catch (IntrospectionException e) {
-			logger.error("can't get bean info for "+beanClass.getCanonicalName()); 
+			logger.error("can't get bean info for "
+					+ beanClass.getCanonicalName());
 		}
 		return accessors;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.vaadin.data.util.AbstractBeanContainer#getContainerPropertyIds()
 	 */
 	@Override
@@ -183,7 +220,9 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 		return accessors.keySet();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.vaadin.data.util.BeanItemContainer#addItem(java.lang.Object)
 	 */
 	@Override
@@ -191,39 +230,72 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 		if (item == null) {
 			return null;
 		}
-		
+
 		ManagedContainerItem controlled = (item instanceof ManagedContainerItem) ? (ManagedContainerItem) item : new ManagedContainerItem(item, this);
-		if (manager == null) {
-			controlled.getControls().hideAction(Action.EDIT);
+		if (manager == null) {controlled.getControls().hideAction(Action.EDIT);
 		} else {
 			applyManagerActions(controlled);
 		}
-		
-		return internalAddItemAtEnd(controlled, createBeanItem(controlled),	true);
+		return internalAddItemAtEnd(controlled, createBeanItem(controlled),
+				true);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.data.util.AbstractBeanContainer#getContainerProperty(java.lang.Object, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.data.util.AbstractBeanContainer#getContainerProperty(java.
+	 * lang.Object, java.lang.Object)
 	 */
 	@Override
 	public Property getContainerProperty(Object itemId, final Object propertyId) {
-		
+
 		if (itemId instanceof ManagedContainerItem) {
 			final ManagedContainerItem controlled = (ManagedContainerItem) itemId;
 			final Object instance = controlled.getBean();
 			final Accessor accessor = accessors.get((String) propertyId);
+			Object val = null;
+			
+			if ("controls".equals(propertyId)) {
+				return super.getContainerProperty(itemId, propertyId);
+			}
 
-			if (!"controls".equals(propertyId) && !"bean".equals(propertyId)
-					&& accessor != null) {
+			if ("bean".equals(propertyId)) {
+				if (beanClass == String.class) {
+					val = instance;
+					if (controlled == createItem) {
+						val = "( . . . )";
+					}
+				}
+
+			}
+
+			if ((!"controls".equals(propertyId) && !"bean".equals(propertyId) && accessor != null)
+					|| (val != null )) {
+
 				try {
-					if (accessor.getGetter() == null) {
-						return null;
+
+					if (val == null) {
+						if (instance == null) {
+							if (itemId == createItem
+									&& accessor.getPropertyType().equals(
+											String.class)) {
+								val = "( . . . )";
+							} else
+								return null;
+						} else {
+							if (accessor.getGetter() == null) {
+								return null;
+							}
+							val = accessor.get(instance);
+						}
+
+						if (val == null) {
+							return null;
+						}
 					}
-					
-					final Object value = accessor.get(instance);
-					if (value == null) {
-						return null;
-					}
+
+					final Object value = val;
 
 					return new Property() {
 
@@ -243,7 +315,7 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 
 						@Override
 						public Class getType() {
-							return instance.getClass();
+							return beanClass==String.class?String.class:accessor.getPropertyType();
 						}
 
 						@Override
@@ -266,11 +338,13 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 				}
 			}
 		}
-		
+
 		return super.getContainerProperty(itemId, propertyId);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.vaadin.data.util.AbstractBeanContainer#getType(java.lang.Object)
 	 */
 	@Override
@@ -284,6 +358,10 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 	public void edit(ManagedContainerItem bean) {
 		if (manager != null) {
 			if (table != null) {
+				if (bean == createItem) {
+					bean.setBean(manager.createEmpty());
+				}
+
 				table.select(bean);
 				table.refreshRowCache();
 			}
@@ -295,6 +373,8 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 	 * @param item
 	 */
 	public void moveDown(ManagedContainerItem item) {
+		if (createItem != null)
+			super.removeItem(createItem);
 		try {
 			List<ManagedContainerItem> items = getItemIds();
 			int index = items.indexOf(item);
@@ -313,12 +393,15 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 		} catch (Exception e) {
 			logger.error("", e);
 		}
+		implementCreate();
 	}
 
 	/**
 	 * @param item
 	 */
 	public void moveUp(ManagedContainerItem item) {
+		if (createItem != null)
+			super.removeItem(createItem);
 		try {
 			List<ManagedContainerItem> items = getItemIds();
 			int index = items.indexOf(item);
@@ -338,6 +421,7 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 		} catch (Exception e) {
 			logger.error("", e);
 		}
+		implementCreate();
 	}
 
 	/**
@@ -355,16 +439,16 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
-	public void addNew () {
-		if (manager==null) {
+	public void addNew() {
+		if (manager == null) {
 			return;
 		}
-		BEANTYPE bean = manager.createEmpty ();
-		BeanItem<ManagedContainerItem> itemId = addItem (bean);
+		BEANTYPE bean = manager.createEmpty();
+		BeanItem<ManagedContainerItem> itemId = addItem(bean);
 		manager.edit(itemId.getBean());
 	}
 
@@ -373,6 +457,13 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 	 */
 	public void bind(Table table) {
 		this.table = table;
+		table.addValueChangeListener(new Property.ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				implementCreate();
+			}
+		});
+		implementCreate();
 		FacematicUtils.setTableDatasource(table, this);
 	}
 
@@ -385,17 +476,29 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 		for (ManagedContainerItem b : allItems) {
 			applyManagerActions(b);
 		}
+		implementCreate();
 	}
 
 	/**
 	 * @param b
 	 */
 	private void applyManagerActions(ManagedContainerItem b) {
-	    if (manager==null) {
-			b.getControls().hideAction(Action.EDIT);	        
-			b.getControls().hideAction(Action.DELETE);	        
+
+		if (manager == null) {
+			b.getControls().hideAction(Action.EDIT);
+			b.getControls().hideAction(Action.DELETE);
 			return;
-	    }
+		}
+
+		if (b.getBean() == null) {
+			b.getControls().showAction(Action.EDIT);
+			b.getControls().hideAction(Action.UP);
+			b.getControls().hideAction(Action.DOWN);
+			b.getControls().hideAction(Action.DELETE);
+			return;
+		}
+		
+
 		if (manager.canEdit())
 			b.getControls().showAction(Action.EDIT);
 		else
@@ -413,5 +516,59 @@ public class ManagedContainer<BEANTYPE> extends	BeanItemContainer<ManagedContain
 			b.getControls().hideAction(Action.DELETE);
 		}
 	}
-	
+
+	@Override
+	public void sort(Object[] propertyId, boolean[] ascending) {
+		if (createItem != null) {
+			super.removeItem(createItem);
+		}
+		super.sort(propertyId, ascending);
+		implementCreate();
+	}
+
+	@Override
+	public boolean removeItem(Object itemId) {
+		if (itemId == createItem) {
+			return false;
+		}
+		return super.removeItem(itemId);
+	}
+
+	public void commit() {
+		if (createItem != null)
+		if (createItem.getBean() != null) {
+			applyManagerActions(createItem);
+			
+		} 
+		implementCreate();
+		if (table != null) {
+			table.refreshRowCache();
+		}
+	}
+
+	public ManagedContainerItem<String> getNewItem() {
+		if (createItem != null) return createItem;
+		implementCreate();
+		return createItem;
+	}
+
+	public void clear() {
+		removeAllItems ();
+		implementCreate();
+	}
+
+	public List<BEANTYPE> getData() {
+		List<BEANTYPE> result = new ArrayList<BEANTYPE>();
+		List<ManagedContainerItem> allItems = getItemIds();
+		
+		for (ManagedContainerItem item : allItems) {
+			if (item.getBean()==null) {
+				continue;
+			}
+			result.add((BEANTYPE)item.getBean ());
+		}
+		return result;
+	}
+
+
 }

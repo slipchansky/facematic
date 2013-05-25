@@ -10,6 +10,11 @@
 					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
+
+					<element type="c:TabSheetType" name="Accordion" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
 					<element type="c:HtmlType" name="Html" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
@@ -365,6 +370,10 @@
 					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
+					<element type="c:TabSheetType" name="Accordion" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
 					<element type="c:ContentContainerType" name="hl" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
@@ -454,8 +463,9 @@
 		<complexContent>
 			<extension base="c:ContentType">
 				<attribute name="controller" type="string" use="optional"></attribute>
-				<attribute name="location" type="c:CompositeLocationType"
-					use="required"></attribute>
+				<attribute name="location" type="c:CompositeLocationType" use="required"></attribute>
+				<attribute name="margin" type="c:TrueFalseType"></attribute>
+				<attribute name="spacing" type="c:TrueFalseType"></attribute>
 				<attribute name="path" type="string" use="required"></attribute>
 			</extension>
 		</complexContent>
@@ -1015,6 +1025,10 @@
 			<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
 				maxOccurs="unbounded">
 			</element>
+			<element type="c:TabSheetType" name="Accordion" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
 			<element type="c:HtmlType" name="Html" minOccurs="0"
 				maxOccurs="unbounded">
 			</element>

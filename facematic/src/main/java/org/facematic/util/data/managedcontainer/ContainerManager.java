@@ -16,4 +16,5 @@ public interface ContainerManager<TYPE> {
 	boolean canMove ();
 	boolean canDelete ();
 	boolean canEdit ();
+	boolean canCreate ();
 }

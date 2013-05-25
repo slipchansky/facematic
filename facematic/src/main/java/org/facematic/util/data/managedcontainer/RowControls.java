@@ -3,6 +3,8 @@ package org.facematic.util.data.managedcontainer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+import org.facematic.core.logging.LoggerFactory;
 import org.facematic.util.data.managedcontainer.Action;
 import org.facematic.util.data.managedcontainer.ManagedContainer;
 import org.facematic.util.data.managedcontainer.ManagedContainerItem;
@@ -19,6 +21,8 @@ import com.vaadin.ui.themes.BaseTheme;
  *
  */
 public class RowControls extends HorizontalLayout {
+	private static final Logger logger = LoggerFactory.getLogger(RowControls.class);
+	
 	private static final Resource UP_ICON = new ThemeResource("../runo/icons/16/arrow-up.png");
 	private static final Resource DOWN_ICON = new ThemeResource("../runo/icons/16/arrow-down.png");
 	private static final Resource DELETE_ICON = new ThemeResource("../runo/icons/16/cancel.png");
@@ -80,11 +84,19 @@ public class RowControls extends HorizontalLayout {
 		}
 
 		private void moveDown() {
+			try {
 			container.moveDown (row);
+			} catch (Exception e) {
+				logger.error ("", e);
+			}
 		}
 
 		private void edit() {
+			try {
 			container.edit (row);
+			} catch (Exception e) {
+				logger.error("", e);
+			}
 		}
 		
 		protected void remove() {
