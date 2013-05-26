@@ -114,6 +114,7 @@ public class ManagedContainer<BEANTYPE> extends
 	private Class beanClass;
 	private Table table;
 	private ManagedContainerItem createItem;
+	private ManagedContainerItem currentItem;
 
 	public ManagedContainer(Class beanClass, Collection<BEANTYPE> collection)
 			throws IllegalArgumentException {
@@ -353,26 +354,28 @@ public class ManagedContainer<BEANTYPE> extends
 	}
 
 	/**
-	 * @param bean
+	 * @param item
 	 */
-	public void edit(ManagedContainerItem bean) {
+	public void edit(ManagedContainerItem item) {
+		currentItem = item;
 		if (manager != null) {
 			if (table != null) {
-				if (bean == createItem) {
-					bean.setBean(manager.createEmpty());
+				if (item == createItem) {
+					item.setBean(manager.createEmpty());
 				}
 
-				table.select(bean);
+				table.select(item);
 				table.refreshRowCache();
 			}
-			manager.edit(bean);
+			manager.edit(item);
 		}
 	}
 
 	/**
 	 * @param item
 	 */
-	public void moveDown(ManagedContainerItem item) {
+	public void moveDown(ManagedContainerItem<BEANTYPE> item) {
+		currentItem = item;
 		if (createItem != null)
 			super.removeItem(createItem);
 		try {
@@ -431,7 +434,7 @@ public class ManagedContainer<BEANTYPE> extends
 		if (item != null) {
 			removeItem(item);
 			if (manager != null) {
-				manager.editNull();
+				manager.blank();
 			}
 			if (table != null) {
 				table.refreshRowCache();
@@ -528,17 +531,54 @@ public class ManagedContainer<BEANTYPE> extends
 
 	@Override
 	public boolean removeItem(Object itemId) {
+		if (itemId == null) {
+			return false;
+		}
+		
+		if (beanClass.isAssignableFrom(itemId.getClass()) ) {
+			if (currentItem != null && currentItem.getBean ()==itemId) {
+				itemId = currentItem;
+			} 
+			else {
+				itemId = findItemForBean (itemId);
+			}
+			if (itemId == null) {
+				return false;
+			}
+		}
+		
 		if (itemId == createItem) {
 			return false;
 		}
-		return super.removeItem(itemId);
+		
+		if (manager != null) {
+			if (!manager.delete((ManagedContainerItem)itemId)) {
+				return false;
+			}
+		}
+		
+		boolean result = super.removeItem(itemId);
+		if (result) {
+			currentItem = null;
+			if (table != null) {
+				table.refreshRowCache();
+			}
+		}
+		return result;
+	}
+
+	public Object findItemForBean(Object itemId) {
+		for (ManagedContainerItem i : getAllItemIds()) {
+			if (i.getBean() == itemId) 
+				return i;
+		}
+		return null;
 	}
 
 	public void commit() {
 		if (createItem != null)
 		if (createItem.getBean() != null) {
 			applyManagerActions(createItem);
-			
 		} 
 		implementCreate();
 		if (table != null) {

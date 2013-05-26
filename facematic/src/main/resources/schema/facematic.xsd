@@ -46,6 +46,10 @@
 					<element type="c:InlineDateFieldType" name="InlineDateField"
 						minOccurs="0" maxOccurs="unbounded">
 					</element>
+					<element type="c:InlineDateFieldType" name="DateField"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+
 					<element type="c:TextAreaType" name="TextArea" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
@@ -405,6 +409,10 @@
 					<element type="c:InlineDateFieldType" name="InlineDateField"
 						minOccurs="0" maxOccurs="unbounded">
 					</element>
+					<element type="c:InlineDateFieldType" name="DateField"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+
 					<element type="c:TextAreaType" name="TextArea" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
@@ -463,7 +471,8 @@
 		<complexContent>
 			<extension base="c:ContentType">
 				<attribute name="controller" type="string" use="optional"></attribute>
-				<attribute name="location" type="c:CompositeLocationType" use="required"></attribute>
+				<attribute name="location" type="c:CompositeLocationType"
+					use="required"></attribute>
 				<attribute name="margin" type="c:TrueFalseType"></attribute>
 				<attribute name="spacing" type="c:TrueFalseType"></attribute>
 				<attribute name="path" type="string" use="required"></attribute>
@@ -1060,6 +1069,10 @@
 			<element type="c:InlineDateFieldType" name="InlineDateField"
 				minOccurs="0" maxOccurs="unbounded">
 			</element>
+			<element type="c:InlineDateFieldType" name="DateField"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+
 			<element type="c:TextAreaType" name="TextArea" minOccurs="0"
 				maxOccurs="unbounded">
 			</element>
