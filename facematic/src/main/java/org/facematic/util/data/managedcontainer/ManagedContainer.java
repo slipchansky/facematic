@@ -468,6 +468,7 @@ public class ManagedContainer<BEANTYPE> extends
 		});
 		implementCreate();
 		FacematicUtils.setTableDatasource(table, this);
+		table.refreshRowCache();
 	}
 
 	/**

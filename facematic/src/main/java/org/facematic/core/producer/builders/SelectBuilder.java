@@ -69,8 +69,7 @@ public class SelectBuilder extends AbstractFieldBuilder {
 		
 		String enumName = configuration.attributeValue("enum");
 		if (!addEnumDataSource(select, enumName)) {
-			List<Item> items = NvoItemBuilder
-					.buildItems(builder, configuration);
+			List<Item> items = NvoItemBuilder.buildItems(builder, configuration);
 			if (items != null && items.size() > 0) {
 				addContainerDataSource(select, items);
 			}
@@ -92,13 +91,11 @@ public class SelectBuilder extends AbstractFieldBuilder {
 		}
 		try {
 			Class enumClass = Class.forName(enumName);
-			BeanItemContainer indexedContainer = new BeanItemContainer(
-					enumClass, Arrays.asList(enumClass.getEnumConstants()));
+			BeanItemContainer indexedContainer = new BeanItemContainer(enumClass, Arrays.asList(enumClass.getEnumConstants()));
 			select.setContainerDataSource(indexedContainer);
 			if (enumField != null)
 				select.setItemCaptionPropertyId(enumField);
-			if (select instanceof ComboBox)
-				((ComboBox) select).setTextInputAllowed(false);
+			if (select instanceof ComboBox)((ComboBox) select).setTextInputAllowed(false);
 			return true;
 		} catch (ClassNotFoundException e) {
 			logger.warn("Enum " + enumName + " not found");
@@ -128,8 +125,7 @@ public class SelectBuilder extends AbstractFieldBuilder {
 		if (beanIdField==null || "".equals(beanIdField.trim())) {
 			beanIdField = "id";
 		}
-		
-		Converter converter = new BeanConverter (clazz, beanIdField);
+		Converter converter = new BeanConverter (clazz, beanIdField, beanCaptionField);
 		field.setConverter (converter);
 	}
 	

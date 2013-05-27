@@ -16,12 +16,17 @@ public class BeanConverter<PRESENTATION> implements Converter {
 	private Class<? > modelClass;
 	private Method getterMethod;
 	private Method setterMethod;
+	private String idFieldName;
+	private String captionFieldName;
 	
 
-	public BeanConverter (Class<PRESENTATION> presentationClass, String fieldName)  {
+	public BeanConverter (Class<PRESENTATION> presentationClass, String idFieldName, String captionFieldName)  {
+		this.idFieldName = idFieldName;
+		this.captionFieldName = captionFieldName;
+		
 		this.presentationClass = presentationClass;
-		String getter="get"+fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);
-		String setter="set"+fieldName.substring(0, 1).toUpperCase()+fieldName.substring(1);
+		String getter="get"+idFieldName.substring(0, 1).toUpperCase()+idFieldName.substring(1);
+		String setter="set"+idFieldName.substring(0, 1).toUpperCase()+idFieldName.substring(1);
 		getterMethod = null;
 		
 		try {
@@ -45,6 +50,7 @@ public class BeanConverter<PRESENTATION> implements Converter {
 		
 		this.modelClass = type;
 	}
+	
 
 	@Override
 	public Object convertToModel(Object value, Locale locale) throws com.vaadin.data.util.converter.Converter.ConversionException {
@@ -67,7 +73,7 @@ public class BeanConverter<PRESENTATION> implements Converter {
 		try {
 			PRESENTATION presentation = presentationClass.newInstance();
 			setterMethod.invoke (presentation, value);
-			return presentation;
+			return (PRESENTATION)presentation;
 		} catch (Exception e) {
 			logger.error("Can't invoke setter "+setterMethod, e);
 			return null;
@@ -83,6 +89,20 @@ public class BeanConverter<PRESENTATION> implements Converter {
 	public Class<PRESENTATION> getPresentationType() {
 		return presentationClass;
 	}
+
+
+	public Class<?> getModelClass() {
+		return modelClass;
+	}
+
 	
+
+	public String getIdFieldName() {
+		return idFieldName;
+	}
+
+	public String getCaptionFieldName() {
+		return captionFieldName;
+	}
 
 }
