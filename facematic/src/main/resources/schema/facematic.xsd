@@ -84,6 +84,9 @@
 					<element type="c:TableType" name="Table" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
+					<element type="c:TableType" name="TreeTable" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
 					<element type="c:TreeType" name="Tree" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
@@ -115,6 +118,10 @@
 		<sequence minOccurs="0" maxOccurs="unbounded">
 			<element type="c:CoreHtmlTableType" name="table" minOccurs="0"
 				maxOccurs="unbounded" />
+					<element type="c:TableType" name="TreeTable" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+				
 			<element type="c:CoreHtmlType" name="p" minOccurs="0"
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="span" minOccurs="0"
@@ -443,6 +450,10 @@
 					<element type="c:TableType" name="Table" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
+					<element type="c:TableType" name="TreeTable" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					
 					<element type="c:TreeType" name="Tree" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>

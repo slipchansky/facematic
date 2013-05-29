@@ -9,6 +9,14 @@
 		<hl spacing="true" margin="true" width="100%">
 			<vl spacing="true" >
 				<Label value="Label component" />
+				
+			<TreeTable name="departmentsTable" expandRatio="100" sizeFull="true">
+				<columns>
+					<column id="title" header="Подразделение"></column>
+					<column id="location" header="Город"></column>
+				</columns>
+			</TreeTable>
+				
 
 				<Html>
 					<b>Html</b>

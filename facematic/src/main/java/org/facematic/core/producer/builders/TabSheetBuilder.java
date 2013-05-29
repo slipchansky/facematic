@@ -5,9 +5,13 @@ import org.dom4j.Element;
 
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
+import org.facematic.utils.FacematicUtils;
+
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.Tab;
 
 /**
  * @author "Stanislav Lipchansky"
@@ -48,8 +52,16 @@ public class TabSheetBuilder extends ComponentContainerBuilder {
 	@Override
 	protected void addComponent (AbstractComponentContainer container,
 			AbstractComponent component, Element node) {
-		    TabSheet tabSheet = (TabSheet)container;
+		    final TabSheet tabSheet = (TabSheet)container;
 		    tabSheet.addTab(component);
+		    tabSheet.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
+				
+				@Override
+				public void selectedTabChange(SelectedTabChangeEvent event) {
+					FacematicUtils.updateTabFocus(tabSheet.getSelectedTab());
+				}
+			});
+		    
 	}
 	
 }

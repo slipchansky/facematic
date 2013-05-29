@@ -2,12 +2,18 @@ package org.facematic.utils;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Iterator;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.converter.Converter;
+import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Component.Focusable;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextField;
 
 /**
  * @author "Stanislav Lipchansky"
@@ -51,5 +57,57 @@ public class FacematicUtils {
 			combo.setConverter((Converter)null);
 			setComboBoxData (combo, modelClass, collection, idFieldName, captionFieldName);
 		}
+	}
+	
+	public static boolean updateTabFocus (Object obj) {
+		if (! (obj instanceof Component) ) return false;
+		Component tab = (Component)obj; 
+		
+		if (! (tab instanceof AbstractComponentContainer) ) {
+			if (tab instanceof Focusable) {
+				((Focusable) tab).focus();
+				return true;
+			}
+			return false;
+		}
+		Iterator<Component> iterator = ((AbstractComponentContainer)tab).getComponentIterator();
+		Component c;
+		while ( iterator.hasNext()) {
+			c = iterator.next ();
+			if (c instanceof Focusable) {
+				((Focusable)c).focus();
+				if (c instanceof TabSheet) {
+					((TabSheet)c).setSelectedTab(0);
+					Component selected = ((TabSheet)c).getSelectedTab();
+					return updateTabFocus (selected);
+				}
+				else
+				if (c instanceof Table) {
+					Table t = (Table)c;
+					if (t.getValue() != null)
+						return true;
+					
+					Collection<?> ids = t.getItemIds();
+					if (ids != null) {
+						for (Object id : ids) {
+							t.select(id);
+							return true;
+						}
+					}
+				}
+				else
+				if (c instanceof TextField) {
+					TextField f = (TextField)c;
+					f.selectAll();
+				}
+				
+				return true;
+			} else if (c instanceof AbstractComponentContainer) {
+				if (updateTabFocus (c)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

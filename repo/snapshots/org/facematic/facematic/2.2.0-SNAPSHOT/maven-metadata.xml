@@ -2,23 +2,23 @@
 <metadata modelVersion="1.1.0">
   <groupId>org.facematic</groupId>
   <artifactId>facematic</artifactId>
-  <version>2.1.1-SNAPSHOT</version>
+  <version>2.2.0-SNAPSHOT</version>
   <versioning>
     <snapshot>
-      <timestamp>20130529.164944</timestamp>
-      <buildNumber>2</buildNumber>
+      <timestamp>20130529.204604</timestamp>
+      <buildNumber>1</buildNumber>
     </snapshot>
-    <lastUpdated>20130529164944</lastUpdated>
+    <lastUpdated>20130529204604</lastUpdated>
     <snapshotVersions>
       <snapshotVersion>
         <extension>jar</extension>
-        <value>2.1.1-20130529.164944-2</value>
-        <updated>20130529164944</updated>
+        <value>2.2.0-20130529.204604-1</value>
+        <updated>20130529204604</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom</extension>
-        <value>2.1.1-20130529.164944-2</value>
-        <updated>20130529164944</updated>
+        <value>2.2.0-20130529.204604-1</value>
+        <updated>20130529204604</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>

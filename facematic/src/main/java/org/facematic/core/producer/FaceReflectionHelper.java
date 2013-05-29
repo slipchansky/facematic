@@ -101,6 +101,7 @@ public class FaceReflectionHelper implements Serializable {
 		if (instance == null) {
 			return;
 		}
+		
 
 		Field field = findAnnotatedField((String) name, viewComponentMatcher, FmViewComponent.class);
 		if (field != null) {
@@ -114,6 +115,12 @@ public class FaceReflectionHelper implements Serializable {
 	 * @param controller
 	 */
 	public void putController(String name, Object controller) {
+		int k = 0;
+		if (name.equals("questions")) {
+			k++;
+		}
+		
+		
 		if (instance == null) {
 			return;
 		}

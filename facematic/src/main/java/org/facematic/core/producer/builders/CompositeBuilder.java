@@ -67,9 +67,17 @@ public class CompositeBuilder extends ComponentBuilder {
 		String path = firstNested.attributeValue("path");
 		String name = firstNested.attributeValue("name");
 		
+		
 		String controllerClassName = firstNested.attributeValue("controller");
 		Object controller = null;
 		
+		if ("none".equals (controllerClassName) || "owner".equals (controllerClassName)) {
+			
+			controller = builder.getControllerInstance();
+			logger.trace("------------------------------------------!!!!!!!!!!!!!!!!!"+controller.getClass().getCanonicalName());
+		}
+		
+		if (controller == null)
 		if (controllerClassName != null && !"".equals(controllerClassName)) {
 			try {
 				controller = builder.createClassInstance(controllerClassName);

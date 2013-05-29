@@ -18,9 +18,13 @@ public class FormBinder {
 	}
 	
 	public void bind (Object dataBean) {
+		attach(dataBean);
+		this.fieldGroup.bindMemberFields(fieldsContainerdInstance);
+	}
+
+	public void attach(Object dataBean) {
 		BeanItem beanItem = new BeanItem(dataBean);
 		this.fieldGroup = new FieldGroup(beanItem);
-		this.fieldGroup.bindMemberFields(fieldsContainerdInstance);
 		this.dataBean = dataBean;
 	}
 	
@@ -35,6 +39,10 @@ public class FormBinder {
 	
 	public <T> T getBean () {
 		return (T)dataBean;
-	} 
+	}
+	
+	public FieldGroup getFieldGroup () {
+		return fieldGroup;
+	}
 
 }

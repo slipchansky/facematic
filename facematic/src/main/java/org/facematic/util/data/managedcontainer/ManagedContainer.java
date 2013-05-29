@@ -476,6 +476,12 @@ public class ManagedContainer<BEANTYPE> extends
 	 */
 	public void setManager(ContainerManager<BEANTYPE> editor) {
 		this.manager = editor;
+		
+		if (indexOfId(createItem) >= 0) {
+			super.removeItem (createItem);
+			createItem = null;
+		}
+		
 		List<ManagedContainerItem> allItems = getItemIds();
 		for (ManagedContainerItem b : allItems) {
 			applyManagerActions(b);
