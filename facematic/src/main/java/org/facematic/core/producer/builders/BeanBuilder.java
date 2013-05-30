@@ -39,6 +39,10 @@ public class BeanBuilder {
 			String value = attr.getValue();
 			String name = "set" + attrname.substring(0, 1).toUpperCase()
 					+ attrname.substring(1);
+			
+			if (name.equals("setSelectable"))
+				name+="";
+			
 			try {
 				Method setter = instance.getClass().getMethod(name, String.class);
 				setter.invoke(instance, value);

@@ -126,7 +126,7 @@ public class ManagedContainer<BEANTYPE> extends
 	}
 
 	public ManagedContainer(Class type) throws IllegalArgumentException {
-		super(type);
+		super(ManagedContainerItem.class);
 		this.beanClass = type;
 		prepareModel(type);
 		implementCreate();
@@ -140,14 +140,17 @@ public class ManagedContainer<BEANTYPE> extends
 		List<ManagedContainerItem> data = new ArrayList<ManagedContainerItem>();
 		removeAllItems();
 		for (BEANTYPE o : collection) {
-			ManagedContainerItem<BEANTYPE> bean = new ManagedContainerItem<BEANTYPE>(
-					o, this);
+			ManagedContainerItem<BEANTYPE> bean = new ManagedContainerItem<BEANTYPE>(o, this);
+			applyManagerActions(bean);
 			if (manager == null)
 				bean.getControls().hideAction(Action.EDIT);
 			data.add(bean);
 		}
 		addAll(data);
 		implementCreate();
+		
+		if (table != null)
+			table.refreshRowCache();
 	}
 
 	private void implementCreate() {
@@ -362,10 +365,11 @@ public class ManagedContainer<BEANTYPE> extends
 			if (table != null) {
 				if (item == createItem) {
 					item.setBean(manager.createEmpty());
+					item.setIsNewInstance (true);
 				}
-
+				else 
+					item.setIsNewInstance (false);
 				table.select(item);
-				table.refreshRowCache();
 			}
 			manager.edit(item);
 		}
@@ -593,7 +597,7 @@ public class ManagedContainer<BEANTYPE> extends
 		}
 	}
 
-	public ManagedContainerItem<String> getNewItem() {
+	public ManagedContainerItem<BEANTYPE> getNewItem() {
 		if (createItem != null) return createItem;
 		implementCreate();
 		return createItem;
@@ -615,6 +619,14 @@ public class ManagedContainer<BEANTYPE> extends
 			result.add((BEANTYPE)item.getBean ());
 		}
 		return result;
+	}
+	
+	public void killItem  (Object itemId) {
+		super.removeItem(itemId);
+		implementCreate();
+		if (table != null)
+			table.refreshRowCache();
+		
 	}
 
 

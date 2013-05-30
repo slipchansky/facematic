@@ -25,6 +25,7 @@ public interface ContainerManager<TYPE> {
 	 * implement edit blank in cases wnen browser and editor are visible simultinously. 
 	 * blank must bind new empty bean where there are no selected rows in the browser.
 	 */
+	@Deprecated
 	void blank ();
 	
 	/**

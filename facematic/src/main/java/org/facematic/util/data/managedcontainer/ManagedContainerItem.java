@@ -7,6 +7,7 @@ import org.facematic.util.data.managedcontainer.RowControls;
 public class ManagedContainerItem<TYPE> {
 	private TYPE        bean;
 	private RowControls controls;
+	private boolean isNewInstance;
 	
 	
 	public ManagedContainerItem (TYPE bean, ManagedContainer container) {
@@ -32,4 +33,12 @@ public class ManagedContainerItem<TYPE> {
 	public void setControls(RowControls controls) {
 		this.controls = controls;
 	}
+
+	public void setIsNewInstance(boolean b) {
+		this.isNewInstance = b;
+	}
+	public boolean isNewInstance () {
+		return isNewInstance;
+	}
+	
 }
