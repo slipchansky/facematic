@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
+	controller="${controllerQualifiedName}"
+	sizeFull="true" expandRatio="100">
+
+	<TabSheet name="tsOverlay" sizeFull="true" margin="false" hideTabs="true" >
+		<vl name="tabBrowse" caption="Browse" margin="false" sizeFull="true">
+			<Table name="table" sizeFull="true" expandRatio="100" nullSelectionAllowed="false" selectable="true" >
+				<columns>
+				  
+${browserViewColumns}
+        	    <column header="" id="controls" width="60" />
+
+				</columns>
+			</Table>
+		</vl>
+
+		<vl name="tabEdit" caption="Modify" margin="true">
+			<composite controller="${editFormQualifiedName}"
+				   name="editForm" location="RESOURCE"
+				   path="${editViewQualifiedName}" />
+		</vl>
+	</TabSheet>
+</content>

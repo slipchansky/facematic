@@ -1,0 +1,4 @@
+${INDENT}@FmViewComponent(name="${fieldName}")
+${INDENT}@PropertyId("${fieldName}")
+${INDENT}TextField ${fieldName};
+

@@ -13,8 +13,8 @@ import org.facematic.wizards.beanwizard.base.BeanFormWizardPage;
 
 public class BeanBrowseEditWizardPage extends BeanFormWizardPage {
 
-	private Text editorNameText;
-	private Text creatorNameText;
+	protected Text editorNameText;
+	protected Text creatorNameText;
 
 	public BeanBrowseEditWizardPage(ISelection selection) {
 		super(selection);
@@ -22,29 +22,25 @@ public class BeanBrowseEditWizardPage extends BeanFormWizardPage {
 
 	@Override
 	protected void addMoreControls (Composite container) {
-		//super.addMoreControls (container);
+		editorNameText = addInputLine(container, "&Details Controller Name:");
+		creatorNameText = addInputLine (container, "C&reate Controller Name:");
+	}
+
+	protected Text addInputLine(Composite container, String inputCaption) {
 		Label label = new Label(container, SWT.NULL);
-		label.setText("&Details Controller Name:");
-		editorNameText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		label.setText(inputCaption);
+		Text inputLine = new Text(container, SWT.BORDER | SWT.SINGLE);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		editorNameText.setLayoutData(gd);
+		inputLine.setLayoutData(gd);
 		new Label (container, SWT.NULL).setLayoutData(gd);
-		
-		label = new Label(container, SWT.NULL);
-		label.setText("C&reate Controller Name:");
-		creatorNameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		creatorNameText.setLayoutData(gd);
-		new Label (container, SWT.NULL).setLayoutData(gd);
-		
-		
+		return inputLine;
 	}
 
 	@Override
 	protected void updateInputsForBeanClass(IType type) {
 		controllerNameText.setText(type.getElementName()+"Browser");
 		editorNameText.setText(type.getElementName()+"FormEdit");
-		creatorNameText.setText(type.getElementName()+"FormCreate");
+		if (creatorNameText != null) creatorNameText.setText(type.getElementName()+"FormCreate");
 	}
 
 	public String getEditorNameText() {
@@ -52,6 +48,7 @@ public class BeanBrowseEditWizardPage extends BeanFormWizardPage {
 	}
 	
 	public String getCreatorNameText () {
+		if (creatorNameText==null) return "";
 		return creatorNameText.getText();
 	}
 }

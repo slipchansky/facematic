@@ -11,8 +11,8 @@ import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.FacematicUI;
-import org.facematic.sandbox.activerecord.ActiveRecordManager;
-import static org.facematic.sandbox.activerecord.ActiveRecordManager.Activity.*;
+import org.facematic.ext.activerecord.ActiveRecordManager;
+import static org.facematic.ext.activerecord.ActiveRecordManager.Activity.*;
 import org.facematic.utils.FacematicDaoUtils;
 import ${className};
 
@@ -54,9 +54,9 @@ public class ${controllerSimpleName} implements FmBaseController {
 	${editFormSimpleName} editForm;
 
 	
-	private TestBeanDao dao;
+	private ${daoName} dao;
 	
-	ActiveRecordManager<TestBean> recordManager;
+	ActiveRecordManager<${classSimpleName}> recordManager;
 	
 	// from FaceProducer
 	@Override
@@ -66,12 +66,12 @@ public class ${controllerSimpleName} implements FmBaseController {
     // from FaceProducer
 	@Override
 	public void init() {
-	    dao = FacematicDaoUtils.getDao(TestBeanDao.class);
+	    dao = FacematicDaoUtils.getDao(${daoName}.class);
 	    
-		recordManager = new ActiveRecordManager<TestBean>(TestBean.class, dao, table) {
+		recordManager = new ActiveRecordManager<${classSimpleName}>(${classSimpleName}.class, dao, table) {
 			@Override
-			public void edit(TestBean bean) {
-				TestBeanBrowse.this.edit(bean);
+			public void edit(${classSimpleName} bean) {
+				${controllerSimpleName}.this.edit(bean);
 			}
 		};
 		recordManager.disable(MOVE);
@@ -79,7 +79,7 @@ public class ${controllerSimpleName} implements FmBaseController {
 	}
 
     // from recordManager
-	public void edit(TestBean bean) {
+	public void edit(${classSimpleName} bean) {
 		editForm.bind (bean);
 		tsOverlay.setSelectedTab(tabEdit);
 	}

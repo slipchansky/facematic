@@ -30,14 +30,14 @@ import org.facematic.plugin.utils.SimpleTemplateEngine;
  */
 @SuppressWarnings("restriction")
 public class BeanFormBuilder {
-	private IProject classProject ;
-	private URLClassLoader projectClassLoader;
+	protected IProject classProject ;
+	protected URLClassLoader projectClassLoader;
 	
 	protected Class<?>  beanClass; // = org.facematic.plugin.utils.TestBean.class;
-	private String beanClassSimpleName;
-	private String beanClassQualifiedName; // = org.facematic.plugin.utils.TestBean.class.getCanonicalName();
-	private String beanFormControllerName      = "EditTestBeanFormController";
-	private String destinationPackagePath = "/org.facematic.eclipse.plugin/src/org/facematic/plugin/utils/views";
+	protected String beanClassSimpleName;
+	protected String beanClassQualifiedName; // = org.facematic.plugin.utils.TestBean.class.getCanonicalName();
+	protected String beanFormControllerName      = "EditTestBeanFormController";
+	protected String destinationPackagePath = "/org.facematic.eclipse.plugin/src/org/facematic/plugin/utils/views";
 	
 	protected String viewSimpleName;
 	protected String viewPackageName;
@@ -56,8 +56,8 @@ public class BeanFormBuilder {
 	String formFields = "", viewFields = "";
 	
 	protected SimpleTemplateEngine translator = new SimpleTemplateEngine ();
-	private String controllerCode;
-	private String viewCode;
+	protected String controllerCode;
+	protected String viewCode;
 	
 	
 	public void setClassProject(IProject classProject) {
@@ -199,7 +199,7 @@ public class BeanFormBuilder {
 	}
 	
 
-	private void prepareProjectClassLoader () throws Exception {
+	protected void prepareProjectClassLoader () throws Exception {
 		IJavaProject javaProject = JavaCore.create(classProject);
 		String[] classPathEntries = JavaRuntime.computeDefaultRuntimeClassPath(javaProject);
 		

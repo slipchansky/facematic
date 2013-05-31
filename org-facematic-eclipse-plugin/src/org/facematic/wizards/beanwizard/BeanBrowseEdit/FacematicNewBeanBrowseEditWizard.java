@@ -8,8 +8,8 @@ import org.facematic.wizards.beanwizard.base.BeanFormWizardPage;
 public class FacematicNewBeanBrowseEditWizard extends BeanBaseWizard {
 	
 	
-	private BeanBrowseEditWizardPage page;
-	private BeanBrowseEditBuilder builder;
+	protected BeanBrowseEditWizardPage page;
+	protected BeanBrowseEditBuilder builder;
 
 	protected BeanFormBuilder getBuilderInstance () {
 		return builder;
@@ -23,9 +23,13 @@ public class FacematicNewBeanBrowseEditWizard extends BeanBaseWizard {
 	@Override
 	protected void prepareFinishContext() {
 		super.prepareFinishContext();
-		builder = new BeanBrowseEditBuilder();
+		builder = getBuilder();
 		builder.setEditorName (page.getEditorNameText());
 		builder.setCreatorName(page.getCreatorNameText ());
+	}
+
+	public BeanBrowseEditBuilder getBuilder() {
+		return new BeanBrowseEditBuilder();
 	}
 	
 	

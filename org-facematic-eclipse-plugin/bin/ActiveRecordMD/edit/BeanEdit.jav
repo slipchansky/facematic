@@ -1,4 +1,4 @@
-package org.test.ui.testbean;
+package ${controllerPackageName};
 
 import javax.inject.Inject;
 
@@ -20,14 +20,15 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 
-import org.test.beans.TestBean;
+import ${className};
+
 
 /**
  *
  */
-@FmView(name = "org.test.ui.testbean.TestBeanEdit")
-public class TestBeanEdit implements FmBaseController {
-	private static final Logger logger = LoggerFactory.getLogger(TestBeanEdit.class);
+@FmView(name = "${editViewQualifiedName}")
+public class ${editFormSimpleName} implements FmBaseController {
+	private static final Logger logger = LoggerFactory.getLogger(${editFormSimpleName}.class);
 	
 	protected FormBinder binder;  
 
@@ -35,13 +36,7 @@ public class TestBeanEdit implements FmBaseController {
 	@FmUI
 	protected FacematicUI ui;
 	
-    @FmViewComponent(name="id")
-    @PropertyId("id")
-    TextField id;
-
-    @FmViewComponent(name="name")
-    @PropertyId("name")
-    TextField name;
+ ${editorContollerFields}
 
     @FmViewComponent(name="form")
     protected FormLayout form;
@@ -56,7 +51,7 @@ public class TestBeanEdit implements FmBaseController {
     protected VerticalLayout view;
     
     @FmController
-    protected TestBeanBrowse parent;
+    protected ${controllerSimpleName} parent;
 
 	@Override
 	public void prepareContext(FaceProducer producer) {
@@ -68,7 +63,7 @@ public class TestBeanEdit implements FmBaseController {
 	}
 	
     // from browser
-	public void bind (TestBean bean) {
+	public void bind (${classSimpleName} bean) {
 		binder.bind (bean);
 	}
 

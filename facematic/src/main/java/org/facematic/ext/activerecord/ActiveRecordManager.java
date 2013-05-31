@@ -1,4 +1,4 @@
-package org.facematic.sandbox.activerecord;
+package org.facematic.ext.activerecord;
 
 import java.util.Collection;
 

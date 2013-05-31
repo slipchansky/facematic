@@ -22,21 +22,28 @@
             class="org.facematic.wizards.FacematicNewWizard"
             icon="icons/fm-vaadin.png"
             id="org.facematic.wizards.FacematicNewWizard"
-            name="Create Facematic View+Controller">
+            name="View+Controller">
       </wizard>
       <wizard
             category="org.facematic"
             class="org.facematic.wizards.beanwizard.BeanForm.FacematicNewBeanFormWizard"
             icon="icons/fm-vaadin.png"
             id="org.facematic.wizards.beanwizard.BeanForm.FacematicNewBeanFormWizard"
-            name="Create Facematic BeanForm">
+            name="BeanForm">
       </wizard>
       <wizard
             category="org.facematic"
             class="org.facematic.wizards.beanwizard.BeanBrowseEdit.FacematicNewBeanBrowseEditWizard"
             icon="icons/fm-vaadin.png"
             id="org.facematic.wizards.beanwizard.BeanBrowseEdit.FacematicNewBeanBrowseEditWizard"
-            name="Create Facematic MasterDetail">
+            name="MasterDetail">
+      </wizard>
+      <wizard
+            category="org.facematic"
+            class="org.facematic.wizards.beanwizard.ActiveRecordMasterDetail.ActiveRecordMasterDetailWizard"
+            icon="icons/fm-vaadin.png"
+            id="org.facematic.wizards.beanwizard.ActiveRecordMasterDetail.ActiveRecordMasterDetailWizard"
+            name="ActiveRecord MasterDetail">
       </wizard>
    </extension>
    

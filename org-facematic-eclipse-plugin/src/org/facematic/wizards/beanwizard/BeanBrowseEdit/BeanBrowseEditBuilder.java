@@ -10,16 +10,16 @@ public class BeanBrowseEditBuilder extends BeanFormBuilder {
 
 	
 
-	private String editFormSimpleName;
-	private String editFormQualifiedName;
-	private String editViewQualifiedName;
-	private String browserViewSimpleName;
-	private String browserViewQualifiedName;
-	private String createFormSimpleName;
-	private String createFormQualifiedName;
-	private String createViewQualifiedName;
-	private String editViewSimpleName;
-	private String creatorFormSimpleName;
+	protected String editFormSimpleName;
+	protected String editFormQualifiedName;
+	protected String editViewQualifiedName;
+	protected String browserViewSimpleName;
+	protected String browserViewQualifiedName;
+	protected String createFormSimpleName;
+	protected String createFormQualifiedName;
+	protected String createViewQualifiedName;
+	protected String editViewSimpleName;
+	protected String creatorFormSimpleName;
 
 	@Override
 	protected void prepareEnvironment() {
@@ -107,13 +107,18 @@ public class BeanBrowseEditBuilder extends BeanFormBuilder {
 		
 	}
 
-	private File writeXml(String fileName, String browserViewCode) {
-		return writeSourceFile("src.main.resources."+viewPackageName, fileName+".xml", browserViewCode);
+	protected File writeXml(String fileName, String xmlCode) {
+		return writeSourceFile("src.main.resources."+viewPackageName, fileName+".xml", xmlCode);
 	}
 
-	private File writeJavaCode(String fileName, String browserControllerCode) {
-		return writeSourceFile("src.main.java."+controllerPackageName, fileName+".java", browserControllerCode);
+	protected File writeJavaCode(String fileName, String javaCode) {
+		return writeSourceFile("src.main.java."+controllerPackageName, fileName+".java", javaCode);
 	}
+	
+	protected File writeTestJavaCode(String fileName, String javaCode) {
+		return writeSourceFile("src.test.java."+controllerPackageName, fileName+".java", javaCode);
+	}
+	
 
 	public void setEditorName(String editorNameText) {
 		this.editFormSimpleName = editorNameText;
@@ -122,7 +127,7 @@ public class BeanBrowseEditBuilder extends BeanFormBuilder {
 
 	public void setCreatorName(String creatorNameText) {
 		this.creatorFormSimpleName = creatorNameText;
-		
 	}
+
 
 }
