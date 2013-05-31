@@ -10,3 +10,4 @@ target
 /VAADIN/
 rebel.xml
 nb*.xml
+/bin/

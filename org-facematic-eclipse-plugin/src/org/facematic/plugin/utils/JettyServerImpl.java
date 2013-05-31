@@ -4,9 +4,12 @@ import java.lang.reflect.Method;
 
 import javax.servlet.Servlet;
 
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.xml.XmlConfiguration;
 import org.facematic.Activator;
 
 
@@ -30,16 +33,21 @@ public class JettyServerImpl implements IJettyServer {
 		this.port = port;
 		//org.eclipse.jetty.util.log.Log.setLog(new CustomJettyLogger ()); 
 	    server = new Server(port);
+	    
+	    //XmlConfiguration configuration = new XmlConfiguration(new File("myJetty.xml").toURL()); //or use new XmlConfiguration(new FileInputStream("myJetty.xml"));
+	    //configuration.configure(server);
+	    
+	    
 	    Class<? extends Servlet> fmInternalTestServletClass = (Class<? extends Servlet>)classLoader.loadClass(INTERNAL_SERVLET_CLASS_NAME);
 	    Method method = fmInternalTestServletClass.getMethod("setPluginOutputStream", Object.class);
 	    method.invoke(fmInternalTestServletClass, (Object)Activator.getConsoleOutputStream());
-	    
 	    
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         handler.addServlet(fmInternalTestServletClass, "/*"); 
         handler.setSessionHandler(new SessionHandler ());
         handler.setClassLoader(classLoader);
 	    server.setHandler(handler);
+
 	  }
 	 
 	 

@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.util.data.managedcontainer.Action;
@@ -188,7 +190,9 @@ public class ManagedContainer<BEANTYPE> extends
 	 */
 	private void prepareModel(Class beanClass) {
 		accessors = getPropertyAccessors(beanClass);
-		accessors.putAll(getPropertyAccessors(ManagedContainerItem.class));
+		Map<String, Accessor> manageAccessors = getPropertyAccessors(ManagedContainerItem.class);
+		accessors.put("controls", manageAccessors.get("controls"));
+		accessors.put("bean", manageAccessors.get("bean"));
 	}
 
 	/**
@@ -221,7 +225,8 @@ public class ManagedContainer<BEANTYPE> extends
 	 */
 	@Override
 	public Collection<String> getContainerPropertyIds() {
-		return accessors.keySet();
+	    Set<String> propertyIds = accessors.keySet();
+		return propertyIds;
 	}
 
 	/*
@@ -353,7 +358,11 @@ public class ManagedContainer<BEANTYPE> extends
 	 */
 	@Override
 	public Class<?> getType(Object propertyId) {
+		try {
 		return accessors.get(propertyId).getPropertyType();
+		} catch (Exception e) {
+			return Object.class;
+		}
 	}
 
 	/**
