@@ -150,6 +150,7 @@ public class FaceProducer implements Serializable {
 		final static Map<String, Class> CREATORS = new HashMap<String, Class>() {
 			{
 				put("composite", Composite.class);
+				put("part", VerticalLayout.class);
 				put("html", Html.class);
 				put("Html", Html.class);
 				put("complex", Complex.class);
@@ -233,14 +234,14 @@ public class FaceProducer implements Serializable {
 	 * @param parent
 	 * @param parentNamePrefix
 	 */
-	public FaceProducer(Object controllerInstance, FaceProducer parent,
-			String parentNamePrefix) {
+	public FaceProducer(Object controllerInstance, FaceProducer parent, String parentNamePrefix) {
 		if (parent != null) {
 			if (this.ui == null) {
 				this.ui = parent.getUi();
 			}
 			this.customClassLoader = parent.customClassLoader;
 		}
+		this.complexResources = parent.complexResources;
 		if (ui == null) {
 			logger.error("ui cannot be null");
 			throw new RuntimeException(
@@ -374,19 +375,25 @@ public class FaceProducer implements Serializable {
 			return;
 		}
 		try {
-			controllerInstance = createClassInstance(controllerClassName);
-			if (controllerInstance != null) {
-				if (controllerInstance instanceof FmBaseController) {
-					try {
-					((FmBaseController)controllerInstance).prepareContext(this);
-					} catch (Exception e) {
-						logger.error("Could not prepare context. If you see this message in Facematic console, it is probably due to the fact that your code is not running in a work context. In this case, you can ignore this message.", e);
-					}
-				}
-			}
+			createControllerInstance(controllerClassName);
 		} catch (Exception e) {
 			logger.error("Can't instantinate controller: "
 					+ controllerClassName, e);
+		}
+	}
+
+	public void createControllerInstance(String controllerClassName)
+			throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException {
+		controllerInstance = createClassInstance(controllerClassName);
+		if (controllerInstance != null) {
+			if (controllerInstance instanceof FmBaseController) {
+				try {
+				((FmBaseController)controllerInstance).prepareContext(this);
+				} catch (Exception e) {
+					logger.error("Could not prepare context. If you see this message in Facematic console, it is probably due to the fact that your code is not running in a work context. In this case, you can ignore this message.", e);
+				}
+			}
 		}
 	}
 	
@@ -778,4 +785,5 @@ public class FaceProducer implements Serializable {
 			complexResources = new HashMap<String, String> ();
 		complexResources.put(name,  xml);
 	}
+
 }

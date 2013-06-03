@@ -11,6 +11,7 @@ import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.FacematicUI;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Notification;
 
 
 @FmView(name="org.facematic.site.showcase.complex.ComplexTest")
@@ -59,5 +60,14 @@ public class ComplexTest implements FmBaseController {
 		FaceProducer fp = new FaceProducer ();
 		fp.getViewFor(ComplexTest.class);
 	}
+	
+	public void first () {
+	  Notification.show("ComplexTest.first");
+	}
+	
+	public void second () {
+	  Notification.show("ComplexTest.second");
+	}
+	
 }
 

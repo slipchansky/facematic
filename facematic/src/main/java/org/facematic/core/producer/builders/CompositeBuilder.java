@@ -66,6 +66,11 @@ public class CompositeBuilder extends ComponentBuilder {
 		String sLocation = firstNested.attributeValue("location");
 		String path = firstNested.attributeValue("path");
 		String name = firstNested.attributeValue("name");
+		String src = firstNested.attributeValue("src");
+		if (src != null && !src.trim().equals("") ) {
+			sLocation = "RESOURCE";
+			path = src;
+		}
 		
 		
 		String controllerClassName = firstNested.attributeValue("controller");

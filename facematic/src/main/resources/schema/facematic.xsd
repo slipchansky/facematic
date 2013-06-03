@@ -494,8 +494,7 @@
 				<documentation>Deprecated. Use attribute "content" instead of location+path.</documentation>
 				</annotation>
 				</attribute>
-				<attribute name="content" type="string" use="optional"></attribute>
-				
+				<attribute name="src" type="string" use="optional"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -1207,6 +1206,7 @@
 				maxOccurs="unbounded">
 			</element>
 		</sequence>
+		<attribute name="controller" type="string"></attribute>
 	</complexType>
 
 
