@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<content 	controller="org.facematic.site.showcase.controllers.SimpleComponents"
+<content 	controller="org.facematic.site.showcase.simple.SimpleComponentsExample"
 	sizeFull="true">
 
 	<Panel sizeFull="true">
@@ -9,8 +9,7 @@
 				<Label value="Label component" />
 
 				<Html>
-					<b>Html</b>
-					<input type="button" value="ok" onclick="alert('mama')" />
+					Here is <b>Html</b>
 				</Html>
 
 				<TextField caption="TextField" inputPrompt="TextField" />
@@ -59,15 +58,6 @@
 					<item>Three</item>
 				</ComboBox>
 				
-				<Tree caption="Tree" height="60" itemCaptionPropertyId="value">
-					<item value="One">
-					   <item value="a-One"></item>
-					   <item>b-One</item>
-					   <item>c-One</item>
-					</item>
-					<item value="Two"></item>
-					<item value="Three"></item>
-				</Tree>
 				
 			</vl>
 		</hl>

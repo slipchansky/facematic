@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
+	controller="org.facematic.site.showcase.composite.CompositeExampleNested"
+	width="100%"
+	>
+	
+	<hl width="100%">
+	<Button caption="first" onClick="onFirst" width="100%"></Button>
+	<Button caption="second" onClick="onSecond" width="100%"></Button>
+	</hl>
+	
+	
+</content>

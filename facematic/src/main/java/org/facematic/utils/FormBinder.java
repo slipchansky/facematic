@@ -8,7 +8,7 @@ import com.vaadin.data.util.BeanItem;
  * @author "Stanislav Lipchansky"
  *
  */
-public class FormBinder {
+public class FormBinder<BEANTYPE> {
 	private Object fieldsContainerdInstance;
 	private FieldGroup fieldGroup;
 	private Object dataBean;
@@ -17,12 +17,12 @@ public class FormBinder {
 		this.fieldsContainerdInstance = fieldsContainerdInstance;
 	}
 	
-	public void bind (Object dataBean) {
+	public void bind (BEANTYPE dataBean) {
 		attach(dataBean);
 		this.fieldGroup.bindMemberFields(fieldsContainerdInstance);
 	}
 
-	public void attach(Object dataBean) {
+	public void attach(BEANTYPE dataBean) {
 		BeanItem beanItem = new BeanItem(dataBean);
 		this.fieldGroup = new FieldGroup(beanItem);
 		this.dataBean = dataBean;
@@ -37,8 +37,8 @@ public class FormBinder {
 		return (T) dataBean;
 	}
 	
-	public <T> T getBean () {
-		return (T)dataBean;
+	public BEANTYPE getBean () {
+		return (BEANTYPE)dataBean;
 	}
 	
 	public FieldGroup getFieldGroup () {

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<extension xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
+	
+	base="org.facematic.site.showcase.inheritance.InheritanceExampleSuper" 
+	controller="org.facematic.site.showcase.inheritance.InheritanceExample">
+
+	<subst name="firstInputCaption">Descendant-First</subst>
+
+	<implement placeholder="moreInputs">
+		<TextField caption="Descendant-1" />
+		<TextArea caption="Descendant-2" />
+	</implement>
+
+</extension>

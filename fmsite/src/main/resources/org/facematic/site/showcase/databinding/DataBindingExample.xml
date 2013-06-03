@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
+    controller="org.facematic.site.showcase.databinding.DataBindingExample" >
+
+    <vl width="300">
+        <FormLayout name="dataBindingExample" width="100%">
+	        <TextField caption="string" name="string" width="100%" />
+	        <ComboBox caption="comboEnum" name="comboEnum" width="100%" enum="org.facematic.site.showcase.databinding.ComboEnum/description"/>
+	        <ComboBox caption="comboInt" name="comboInt" width="100%" />
+	        <DateField caption="date" name="date" width="100%" />
+
+        </FormLayout>
+
+		<Button caption="Save" width="150" onClick="save" alignment="BOTTOM_RIGHT"/>
+    </vl>
+
+</content>

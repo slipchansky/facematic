@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
+	controller="org.facematic.site.showcase.tree.TreeExample">
+
+	<Tree caption="Tree" height="60" itemCaptionPropertyId="value">
+		<item value="One">
+			<item>One-a</item>
+			<item>One-b</item>
+			<item>One-c</item>
+		</item>
+		<item value="Two"></item>
+		<item value="Three"></item>
+	</Tree>
+
+
+</content>

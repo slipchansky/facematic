@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <complex xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://facematic.org/fm facematic.xsd"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
 	controller="org.facematic.site.showcase.complex.ComplexExample">
 
 	<content sizeFull="true" expandRatio="100">

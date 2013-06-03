@@ -482,17 +482,22 @@
 		<complexContent>
 			<extension base="c:ContentType">
 				<attribute name="controller" type="string" use="optional"></attribute>
-				<attribute name="location" type="c:CompositeLocationType" use="optional">
-				<annotation >
-				<documentation>Deprecated. Use attribute "content" instead of location+path.</documentation>
-				</annotation>
+				<attribute name="location" type="c:CompositeLocationType"
+					use="optional">
+					<annotation>
+						<documentation>Deprecated. Use attribute "content" instead of
+							location+path.
+						</documentation>
+					</annotation>
 				</attribute>
 				<attribute name="margin" type="c:TrueFalseType"></attribute>
 				<attribute name="spacing" type="c:TrueFalseType"></attribute>
 				<attribute name="path" type="string" use="optional">
-				<annotation >
-				<documentation>Deprecated. Use attribute "content" instead of location+path.</documentation>
-				</annotation>
+					<annotation>
+						<documentation>Deprecated. Use attribute "content" instead of
+							location+path.
+						</documentation>
+					</annotation>
 				</attribute>
 				<attribute name="src" type="string" use="optional"></attribute>
 			</extension>
@@ -1037,8 +1042,11 @@
 	</complexType>
 
 	<complexType name="SubstituteType" mixed="true">
-		<attribute name="name" type="string" use="required"></attribute>
-		<attribute name="value" type="string" use="optional"></attribute>
+		<complexContent>
+			<extension base="c:CoreHtmlType">
+				<attribute name="value" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
 	</complexType>
 
 
@@ -1187,14 +1195,14 @@
 			</extension>
 		</complexContent>
 	</complexType>
-	
+
 	<complexType name="ComplexContentType">
-	<complexContent >
-	   <extension base="c:RootContentType">
-	   <attribute name="name" use="prohibited"></attribute>
-	   </extension>
-	</complexContent>
-	
+		<complexContent>
+			<extension base="c:RootContentType">
+				<attribute name="name" use="prohibited"></attribute>
+			</extension>
+		</complexContent>
+
 	</complexType>
 
 	<complexType name="ComplexType">
@@ -1207,11 +1215,12 @@
 				</annotation>
 			</element>
 
-			<element type="c:ComplexContentType" name="content" minOccurs="0" maxOccurs="unbounded">
+			<element type="c:ComplexContentType" name="content"
+				minOccurs="0" maxOccurs="unbounded">
 			</element>
-			
-			<element type="c:PartExtensionType" name="extension" minOccurs="0"
-				maxOccurs="unbounded">
+
+			<element type="c:PartExtensionType" name="extension"
+				minOccurs="0" maxOccurs="unbounded">
 			</element>
 
 		</sequence>

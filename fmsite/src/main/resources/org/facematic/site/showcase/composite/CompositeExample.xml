@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
+	controller="org.facematic.site.showcase.composite.CompositeExample"
+	width="600" spacing="true" margin="true"
+	>
+	
+	<html><b>content, controller=CompositeExample</b></html>
+
+	<composite
+		caption="First composite (controller=CompositeExampleNested)" 
+		src="org.facematic.site.showcase.composite.CompositeExampleNested"
+		/>
+		
+		
+	<composite
+		caption="Second composite(controller=content.controller = CompositeExample)" 
+		src="org.facematic.site.showcase.composite.CompositeExampleNested"
+		controller="none" />
+		
+	<composite
+		caption="Third composite (controller=CompositeCustomController extends CompositeExampleNested, overrides onFirst )"
+		src="org.facematic.site.showcase.composite.CompositeExampleNested"
+		controller="org.facematic.site.showcase.composite.CompositeCustomController" />
+		
+
+</content>

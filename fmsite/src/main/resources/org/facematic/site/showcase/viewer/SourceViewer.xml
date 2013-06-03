@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
+	controller="org.facematic.site.showcase.viewer.SourceViewer" sizeFull="true" expandRatio="100" margin="true" spacing="true">
+	
+	<html name="xmlCaption" />
+	<TextArea name="xmlCode" width="100%" height="100%" expandRatio="100" />
+	
+	<html name="javaCaption"/>
+	<TextArea name="javaCode" width="100%" height="100%" expandRatio="100" />
+	
+</content>
