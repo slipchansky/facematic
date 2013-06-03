@@ -30,6 +30,8 @@ public class ExtensionProcessor {
 	private Map<String, Element> placeholders = new HashMap<String, Element>();
 	private Map<String, Object> substitutions = new HashMap();
 
+	private HashMap<String, String> complexResources;
+
 	/**
 	 * @param xml
 	 * @return
@@ -61,8 +63,14 @@ public class ExtensionProcessor {
 	}
 
 	public String getXmlResource(String resourceName) {
-		String xml = org.facematic.utils.StreamUtils
-				.getResourceAsString(resourceName);
+		String xml = null;
+		
+		if (complexResources != null)
+		     xml = complexResources.get (resourceName);
+		
+		if (xml == null)
+		    xml = org.facematic.utils.StreamUtils.getResourceAsString(resourceName);
+		
 		if (xml == null) {
 			resourceName = resourceName.replaceAll("\\.", "/") + ".xml";
 			logger.info("Look for resource " + resourceName);
@@ -203,6 +211,10 @@ public class ExtensionProcessor {
 	public void putSubstitutions (Map<String, Object> substs) {
 		if (substs != null)
 		substitutions.putAll (substs);
+	}
+
+	public void setComplexResources(HashMap<String, String> complexResources) {
+		this.complexResources = complexResources;
 	}
 
 	

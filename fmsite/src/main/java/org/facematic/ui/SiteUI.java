@@ -7,6 +7,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.annotations.FmUI;
+import org.facematic.site.showcase.complex.ComplexTest;
 
 
 
@@ -23,7 +24,7 @@ public class SiteUI extends org.facematic.core.ui.FacematicUI {
 		try {
 			FaceProducer  producer = new FaceProducer(this);
 			
-		    	Object cont = producer.buildFromResource("org.facematic.site.showcase.views.SimpleComponents");
+		    	Object cont = producer.getViewFor (ComplexTest.class);
 		    	if (cont != null) {
 		    		setContent((Component)cont);
                         }

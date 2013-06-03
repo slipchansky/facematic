@@ -118,10 +118,10 @@
 		<sequence minOccurs="0" maxOccurs="unbounded">
 			<element type="c:CoreHtmlTableType" name="table" minOccurs="0"
 				maxOccurs="unbounded" />
-					<element type="c:TableType" name="TreeTable" minOccurs="0"
-						maxOccurs="unbounded">
-					</element>
-				
+			<element type="c:TableType" name="TreeTable" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
 			<element type="c:CoreHtmlType" name="p" minOccurs="0"
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="span" minOccurs="0"
@@ -453,7 +453,7 @@
 					<element type="c:TableType" name="TreeTable" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
-					
+
 					<element type="c:TreeType" name="Tree" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
@@ -482,11 +482,20 @@
 		<complexContent>
 			<extension base="c:ContentType">
 				<attribute name="controller" type="string" use="optional"></attribute>
-				<attribute name="location" type="c:CompositeLocationType"
-					use="required"></attribute>
+				<attribute name="location" type="c:CompositeLocationType" use="optional">
+				<annotation >
+				<documentation>Deprecated. Use attribute "content" instead of location+path.</documentation>
+				</annotation>
+				</attribute>
 				<attribute name="margin" type="c:TrueFalseType"></attribute>
 				<attribute name="spacing" type="c:TrueFalseType"></attribute>
-				<attribute name="path" type="string" use="required"></attribute>
+				<attribute name="path" type="string" use="optional">
+				<annotation >
+				<documentation>Deprecated. Use attribute "content" instead of location+path.</documentation>
+				</annotation>
+				</attribute>
+				<attribute name="content" type="string" use="optional"></attribute>
+				
 			</extension>
 		</complexContent>
 	</complexType>
@@ -930,7 +939,8 @@
 				<sequence>
 					<element ref="c:columns" minOccurs="0" maxOccurs="unbounded"></element>
 				</sequence>
-				<attribute name="selectable" type="c:TrueFalseType" use="optional" default="false"></attribute>
+				<attribute name="selectable" type="c:TrueFalseType" use="optional"
+					default="false"></attribute>
 				<attribute name="multiSelectAllowed" type="c:TrueFalseType"
 					use="optional"></attribute>
 				<attribute name="columnReorderingAllowed" type="c:TrueFalseType"
@@ -1151,6 +1161,17 @@
 	</complexType>
 
 
+	<complexType name="PartExtensionType">
+		<complexContent>
+			<extension base="c:ExtensionType">
+				<sequence minOccurs="0" maxOccurs="unbounded">
+				</sequence>
+				<attribute name="name" type="string" use="required"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
 	<complexType name="RootContentType">
 		<complexContent>
 			<extension base="c:ContentContainerType">
@@ -1159,7 +1180,6 @@
 						maxOccurs="unbounded">
 						<annotation>
 							<documentation>
-								Not implemented yet
 							</documentation>
 						</annotation>
 					</element>
@@ -1169,10 +1189,32 @@
 		</complexContent>
 	</complexType>
 
+	<complexType name="ComplexType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element type="c:RootContentType" name="part" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+					</documentation>
+				</annotation>
+			</element>
+
+			<element type="c:PartExtensionType" name="extension" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
+			<element type="c:RootContentType" name="content" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+		</sequence>
+	</complexType>
+
+
 
 	<element name="hl" type="c:RootContentType"></element>
 	<element name="vl" type="c:RootContentType"></element>
 	<element name="content" type="c:RootContentType"></element>
 	<element name="extension" type="c:ExtensionType"></element>
+	<element name="complex" type="c:ComplexType"></element>
 
 </schema>

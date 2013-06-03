@@ -2,13 +2,16 @@
 <?eclipse version="3.4"?>
 <plugin >
    <extension
+         id="org.facematic.wizards"
+         name="Facematic"
          point="org.eclipse.ui.newWizards">
       <category
             name="Facematic  Wizards"
-            id="org.facematic">
+            id="org.facematic.wizards">
       </category>
       <wizard
             canFinishEarly="false"
+            category="org.facematic.wizards"
             class="org.facematic.wizards.NewFacematicProjectWizard"
             finalPerspective="org.eclipse.jst.j2ee.J2EEPerspective"
             hasPages="true"
@@ -18,32 +21,32 @@
             project="true">
       </wizard>
       <wizard
-            category="org.facematic"
             class="org.facematic.wizards.FacematicNewWizard"
+            descriptionImage="fm-vaadin.png"
             icon="icons/fm-vaadin.png"
             id="org.facematic.wizards.FacematicNewWizard"
-            name="View+Controller">
+            name="Facematic View+Controller">
       </wizard>
       <wizard
-            category="org.facematic"
+            canFinishEarly="true"
             class="org.facematic.wizards.beanwizard.BeanForm.FacematicNewBeanFormWizard"
             icon="icons/fm-vaadin.png"
             id="org.facematic.wizards.beanwizard.BeanForm.FacematicNewBeanFormWizard"
-            name="BeanForm">
+            name="Facematic BeanForm">
       </wizard>
       <wizard
-            category="org.facematic"
+            canFinishEarly="true"
             class="org.facematic.wizards.beanwizard.BeanBrowseEdit.FacematicNewBeanBrowseEditWizard"
             icon="icons/fm-vaadin.png"
             id="org.facematic.wizards.beanwizard.BeanBrowseEdit.FacematicNewBeanBrowseEditWizard"
-            name="MasterDetail">
+            name="Facematic MasterDetail">
       </wizard>
       <wizard
-            category="org.facematic"
+            canFinishEarly="true"
             class="org.facematic.wizards.beanwizard.ActiveRecordMasterDetail.ActiveRecordMasterDetailWizard"
             icon="icons/fm-vaadin.png"
             id="org.facematic.wizards.beanwizard.ActiveRecordMasterDetail.ActiveRecordMasterDetailWizard"
-            name="ActiveRecord MasterDetail">
+            name="Facematic ActiveRecord MasterDetail">
       </wizard>
    </extension>
    

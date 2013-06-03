@@ -14,6 +14,7 @@ import org.facematic.core.producer.builders.AbstractOrderedLayoutBuilder;
 import org.facematic.core.producer.builders.AbstractTextFieldBuilder;
 import org.facematic.core.producer.builders.BeanBuilder;
 import org.facematic.core.producer.builders.ButtonBuilder;
+import org.facematic.core.producer.builders.ComplexBuilder;
 import org.facematic.core.producer.builders.CompositeBuilder;
 import org.facematic.core.producer.builders.ComponentBuilder;
 import org.facematic.core.producer.builders.ComponentContainerBuilder;
@@ -31,6 +32,7 @@ import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.nvo.Item;
 import org.facematic.core.ui.DummyFacematicUi;
 import org.facematic.core.ui.FacematicUI;
+import org.facematic.core.ui.custom.Complex;
 import org.facematic.core.ui.custom.Composite;
 import org.facematic.core.ui.custom.Html;
 import org.facematic.utils.ITemplateEngine;
@@ -128,6 +130,7 @@ public class FaceProducer implements Serializable {
 	private FacematicUI ui;
 	private Map<String, Object> viewSubstitutions = null;
 	private List<Object> siblingControllers = new ArrayList<Object> ();
+	private HashMap<String, String> complexResources;
 
 	private final static Map<String, String> substs = new HashMap<String, String>() {
 		{
@@ -149,6 +152,7 @@ public class FaceProducer implements Serializable {
 				put("composite", Composite.class);
 				put("html", Html.class);
 				put("Html", Html.class);
+				put("complex", Complex.class);
 				put("item", Item.class);
 			}
 		};
@@ -172,11 +176,11 @@ public class FaceProducer implements Serializable {
 			putBuilder (new TreeBuilder());
 			putBuilder (new UploadBuilder());
 			putBuilder (new AbstractTextFieldBuilder());
+			putBuilder (new ComplexBuilder());
 		};
 
 		private static void putBuilder(BeanBuilder componentBuilder) {
-			logger.info("register builder: "
-					+ componentBuilder.getClass().getCanonicalName());
+			logger.info("register builder: " + componentBuilder.getClass().getCanonicalName());
 			componentBuilders.put(componentBuilder.getBuildingClass(),
 					componentBuilder);
 		}
@@ -450,7 +454,12 @@ public class FaceProducer implements Serializable {
 	 */
 	public <T> T buildFromResource(String resourceName) throws Exception {
 		logger.info("Build from resource " + resourceName);
-		String xml = org.facematic.utils.StreamUtils.getResourceAsString(resourceName);
+		String xml = null;
+		if (complexResources != null)
+			xml = complexResources.get(resourceName);
+				
+		if (xml == null)
+				xml = org.facematic.utils.StreamUtils.getResourceAsString(resourceName);
 		if (xml == null) {
 			resourceName = resourceName.replaceAll("\\.", "/") + ".xml";
 			logger.info("Look for resource " + resourceName);
@@ -479,6 +488,7 @@ public class FaceProducer implements Serializable {
 		}
 		//Document document = DocumentHelper.parseText(xml);
 		ExtensionProcessor extensionProcessor = new ExtensionProcessor();
+		extensionProcessor.setComplexResources (this.complexResources);
 		extensionProcessor.putSubstitutions(viewSubstitutions);
 		Document  document = extensionProcessor.processXml(xml);
 		this.viewSubstitutions = extensionProcessor.getSubstitutions();
@@ -761,5 +771,11 @@ public class FaceProducer implements Serializable {
 	 */
 	public void putAll(Map map) {
 		getTemplateEngine().put(map);
+	}
+
+	public void addComplexResource(String name, String xml) {
+		if (complexResources==null)
+			complexResources = new HashMap<String, String> ();
+		complexResources.put(name,  xml);
 	}
 }

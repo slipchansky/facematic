@@ -3,7 +3,7 @@
 <complex xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://facematic.org/fm facematic.xsd">
 
-	<content controller="com.test.MyController">
+	<content controller="com.test.Complex">
 		<TabSheet>
 			<composite content="complex.first" caption="First" />
 			<composite content="complex.second" caption="Second" />

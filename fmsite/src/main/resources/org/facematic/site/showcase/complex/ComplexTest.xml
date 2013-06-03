@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <complex xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://facematic.org/fm facematic.xsd">
-
-	<content controller="com.test.MyController">
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xs"
+	>
+	
+	<content controller="org.facematic.site.showcase.complex.ComplexTest">
 		<TabSheet>
-			<composite content="complex.first" caption="First" />
-			<composite content="complex.second" caption="Second" />
-			<composite content="complex.third" caption="Third" />
+			<composite location="RESOURCE" path="first" caption="First" />
+			<composite location="RESOURCE" path="second" caption="Second" />
 		</TabSheet>
 	</content>
 
@@ -16,11 +16,12 @@
 		<Button caption="${secondButtonCaption}" />
 	</part>
 
-	<extension base="first" name="base">
+	<extension name="first" base="base" >
 		<subst name="firstButtonCaption">First</subst>
 		<subst name="secondButtonCaption">Second</subst>
 	</extension>
 
-	<extension base="first" name="second" controller="com.test.SecondController" />
-
+	<extension name="second" base="first" controller="com.test.SecondController" />
+	
+	
 </complex>
