@@ -5,9 +5,9 @@
 
 	<content controller="com.test.MyController">
 		<TabSheet>
-			<composite content="complex.first" caption="First" />
-			<composite content="complex.second" caption="Second" />
-			<composite content="complex.third" caption="Third" />
+			<composite src="first" caption="First" />
+			<composite src="second" caption="Second" />
+			<composite src="third" caption="Third" />
 		</TabSheet>
 	</content>
 

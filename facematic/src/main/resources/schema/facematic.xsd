@@ -1187,6 +1187,15 @@
 			</extension>
 		</complexContent>
 	</complexType>
+	
+	<complexType name="ComplexContentType">
+	<complexContent >
+	   <extension base="c:RootContentType">
+	   <attribute name="name" use="prohibited"></attribute>
+	   </extension>
+	</complexContent>
+	
+	</complexType>
 
 	<complexType name="ComplexType">
 		<sequence minOccurs="0" maxOccurs="unbounded">
@@ -1198,13 +1207,13 @@
 				</annotation>
 			</element>
 
+			<element type="c:ComplexContentType" name="content" minOccurs="0" maxOccurs="unbounded">
+			</element>
+			
 			<element type="c:PartExtensionType" name="extension" minOccurs="0"
 				maxOccurs="unbounded">
 			</element>
 
-			<element type="c:RootContentType" name="content" minOccurs="0"
-				maxOccurs="unbounded">
-			</element>
 		</sequence>
 		<attribute name="controller" type="string"></attribute>
 	</complexType>
