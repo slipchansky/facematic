@@ -1,5 +1,8 @@
 package org.facematic.site.showcase.databinding;
 
+import org.facematic.site.showcase.annotations.ShowFiles;
+
+@ShowFiles(java = true, xml = false)
 public enum ComboEnum {
 	ONE("First"), TWO("Second"), THREE("Third");
 	

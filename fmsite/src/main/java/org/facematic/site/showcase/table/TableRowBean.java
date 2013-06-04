@@ -1,5 +1,8 @@
 package org.facematic.site.showcase.table;
 
+import org.facematic.site.showcase.annotations.ShowFiles;
+
+@ShowFiles(java = true, xml = false)
 public class TableRowBean {
 	int id;
 	String name;

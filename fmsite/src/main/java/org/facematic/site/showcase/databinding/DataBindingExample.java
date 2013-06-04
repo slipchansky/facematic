@@ -29,6 +29,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 
 import org.facematic.site.showcase.annotations.ShowCase;
+import org.facematic.site.showcase.annotations.ShowFiles;
 import org.facematic.site.showcase.databinding.DataBindingBean;
 
 /**
@@ -40,6 +41,7 @@ DataBindingBean.class,
 ComboReference.class,
 ComboEnum.class
 })
+@ShowFiles(java = true, xml = true)
 public class DataBindingExample implements FmBaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(DataBindingExample.class);

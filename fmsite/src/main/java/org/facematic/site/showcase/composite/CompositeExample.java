@@ -11,6 +11,7 @@ import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.FacematicUI;
 import org.facematic.site.showcase.annotations.ShowCase;
+import org.facematic.site.showcase.annotations.ShowFiles;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
@@ -23,6 +24,7 @@ moreClasses={
 CompositeExampleNested.class, 
 CompositeCustomController.class
 }) 
+@ShowFiles(java = true, xml = true)
 @FmView(name="org.facematic.site.showcase.composite.CompositeExample")
 public class CompositeExample  {
 

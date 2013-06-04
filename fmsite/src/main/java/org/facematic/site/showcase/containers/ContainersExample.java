@@ -11,12 +11,14 @@ import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.FacematicUI;
 import org.facematic.site.showcase.annotations.ShowCase;
+import org.facematic.site.showcase.annotations.ShowFiles;
 
 import com.vaadin.ui.Component;
 
 
 @FmView(name="org.facematic.site.showcase.containers.ContainersExample")
 @ShowCase(caption = "Vaadin Containers", description = "")
+@ShowFiles(java = false, xml = true)
 public class ContainersExample {
 
 	

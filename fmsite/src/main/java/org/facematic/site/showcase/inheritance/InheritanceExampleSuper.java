@@ -10,10 +10,13 @@ import org.facematic.core.annotations.FmViewComponent;
 import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.FacematicUI;
+import org.facematic.site.showcase.annotations.ShowFiles;
+
 import com.vaadin.ui.Component;
 
 
 @FmView(name="org.facematic.site.showcase.inheritance.InheritanceExampleSuper")
+@ShowFiles(java = false, xml = true)
 public class InheritanceExampleSuper  {
 	
 }

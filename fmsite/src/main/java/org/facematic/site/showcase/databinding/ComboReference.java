@@ -1,5 +1,8 @@
 package org.facematic.site.showcase.databinding;
 
+import org.facematic.site.showcase.annotations.ShowFiles;
+
+@ShowFiles(java = true, xml = false)
 public class ComboReference {
 	
 	int id;

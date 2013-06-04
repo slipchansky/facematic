@@ -26,6 +26,7 @@ import org.facematic.core.producer.builders.TabSheetBuilder;
 import org.facematic.core.producer.builders.TableBuilder;
 import org.facematic.core.producer.builders.TreeBuilder;
 import org.facematic.core.producer.builders.UploadBuilder;
+import org.facematic.core.producer.builders.WindowBuilder;
 import org.facematic.core.annotations.FmView;
 import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.mvc.FmBaseController;
@@ -178,6 +179,7 @@ public class FaceProducer implements Serializable {
 			putBuilder (new UploadBuilder());
 			putBuilder (new AbstractTextFieldBuilder());
 			putBuilder (new ComplexBuilder());
+			putBuilder (new WindowBuilder());
 		};
 
 		private static void putBuilder(BeanBuilder componentBuilder) {
@@ -360,6 +362,8 @@ public class FaceProducer implements Serializable {
 		if (structureWatcher != null) {
 			structureWatcher.putController(name, controllerInstance);
 		}
+		if ("editForm".equals(name))
+			name+="";
 		reflectionHelper.putController(name, controllerInstance);
 	}
 

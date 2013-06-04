@@ -11,11 +11,13 @@ import org.facematic.core.mvc.FmBaseController;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.core.ui.FacematicUI;
 import org.facematic.site.showcase.annotations.ShowCase;
+import org.facematic.site.showcase.annotations.ShowFiles;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
 
 
+@ShowFiles(java = true, xml = true)
 @ShowCase (
 caption = "Complex", 
 description = "Te way to describe most of the parts of the presentation in one place and build a composite of these items")

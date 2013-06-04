@@ -10,6 +10,7 @@ import org.facematic.core.logging.LoggerFactory;
 import org.facematic.core.producer.FaceProducer;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractComponentContainer;
+import com.vaadin.ui.Window;
 
 /**
  * @author "Stanislav Lipchansky"
@@ -74,7 +75,13 @@ public class ComponentContainerBuilder extends ComponentBuilder {
 
 	protected void addComponent(AbstractComponentContainer container,
 			AbstractComponent component, Element node) {
-		container.addComponent(component);
+		if (! (component instanceof Window) ) {
+			try {
+		    container.addComponent(component);
+			} catch (Exception e) {
+				logger.error("Cant add component of class "+component.getClass().getCanonicalName()+" to container of class "+container.getClass().getCanonicalName());
+			}
+		}
 	}
 
 	

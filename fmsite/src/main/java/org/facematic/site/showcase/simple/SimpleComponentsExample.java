@@ -20,6 +20,7 @@ import com.vaadin.ui.Upload.StartedEvent;
 import org.facematic.core.nvo.UploadProgressEvent;
 import org.facematic.core.producer.FaceProducer;
 import org.facematic.site.showcase.annotations.ShowCase;
+import org.facematic.site.showcase.annotations.ShowFiles;
 
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.FailedEvent;
@@ -28,6 +29,7 @@ import com.vaadin.ui.Upload;
 
 @FmView(name="org.facematic.site.showcase.simple.SimpleComponentsExample")
 @ShowCase(caption = "Simple Face elements", description = "Labels, Buttons, ... etc.")
+@ShowFiles(java = false, xml = true)
 public class SimpleComponentsExample  {
 
 }
