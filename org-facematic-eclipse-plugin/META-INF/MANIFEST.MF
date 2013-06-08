@@ -45,8 +45,7 @@ Bundle-ClassPath: bin/,
 Bundle-Name: Facematic Eclipse plugin
 Bundle-Activator: org.facematic.Activator
 Bundle-ManifestVersion: 2
-Import-Package: org.dom4j,
- org.eclipse.core.filesystem,
+Import-Package: org.eclipse.core.filesystem,
  org.eclipse.jdt.internal.core
 Bundle-SymbolicName: org.facematic.facematic;singleton:=true
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

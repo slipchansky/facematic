@@ -66,9 +66,8 @@ public class OverlayExample implements FmBaseController {
 				showElement(elementPosition);
 			}
 		});
-		selector.setValue (0);
 		
-
+		selector.setValue (0);
 	}
 
 
@@ -79,19 +78,7 @@ public class OverlayExample implements FmBaseController {
     }
     
     private void showElement(Integer elementPosition) {
-        
 		overlay.showElement(elementPosition);
 	}
 
-	public static void main(String[] args) throws Exception {
-        FaceProducer producer = new FaceProducer ();
-		producer.getViewFor(OverlayExample.class);
-		OverlayExample c = (OverlayExample)producer.getControllerInstance();
-		Overlay o = c.overlay;
-		c.showElement(2);
-		Window w = (Window)o.getCurrent();
-		
-		w.close();
-		
-	}
 }
