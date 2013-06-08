@@ -15,6 +15,11 @@ public class WindowBuilder extends PanelBuilder {
 	@Override
 	public void build(FaceProducer builder, Object oComponent, Element configuration) {
 		super.build(builder, oComponent, configuration);
+		String centerAttr = configuration.attributeValue("center");
+		Window window = (Window)oComponent;
+		if ("true".equals(centerAttr)) {
+			window.center();
+		}
 	}
 	
 	

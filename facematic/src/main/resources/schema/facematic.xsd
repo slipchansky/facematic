@@ -15,6 +15,10 @@
 						maxOccurs="unbounded">
 					</element>
 
+					<element type="c:WindowType" name="Window" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
 					<element type="c:HtmlType" name="Html" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
@@ -27,6 +31,11 @@
 					<element type="c:ContentContainerType" name="vl" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
+
+					<element type="c:OverlayType" name="Overlay" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
 					<element type="c:ButtonType" name="Button" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
@@ -104,6 +113,22 @@
 			</extension>
 		</complexContent>
 	</complexType>
+
+	<complexType name="WindowType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+				<attribute name="center" type="c:TrueFalseType"></attribute>
+				<attribute name="positionX" type="int"></attribute>
+				<attribute name="positionY" type="int"></attribute>
+				<attribute name="modal" type="c:TrueFalseType"></attribute>
+				<attribute name="resizable" type="c:TrueFalseType"></attribute>
+				<attribute name="resizeLazy" type="c:TrueFalseType"></attribute>
+				<attribute name="closable" type="c:TrueFalseType"></attribute>
+				<attribute name="draggable" type="c:TrueFalseType"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
 
 	<complexType name="TabSheetType">
 		<complexContent>
@@ -381,7 +406,12 @@
 					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
+
 					<element type="c:TabSheetType" name="Accordion" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:WindowType" name="Window" minOccurs="0"
 						maxOccurs="unbounded">
 					</element>
 
@@ -1060,12 +1090,18 @@
 					</documentation>
 				</annotation>
 			</element>
+			
 			<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
 				maxOccurs="unbounded">
 			</element>
 			<element type="c:TabSheetType" name="Accordion" minOccurs="0"
 				maxOccurs="unbounded">
 			</element>
+
+			<element type="c:WindowType" name="Window" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
 
 			<element type="c:HtmlType" name="Html" minOccurs="0"
 				maxOccurs="unbounded">
@@ -1079,6 +1115,11 @@
 			<element type="c:ContentContainerType" name="vl" minOccurs="0"
 				maxOccurs="unbounded">
 			</element>
+
+			<element type="c:OverlayType" name="Overlay" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
 			<element type="c:ButtonType" name="Button" minOccurs="0"
 				maxOccurs="unbounded">
 			</element>
@@ -1178,7 +1219,6 @@
 		</complexContent>
 	</complexType>
 
-
 	<complexType name="RootContentType">
 		<complexContent>
 			<extension base="c:ContentContainerType">
@@ -1192,6 +1232,15 @@
 					</element>
 				</sequence>
 				<attribute name="controller" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="OverlayType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+				<attribute name="onElementChange" type="string"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>

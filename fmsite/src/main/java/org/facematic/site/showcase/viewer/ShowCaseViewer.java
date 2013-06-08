@@ -115,6 +115,7 @@ public class ShowCaseViewer implements FmBaseController {
 		}
 		
 		if (xmlSource != null) {
+			
 			showFile (xmlCodeName, xmlSource);
 		}
 		
@@ -126,15 +127,17 @@ public class ShowCaseViewer implements FmBaseController {
     
     public void showFile (String fileName, String sourceCode) {
     	String a [] = fileName.split("/");
-    	Panel tab = new Panel ();
-    	tab.setSizeFull();
-    	Label content = new Label ();
-    	content.setContentMode(ContentMode.PREFORMATTED);
+    	Html content = new Html ();
+    	content.setSizeFull();
     	content.setSizeUndefined ();
-    	content.setValue(sourceCode);
-    	tab.setContent(content);
-    	tab.setCaption (a[a.length-1]);
-    	showCaseViewer.addTab(tab);
+		sourceCode = sourceCode.replace("<", "&lt;");
+		sourceCode = sourceCode.replace(">", "&gt;");
+    	content.setValue("<pre class=\"prettyprint\">"+sourceCode+"</pre >");
+    	
+    	VerticalLayout vl = new VerticalLayout (content);
+    	vl.setSizeFull(); vl.setMargin(true);
+    	vl.setCaption (a[a.length-1]);
+    	showCaseViewer.addTab(vl);
     }
 	
     

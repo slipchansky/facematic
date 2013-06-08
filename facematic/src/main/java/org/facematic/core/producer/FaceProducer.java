@@ -20,6 +20,7 @@ import org.facematic.core.producer.builders.ComponentBuilder;
 import org.facematic.core.producer.builders.ComponentContainerBuilder;
 import org.facematic.core.producer.builders.HtmlBuilder;
 import org.facematic.core.producer.builders.NvoItemBuilder;
+import org.facematic.core.producer.builders.OverlayBuilder;
 import org.facematic.core.producer.builders.PanelBuilder;
 import org.facematic.core.producer.builders.SelectBuilder;
 import org.facematic.core.producer.builders.TabSheetBuilder;
@@ -36,6 +37,7 @@ import org.facematic.core.ui.FacematicUI;
 import org.facematic.core.ui.custom.Complex;
 import org.facematic.core.ui.custom.Composite;
 import org.facematic.core.ui.custom.Html;
+import org.facematic.core.ui.custom.Overlay;
 import org.facematic.utils.ITemplateEngine;
 import org.facematic.utils.VelocityEngine;
 import com.vaadin.ui.Component;
@@ -154,6 +156,8 @@ public class FaceProducer implements Serializable {
 				put("part", VerticalLayout.class);
 				put("html", Html.class);
 				put("Html", Html.class);
+				put("Overlay", Overlay.class);
+				put("overlay", Overlay.class);
 				put("complex", Complex.class);
 				put("item", Item.class);
 			}
@@ -180,6 +184,7 @@ public class FaceProducer implements Serializable {
 			putBuilder (new AbstractTextFieldBuilder());
 			putBuilder (new ComplexBuilder());
 			putBuilder (new WindowBuilder());
+			putBuilder (new OverlayBuilder());
 		};
 
 		private static void putBuilder(BeanBuilder componentBuilder) {

@@ -1,57 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<complex xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://facematic.org/fm facematic.xsd"
-	controller="org.facematic.site.showcase.complex.ComplexExample">
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm facematic.xsd" controller="org.facematic.site.showcase.complex.ComplexExample">
 
-	<content sizeFull="true" expandRatio="100">
-		<TabSheet sizeFull="true" expandRatio="100">
-			<composite src="tabBase" caption="BaseTab" />
-			<composite src="first" caption="FirstTab" />
-			<composite src="second" caption="SecondTab" />
-		</TabSheet>
-	</content>
+	<Overlay onElementChange="">
 
-	<part name="tabBase" sizeFull="true" expandRatio="100" margin="true">
-	    <html>${tabCaption}</html>
-		<hl spacing="true">
-			<Button caption="${firstButtonCaption}" onClick="onFirst" />
-			<Button caption="${secondButtonCaption}" onClick="onSecond" />
-			<placeholder name="moreButtons" />
-		</hl>
-		
-		<subst name="firstButtonCaption">base-First</subst>
-		<subst name="secondButtonCaption">base-Second</subst>
-		<subst name="tabCaption">
-		controller=ComplexExample {<br />
-		    implements onFirst (), onSecond ()<br />
-		}<br />
-		</subst>
-	</part>
+	</Overlay>
 
-	<extension name="first" base="tabBase">
-		<subst name="firstButtonCaption">first-First</subst>
-		<subst name="secondButtonCaption">first-Second</subst>
-		<subst name="tabCaption">Substs buttons captions, controller=ComplexExample</subst>
-	</extension>
 
-	<extension name="second" base="first"
-		controller="org.facematic.site.showcase.complex.ComplexExample$Sub">
-		<subst name="firstButtonCaption">second-First</subst>
-		<subst name="secondButtonCaption">second-Second</subst>
-		<subst name="tabCaption">
-		Substs buttons captions,<br />
-		Adds button "second-Third" ( onClick=onThird () )<br /> 
-		controller=ComplexExample.Sub extends ComplexExample {<br />
-		   overrides onSecond ()<br />
-		   implements onThird ()<br />
-		}<br /> 
-		</subst>
-		
-		<implement placeholder="moreButtons">
-			<Button caption="second-Third" onClick="onThird" />
-		</implement>
-		
-	</extension>
-
-</complex>
+</content>

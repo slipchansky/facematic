@@ -75,7 +75,7 @@ public class ComponentContainerBuilder extends ComponentBuilder {
 
 	protected void addComponent(AbstractComponentContainer container,
 			AbstractComponent component, Element node) {
-		if (! (component instanceof Window) ) {
+		if ( !(component instanceof Window) ) {
 			try {
 		    container.addComponent(component);
 			} catch (Exception e) {
