@@ -24,7 +24,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @FmView(name = "org.facematic.site.showcase.controller.ControllerExample")
 @ShowFiles(java = true, xml = true)
-@ShowCase(caption = "Controller example", description = "A method of controlling the behavior of view elements")
+@ShowCase(part=ShowCase.FACEMATIC_BASICS, caption = "Controller", description = "A method of controlling the behavior of view elements")
 public class ControllerExample implements FmBaseController {
 
 	private static final Logger logger = LoggerFactory

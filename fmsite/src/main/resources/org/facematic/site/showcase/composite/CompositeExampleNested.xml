@@ -9,6 +9,7 @@
 	<hl width="100%">
 	<Button caption="first" onClick="onFirst" width="100%"></Button>
 	<Button caption="second" onClick="onSecond" width="100%"></Button>
+	<Button caption="Call parent" name="demonstrateParentCallButton" onClick="callToParent" visible="false" width="100%"></Button>
 	</hl>
 	
 	

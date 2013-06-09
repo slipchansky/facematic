@@ -15,7 +15,7 @@ import com.vaadin.data.util.BeanItemContainer;
 
 
 @FmView(name="org.facematic.site.showcase.table.TableExample")
-@ShowCase(caption = "Table", description = "Vaadin Table implementation", moreClasses={TableRowBean.class})
+@ShowCase(part=ShowCase.SMALL_CONVEIENCE, caption = "Table", description = "Vaadin Table implementation", moreClasses={TableRowBean.class})
 @ShowFiles(java = true, xml = true)
 public class TableExample implements FmBaseController {
 

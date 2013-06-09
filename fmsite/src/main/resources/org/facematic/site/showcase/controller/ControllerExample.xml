@@ -8,8 +8,7 @@
 	<TextField name="theTextField" width="100%"></TextField>
 
 	<hl width="100%">
-		<Button name="theButton" caption="click me" onClick="theButtonClicked"
-			width="100%" />
+		<Button name="theButton" caption="click me" onClick="theButtonClicked" width="100%" />
 		<Button name="oneMoreButton" caption="click me too" width="100%" />
 	</hl>
 

@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://facematic.org/fm facematic.xsd" controller="org.facematic.site.showcase.overlay.OverlayExample"
+	xsi:schemaLocation="http://facematic.org/fm https://raw.github.com/slipchansky/facematic/dev/facematic/src/main/resources/schema/facematic.xsd" controller="org.facematic.site.showcase.overlay.OverlayExample"
 	sizeFull="true">
 
 	<ComboBox name="selector" immediate="true" />
 
 
 
-	<Overlay name="overlay" onElementChange="elementChanged"
-		expandRatio="100">
+	<Overlay name="overlay" onElementChange="elementChanged" expandRatio="100">
+	
 		<Html caption="First element">First overlay element content</Html>
+		
 		<Html caption="Second element">Second overlay element content</Html>
-		<Window caption="Window element" width="300" height="300" center="true">
-			<vl>
-				<html>Here is some window content</html>
+		
+		<Window caption="Normal Window element" width="300" height="300" center="true">
+			<vl margin="true">
+				<html>
+				This is normal window<br />
+				You can just close it, but you can also select other content in combo box.<br />
+				While this window is open, previous content in overlay will be disabled.<br />
+				When you close the window, selector combo will switched to position, that was active before you selected the window.  
+				</html>
 			</vl>
 		</Window>
+		
+		<Window caption="Modal Window element" width="300" height="300" center="true" modal="true">
+			<vl margin="true">
+				<html>
+				This is modal window<br />
+				While this window is open, previous content in overlay will be disabled.<br />
+				When you close the window, selector combo will switched to position, that was active before you selected the window.  
+				</html>
+			</vl>
+		</Window>
+		
 		<Html caption="Third element">Third overlay element content</Html>
+		
 	</Overlay>
 
 </content>

@@ -3,26 +3,45 @@
 <content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
 	controller="org.facematic.site.showcase.composite.CompositeExample"
-	width="600" spacing="true" margin="true"
-	>
-	
-	<html><b>content, controller=CompositeExample</b></html>
+	width="600" spacing="true" margin="true">
 
-	<composite
+	<html>
+		<b>content, controller=CompositeExample</b>
+	</html>
+
+	<composite name="first"
 		caption="First composite (controller=CompositeExampleNested)" 
-		src="org.facematic.site.showcase.composite.CompositeExampleNested"
-		/>
-		
-		
-	<composite
-		caption="Second composite(controller=content.controller = CompositeExample)" 
+		src="org.facematic.site.showcase.composite.CompositeExampleNested" />
+
+
+	<composite name="second"
+		caption="Second composite(controller=content.controller = CompositeExample)"
 		src="org.facematic.site.showcase.composite.CompositeExampleNested"
 		controller="none" />
-		
-	<composite
+
+	<composite name="third"
 		caption="Third composite (controller=CompositeCustomController extends CompositeExampleNested, overrides onFirst )"
 		src="org.facematic.site.showcase.composite.CompositeExampleNested"
 		controller="org.facematic.site.showcase.composite.CompositeCustomController" />
-		
+
+	<html><br /><b>Call sibling controllers</b></html>
+	<hl width="100%">
+		<Button caption="first.onFirst"  onClick="first_onFirst" width="100%"/>
+		<Button caption="first.onSecond" onClick="first_onSecond" width="100%"/>
+	</hl>
+	
+	<hl width="100%">
+		<Button caption="second.onFirst" onClick="second_onFirst" width="100%"/>
+		<Button caption="second.onSecond" onClick="second_onSecond" width="100%"/>
+	</hl>
+	
+	<hl width="100%">
+		<Button caption="third.onFirst" onClick="third_onFirst" width="100%"/>
+		<Button caption="third.onSecond" onClick="third_onSecond" width="100%"/>
+	</hl>
+	
+	<html><br /><b>All sibling controllers</b></html>
+	<Button caption="Show all sibling controllers classes" onClick="showSibling"/>
+	
 
 </content>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm https://raw.github.com/slipchansky/facematic/dev/facematic/src/main/resources/schema/facematic.xsd"
+	controller="org.facematic.site.showcasestudio.ShowCaseStudio" sizeFull="true" expandRatio="100">
+	
+	<hl sizeFull="true" expandRatio="100">
+	    <vl height="100%" width="300"  >
+	    <html><h2 style="margin-left:15px">Cases</h2></html>
+		<Tree name="mainSelector" nullSelectionAllowed="false" sizeFull="true"  expandRatio="100" itemCaptionPropertyId="value" />
+		</vl>
+		<Overlay name="overlay" sizeFull="true" expandRatio="100">
+		</Overlay>
+	</hl>
+
+</content>

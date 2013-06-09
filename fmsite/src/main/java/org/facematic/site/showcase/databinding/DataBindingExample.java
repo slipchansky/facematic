@@ -36,7 +36,7 @@ import org.facematic.site.showcase.databinding.DataBindingBean;
  *
  */
 @FmView(name = "org.facematic.site.showcase.databinding.DataBindingExample")
-@ShowCase(caption = "Data binding", description = "How to bind data on form", moreClasses={
+@ShowCase(part=ShowCase.SMALL_CONVEIENCE, caption = "Data binding", description = "How to bind data on form", moreClasses={
 DataBindingBean.class,
 ComboReference.class,
 ComboEnum.class

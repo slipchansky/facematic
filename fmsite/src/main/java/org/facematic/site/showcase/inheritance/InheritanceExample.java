@@ -17,7 +17,7 @@ import com.vaadin.ui.Component;
 
 
 @FmView(name="org.facematic.site.showcase.inheritance.InheritanceExample")
-@ShowCase(caption = "Face inheritance", description = "The way to inherite the face", moreClasses={InheritanceExampleSuper.class})
+@ShowCase(part=ShowCase.FACEMATIC_BASICS, caption = "Face inheritance", description = "The way to inherite the face", moreClasses={InheritanceExampleSuper.class})
 @ShowFiles(java = false, xml = true)
 public class InheritanceExample  {
 	

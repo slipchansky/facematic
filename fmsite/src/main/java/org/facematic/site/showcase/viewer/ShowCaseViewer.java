@@ -15,17 +15,17 @@ import org.facematic.site.showcase.annotations.ShowFiles;
 import org.facematic.site.showcase.complex.ComplexExample;
 import org.facematic.utils.StreamUtils;
 
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 
 
+@SuppressWarnings({ "unused", "serial" })
 @FmView(name="org.facematic.site.showcase.viewer.ShowCaseViewer")
+@ShowCase (part=ShowCase.EXAMPLES_OF_USE, caption = "ShowCase viewer", description = "How does the Show-Case viewer made", moreClasses={ShowCase.class, ShowFiles.class})
+@ShowFiles(java = true, xml = true, sample=false)
 public class ShowCaseViewer implements FmBaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ShowCaseViewer.class);
@@ -40,18 +40,26 @@ public class ShowCaseViewer implements FmBaseController {
     @FmViewComponent(name="view")
     VerticalLayout view;
 
-	private Class mainClass;
+	private Class<?> caseClass;
+
     
-    public ShowCaseViewer () {
+    public ShowCaseViewer (Class<?> caseClass) {
+       this.caseClass = caseClass;
     }
 	
     @Override
 	public void prepareContext(FaceProducer producer) {
 	}
 	
+	// for preview purposes
+	public ShowCaseViewer () {
+	   this.caseClass = org.facematic.site.showcase.composite.CompositeExample.class;
+	}
+	
     @Override
     public void init () {
-    	showAll (org.facematic.site.showcase.composite.CompositeExample.class);
+         
+    	showAll (caseClass);
     	showCaseViewer.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
 			
 			@Override
@@ -62,28 +70,55 @@ public class ShowCaseViewer implements FmBaseController {
     	JavaScript.getCurrent().execute("prettyPrint ();");
     }
     
-    public void showAll (Class mainClass) {
-        FaceProducer producer = new FaceProducer (ui);
-        try {
-			Component result = producer.getViewFor(mainClass);
-			result.setCaption(mainClass.getSimpleName());
-			showCaseViewer.addTab(result);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+    public void showAll (Class<?> mainClass) {
+    
+        ShowFiles showFilesAnnotation = mainClass.getAnnotation(ShowFiles.class);
+        boolean showSample = true;
+        
+        if (showFilesAnnotation != null) {
+            showSample = showFilesAnnotation.sample();
+        }
+        
+        if (showSample) {
+            addSamplePage(mainClass);
 		}
+		
+		addReadMePage (mainClass);
     
     	showFilesForClass (mainClass);
     	ShowCase showCaseAnnotation = (ShowCase)mainClass.getAnnotation(ShowCase.class);
     	if (showCaseAnnotation != null) {
-    		for (Class c : showCaseAnnotation.moreClasses()) {
+    		for (Class<?> c : showCaseAnnotation.moreClasses()) {
     			showFilesForClass (c);
     		}
     	}
     	
     }
+
+	private void addReadMePage(Class<?> mainClass) {
+	    String className = mainClass.getCanonicalName();
+		String readMePath = className.substring(0, className.length()-mainClass.getSimpleName().length()).replace('.', '/')+"readme.txt";
+		logger.trace ("readMePath="+readMePath);
+		String readMe = StreamUtils.getResourceAsString(readMePath);
+		if (readMe == null) return;
+		showFile (readMePath, readMe);
+	}
+
+	private void addSamplePage(Class<?> mainClass) {
+		FaceProducer producer = new FaceProducer (ui);
+        try {
+			Component result = producer.getViewFor(mainClass);
+			VerticalLayout vl = new VerticalLayout (result);
+			vl.setSizeFull();
+			vl.setMargin(true);
+			vl.setCaption(mainClass.getSimpleName()); 
+			showCaseViewer.addTab(vl);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
     
-    public void showFilesForClass (Class theClass) {
+    public void showFilesForClass (Class<?> theClass) {
     	
 		String javaCodeName = theClass.getCanonicalName().replace('.', '/')+ ".java";
 		String xmlCodeName  = null;
@@ -132,6 +167,10 @@ public class ShowCaseViewer implements FmBaseController {
     	content.setSizeUndefined ();
 		sourceCode = sourceCode.replace("<", "&lt;");
 		sourceCode = sourceCode.replace(">", "&gt;");
+		if (fileName.endsWith(".txt")) {
+		   sourceCode = sourceCode.replace('[', '<');
+		   sourceCode = sourceCode.replace(']', '>');
+		}
     	content.setValue("<pre class=\"prettyprint\">"+sourceCode+"</pre >");
     	
     	VerticalLayout vl = new VerticalLayout (content);
@@ -139,7 +178,5 @@ public class ShowCaseViewer implements FmBaseController {
     	vl.setCaption (a[a.length-1]);
     	showCaseViewer.addTab(vl);
     }
-	
-    
 }
 

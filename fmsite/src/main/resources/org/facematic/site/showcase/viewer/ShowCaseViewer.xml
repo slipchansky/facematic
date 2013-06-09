@@ -4,7 +4,6 @@
 	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
 	controller="org.facematic.site.showcase.viewer.ShowCaseViewer" sizeFull="true" expandRatio="100">
 	
-	<TabSheet name="showCaseViewer" sizeFull="true" expandRatio="100">
-	</TabSheet>
+	<TabSheet name="showCaseViewer" sizeFull="true" expandRatio="100" />
 	
 </content>

@@ -342,7 +342,7 @@ public class FaceProducer implements Serializable {
 		reflectionHelper = new FaceReflectionHelper(controllerInstance);
 		reflectionHelper.addUiInjections(ui);
 
-		if (parent != null && controllerInstance != null && controllerInstance != parent.controllerInstance) {
+		if (parent != null && controllerInstance != null ) { //&& controllerInstance != parent.controllerInstance
 			addController("parent", parent.controllerInstance);
 			if (prefix != null )
 			   parent.addController(prefix, controllerInstance);

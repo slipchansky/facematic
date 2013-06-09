@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<extension base="org.facematic.site.showcase.inheritance.InheritanceExampleSuper" >
+	<implement placeholder="moreInputs">
+		<TextField caption="Middle-1" />
+	</implement>
+	
+	<subst name="firstInputCaption">Middle</subst>
+	
+	
+</extension>

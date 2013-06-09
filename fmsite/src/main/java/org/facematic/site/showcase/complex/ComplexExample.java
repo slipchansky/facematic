@@ -19,6 +19,7 @@ import com.vaadin.ui.Notification;
 
 @ShowFiles(java = true, xml = true)
 @ShowCase (
+part=ShowCase.FACEMATIC_BASICS,
 caption = "Complex", 
 description = "Te way to describe most of the parts of the presentation in one place and build a composite of these items")
 @FmView(name="org.facematic.site.showcase.complex.ComplexExample")

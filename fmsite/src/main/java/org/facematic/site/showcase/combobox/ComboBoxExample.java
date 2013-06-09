@@ -11,7 +11,7 @@ import com.vaadin.ui.Field.ValueChangeEvent;
 import com.vaadin.ui.Notification;
 
 
-@ShowCase (caption = "Enum ComboBox", description = "Shows simple way for binding Enum to ComboBox", moreClasses = { EnumForCombo.class})
+@ShowCase (caption = "Enum ComboBox", description = "Shows simple way for binding Enum to ComboBox", part=ShowCase.SMALL_CONVEIENCE, moreClasses = { EnumForCombo.class})
 @ShowFiles(java = true, xml = true)
 @FmView(name="org.facematic.site.showcase.combobox.ComboBoxExample")
 public class ComboBoxExample {

@@ -17,7 +17,7 @@ import com.vaadin.ui.Component;
 
 
 @FmView(name="org.facematic.site.showcase.containers.ContainersExample")
-@ShowCase(caption = "Vaadin Containers", description = "")
+@ShowCase(part=ShowCase.VAADIN_COMMON, caption = "Vaadin Containers", description = "")
 @ShowFiles(java = false, xml = true)
 public class ContainersExample {
 

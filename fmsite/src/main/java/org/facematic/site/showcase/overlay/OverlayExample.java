@@ -19,8 +19,12 @@ import com.vaadin.ui.Window;
 
 import org.facematic.core.ui.custom.Overlay;
 import org.facematic.core.ui.custom.Overlay.SelectedElementChangeEvent;
+import org.facematic.site.showcase.annotations.ShowCase;
+import org.facematic.site.showcase.annotations.ShowFiles;
 
 @FmView(name = "org.facematic.site.showcase.overlay.OverlayExample")
+@ShowCase(part=ShowCase.SMALL_CONVEIENCE, caption = "Overlay example", description = "1. The way to plase more then one view in one location (like TabSheet, but without tab tags (do not say me about hideTabs! ) ). 2. The way to put Window(s) among other selectable content elements. ")
+@ShowFiles(java = true, xml = true)
 public class OverlayExample implements FmBaseController {
 
 	private static final Logger logger = LoggerFactory
