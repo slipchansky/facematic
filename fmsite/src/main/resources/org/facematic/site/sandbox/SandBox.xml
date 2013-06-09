@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hl xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
+	controller="org.facematic.site.sandbox.SandBox" expandRatio="100" sizeFull="true" >
+
+
+        <composite name="sampler" src="org.facematic.site.sandbox.SandBoxSampler" width="200" spacing="false" height="100%"/>
+        
+		<TabSheet expandRatio="100" sizeFull="true" name="tabSheet" >
+			<vl expandRatio="100" sizeFull="true" caption="Markup" name="sourceTab" margin="true" >
+				<TextArea name="source" sizeFull="true" expandRatio="1"></TextArea>
+			</vl>
+
+			<vl expandRatio="100" sizeFull="true" caption="Result" name="resultTab" margin="true" />
+			
+			<vl expandRatio="100" sizeFull="true" caption="Instructions" name="instructions" margin="true" />
+		</TabSheet>
+
+
+</hl>

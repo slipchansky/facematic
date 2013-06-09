@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd" height="100%" expandRatio="100">
+	<html>
+		<h1 style="margin-top:5px; padding-top:0; margin-bottom:0; margin-left:20px">Try it!</h1>
+	</html>
+	<vl sizeFull="true" expandRatio="100" margin="true" alignment="TOP_RIGHT" spacing="true">
+	    <vl width="100%">
+		<Button caption="Empty" width="100%" onClick="tryEmpty" />
+		<Button caption="Elements" width="100%" onClick="tryElements" />
+		<Button caption="Containers" width="100%" onClick="tryContainers" />
+		<Button caption="Table" width="100%" onClick="tryTable" />
+		<Button caption="Tree" width="100%" onClick="tryTree" />
+		<Button caption="Complex" width="100%" onClick="tryComplex" />
+		</vl>
+
+		<Table name="snippets" sizeFull="true" expandRatio="100">
+			<columns>
+				<column id="value" header="snippet" />
+			</columns>
+		</Table>
+	</vl>
+</content>
