@@ -100,11 +100,12 @@ public class ShowCaseViewer implements FmBaseController {
 		String readMePath = className.substring(0, className.length()-mainClass.getSimpleName().length()).replace('.', '/')+"readme.txt";
 		String readMe = StreamUtils.getResourceAsString(readMePath);
 		if (readMe == null) return;
-		showFile (showCaseViewer, readMePath, readMe);
+		showFile (readMePath, readMe);
+//		showFile (showCaseViewer, readMePath, readMe);
 	}
 
 	public static void showFile(VerticalLayout destination, String readMePath, String readMe) {
-		// TODO Auto-generated method stub
+		// TODO where is my showFile?
 		
 	}
 

@@ -40,7 +40,7 @@ Bundle-ClassPath: bin/,
  lib/jetty-util-9.0.2.v20130417.jar,
  lib/jetty-webapp-9.0.2.v20130417.jar,
  lib/jetty-xml-9.0.2.v20130417.jar,
- lib/dom4j-1.6.1.jarBundle-Version: 1.0.0.5,
+ lib/dom4j-1.6.1.jar,
  .
 Bundle-Name: Facematic Eclipse plugin
 Bundle-Activator: org.facematic.Activator
@@ -50,5 +50,5 @@ Import-Package: org.eclipse.core.filesystem,
 Bundle-SymbolicName: org.facematic.facematic;singleton:=true
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Bundle-Version: 1.3.0.0-SNAPSHOT
+Bundle-Version: 1.3.0.2-SNAPSHOT
 

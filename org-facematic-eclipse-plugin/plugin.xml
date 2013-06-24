@@ -2,49 +2,51 @@
 <?eclipse version="3.4"?>
 <plugin >
    <extension
-         id="org.facematic.wizards"
-         name="Facematic"
          point="org.eclipse.ui.newWizards">
       <category
             name="Facematic  Wizards"
             id="org.facematic.wizards">
       </category>
+      
       <wizard
             canFinishEarly="false"
             category="org.facematic.wizards"
             class="org.facematic.wizards.NewFacematicProjectWizard"
             finalPerspective="org.eclipse.jst.j2ee.J2EEPerspective"
             hasPages="true"
-            icon="icons/fm-vaadin.png"
+            icon="fm-vaadin.png"
             id="org.facematic.wizards.NewFacematicProjectWizard"
             name="Facematic Project"
             project="true">
       </wizard>
       <wizard
+            category="org.facematic.wizards"
             class="org.facematic.wizards.FacematicNewWizard"
-            descriptionImage="fm-vaadin.png"
-            icon="icons/fm-vaadin.png"
+            icon="fm-vaadin.png"
             id="org.facematic.wizards.FacematicNewWizard"
             name="Facematic View+Controller">
       </wizard>
       <wizard
             canFinishEarly="true"
+            category="org.facematic.wizards"
             class="org.facematic.wizards.beanwizard.BeanForm.FacematicNewBeanFormWizard"
-            icon="icons/fm-vaadin.png"
+            icon="fm-vaadin.png"
             id="org.facematic.wizards.beanwizard.BeanForm.FacematicNewBeanFormWizard"
             name="Facematic BeanForm">
       </wizard>
       <wizard
             canFinishEarly="true"
+            category="org.facematic.wizards"
             class="org.facematic.wizards.beanwizard.BeanBrowseEdit.FacematicNewBeanBrowseEditWizard"
-            icon="icons/fm-vaadin.png"
+            icon="fm-vaadin.png"
             id="org.facematic.wizards.beanwizard.BeanBrowseEdit.FacematicNewBeanBrowseEditWizard"
             name="Facematic MasterDetail">
       </wizard>
       <wizard
             canFinishEarly="true"
+            category="org.facematic.wizards"
             class="org.facematic.wizards.beanwizard.ActiveRecordMasterDetail.ActiveRecordMasterDetailWizard"
-            icon="icons/fm-vaadin.png"
+            icon="fm-vaadin.png"
             id="org.facematic.wizards.beanwizard.ActiveRecordMasterDetail.ActiveRecordMasterDetailWizard"
             name="Facematic ActiveRecord MasterDetail">
       </wizard>
@@ -56,7 +58,7 @@
             class="org.facematic.facematic.editors.FmMvcEditor"
             contributorClass="org.facematic.facematic.editors.FmMvcEditorContributor"
             extensions="xml, java"
-            icon="icons/fm-vaadin.png"
+            icon="icons/fm.gif"
             id="org.facematic.facematic.editors.FmMvcEditor"
             name="Facematic View+Controller editor">
       </editor>

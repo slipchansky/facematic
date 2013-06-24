@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
+	controller="org.facematic.ui.controllers.Facematic">
+	<html>
+<h1>Facematic</h1>	
+<p>Facematic - это RAD практика создания RIA на платформе VAADIN путем комбинирования разметки и програмного кода.
+Если упростить объяснение то можно сказать, что facematic - это нечто вроде WPF (практика XAML). Но на самом деле имеются существенные отличия.
+Платформа VAADIN используется для данной конкретной реализации фреймворка. Манифест facematic имеет более широкое значение и 
+может быть реализован на любой платформе (впервые положения этого манифеста были реализованы в 1998 г. на платформе SyBase PowerBuilder).
+</p> 
+
+<p>Практика facematic включает:</p>
+<li>- манифест facematic</li> 
+<li>- facematic framework</li>  
+<li>- набор плагинов для eclipse</li>
+
+<h2>Манифест facematic</h2>
+<li>1. То с чем взаимодействует пользователь посредством браузера есть контент.</li>
+<li>2. Контент состоит из элементов.</li>
+<li>3. Элеметом контента(*parent-контент) может быть контент(*sibling-контент).</li>  
+<li>4. Контент может иметь поведение, реализованное контроллером.</li>
+<li>5. Поведение *sibling-контента может реализовывать контроллер *parent-контента.</li>          
+<li>6. Контент подлежит наследованию новым контентом (наследование).</li>
+<li>7. Контент-наследник может доопределять параметры наследуемого контента(подстановка).</li>
+<li>8. Контент-наследник может расширять наследуемый контент, добавляя новые элементы(расширение).</li>
+<li>9. Контент-наследник может иметь поведение, отличное от наследуемого контента(подстановка контроллера).</li>
+
+
+<p><b>* термины манифеста.</b></p>
+
+
+<h2>FACEMATIC for VAADIN resources</h2>
+<p><a href="https://github.com/slipchansky/facematic">FACEMATIC for VAADIN on github</a></p>
+<p>Facematix for VAADIN XSD: <a href="http://facematic.org/facematic.xsd">http://facematic.org/facematic.xsd</a></p>
+<p>Facematix for VAADIN eclipse dropins plugin <a href="https://github.com/slipchansky/facematic/raw/dev/plugins/org.facematic.facematic_1.3.0.0-SNAPSHOT.jar">download</a></p>
+	
+	</html>
+	
+</content>

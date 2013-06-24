@@ -42,10 +42,13 @@ public class CompositeBuilder extends ComponentBuilder {
 	 * @see org.facematic.core.producer.builders.ComponentBuilder#build(org.facematic.core.producer.FaceProducer, java.lang.Object, org.dom4j.Element)
 	 */
 	@Override
-	public void build(FaceProducer builder, Object oComponent, Element configuration) {
-		super.build(builder, oComponent, configuration);
+	public void build(FaceProducer producer, Object oComponent, Element configuration) {
+		super.build(producer, oComponent, configuration);
 		
-		Object inner = prepareInnerComponent(builder, configuration);
+		
+		List<Element> substElements = (List<Element>)configuration.elements ("subst");
+		
+		Object inner = prepareInnerComponent(producer, configuration, substElements);
 		
 		if (inner != null)
 		if (inner instanceof AbstractComponent) {
@@ -60,9 +63,10 @@ public class CompositeBuilder extends ComponentBuilder {
 	/**
 	 * @param builder
 	 * @param firstNested
+	 * @param substElements 
 	 * @return
 	 */
-	protected Object prepareInnerComponent(FaceProducer builder, Element firstNested) {
+	protected Object prepareInnerComponent(FaceProducer builder, Element firstNested, List<Element> substElements) {
 		String sLocation = firstNested.attributeValue("location");
 		String path = firstNested.attributeValue("path");
 		String name = firstNested.attributeValue("name");
@@ -77,9 +81,7 @@ public class CompositeBuilder extends ComponentBuilder {
 		Object controller = null;
 		
 		if ("none".equals (controllerClassName) || "owner".equals (controllerClassName)) {
-			
 			controller = builder.getControllerInstance();
-			logger.trace("------------------------------------------!!!!!!!!!!!!!!!!!"+controller.getClass().getCanonicalName());
 		}
 		
 		if (controller == null)
@@ -105,6 +107,13 @@ public class CompositeBuilder extends ComponentBuilder {
 		switch (location) {
 		case RESOURCE:
 			FaceProducer nestedBuilder = new FaceProducer(controller, builder, name);
+			logger.error("------------------------------------------------------**************************-----------------------------");
+			if (substElements != null) {
+				for (Element e : substElements) {
+					nestedBuilder.addSubst(e.attributeValue("name"), e.attributeValue("value"));
+					logger.error("add subst : "+e.attributeValue("name")+"="+e.attributeValue("value"));
+				}
+			}
 			try {
 				result = nestedBuilder.buildFromResource(path);
 			} catch (Exception e) {

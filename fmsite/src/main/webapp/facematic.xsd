@@ -1,0 +1,1287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://facematic.org/fm"
+	xmlns:c="http://facematic.org/fm" elementFormDefault="qualified">
+
+
+	<complexType name="ContentContainerType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<sequence minOccurs="0" maxOccurs="unbounded">
+					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:TabSheetType" name="Accordion" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:WindowType" name="Window" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:HtmlType" name="Html" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:HtmlType" name="html" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:ContentContainerType" name="hl" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:ContentContainerType" name="vl" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:OverlayType" name="Overlay" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:ButtonType" name="Button" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:FieldType" name="TextField" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:LabelType" name="Label" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:LinkType" name="Link" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:EmbeddedType" name="Embedded" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:PopupDateFieldType" name="PopupDateField"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:InlineDateFieldType" name="InlineDateField"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:InlineDateFieldType" name="DateField"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+
+					<element type="c:TextAreaType" name="TextArea" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:RichTextAreaType" name="RichTextArea"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:ListSelectType" name="ListSelect"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+
+					<element type="c:FieldType" name="CheckBox" minOccurs="0"
+						maxOccurs="unbounded" />
+
+					<element name="ComboBox" type="c:ComboBoxType" maxOccurs="unbounded"
+						minOccurs="0">
+					</element>
+					<element type="c:TwinColSelectType" name="TwinColSelect"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:OptionGroupType" name="OptionGroup"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:SliderType" name="Slider" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:UploadType" name="Upload" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:FormLayoutType" name="FormLayout"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:TableType" name="Table" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:TableType" name="TreeTable" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:TreeType" name="Tree" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:PanelType" name="Panel" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:CompositeType" name="composite" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:PlaceHolderType" name="placeholder"
+						minOccurs="0" maxOccurs="unbounded" />
+				</sequence>
+				<attribute name="spacing" type="c:TrueFalseType"></attribute>
+				<attribute name="margin" type="c:TrueFalseType"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="WindowType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+				<attribute name="center" type="c:TrueFalseType"></attribute>
+				<attribute name="positionX" type="int"></attribute>
+				<attribute name="positionY" type="int"></attribute>
+				<attribute name="modal" type="c:TrueFalseType"></attribute>
+				<attribute name="resizable" type="c:TrueFalseType"></attribute>
+				<attribute name="resizeLazy" type="c:TrueFalseType"></attribute>
+				<attribute name="closable" type="c:TrueFalseType"></attribute>
+				<attribute name="draggable" type="c:TrueFalseType"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="TabSheetType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+				<attribute name="hideTabs" type="c:TrueFalseType"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="CoreHtmlType" mixed="true">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element type="c:CoreHtmlTableType" name="table" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:TableType" name="TreeTable" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
+			<element type="c:CoreHtmlType" name="p" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="span" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="div" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="input" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="a" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="b" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="br" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="button" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="cente" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="form" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="li" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlImageType" name="image" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlImageType" name="img" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlIframeType" name="iframe" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="i" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="hr" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="ul" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="pre" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="select" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="option" minOccurs="0"
+				maxOccurs="unbounded" />
+
+			<element type="c:CoreHtmlType" name="textarea" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h1" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h2" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h3" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h4" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h5" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="h6" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:CoreHtmlType" name="font" minOccurs="0"
+				maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="class" type="string"></attribute>
+		<attribute name="style" type="string"></attribute>
+		<attribute name="width" type="string"></attribute>
+		<attribute name="height" type="string"></attribute>
+		<attribute name="name" type="string"></attribute>
+		<attribute name="id" type="string"></attribute>
+		<attribute name="type" type="string"></attribute>
+		<attribute name="align" type="string"></attribute>
+		<attribute name="size" type="string"></attribute>
+	</complexType>
+
+
+	<complexType name="CoreHtmlTdType">
+		<complexContent>
+			<extension base="c:CoreHtmlType">
+				<attribute name="colspan" type="int"></attribute>
+				<attribute name="rowspan" type="int"></attribute>
+				<attribute name="valign" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="CoreHtmlTrType">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<element type="c:CoreHtmlTdType" name="td" minOccurs="1"
+				maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="valign" type="string"></attribute>
+		<attribute name="height" type="string"></attribute>
+		<attribute name="colspan" type="int"></attribute>
+		<attribute name="rowspan" type="int"></attribute>
+	</complexType>
+
+	<complexType name="CoreHtmlImageType">
+		<complexContent>
+			<extension base="c:CoreHtmlType">
+				<attribute name="src" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="CoreHtmlTableType">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<element type="c:CoreHtmlTrType" name="tr" minOccurs="1"
+				maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="border" type="int"></attribute>
+		<attribute name="width" type="string"></attribute>
+		<attribute name="height" type="string"></attribute>
+		<attribute name="style" type="string"></attribute>
+		<attribute name="id" type="string"></attribute>
+		<attribute name="cellspacing" type="string"></attribute>
+		<attribute name="cellpadding" type="string"></attribute>
+		<attribute name="bgcolor" type="string"></attribute>
+		<attribute name="frame" type="string"></attribute>
+	</complexType>
+
+	<complexType name="CoreHtmlIframeType">
+		<complexContent>
+			<extension base="c:CoreHtmlType">
+				<attribute name="src" type="string"></attribute>
+				<attribute name="frameborder" type="int"></attribute>
+				<attribute name="allowfullscreen" type="int"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+
+
+	<complexType name="HtmlType" mixed="true">
+		<complexContent>
+			<extension base="c:LabelType">
+				<sequence maxOccurs="unbounded" minOccurs="0">
+					<element type="c:CoreHtmlTableType" name="table" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="p" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="span" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="div" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="input" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="a" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="b" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="br" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="button" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="cente" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="form" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="li" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlImageType" name="img" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlIframeType" name="iframe"
+						minOccurs="0" maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="i" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="hr" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="ul" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="pre" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="select" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="option" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="textarea" minOccurs="0"
+						maxOccurs="unbounded" />
+
+					<element type="c:CoreHtmlType" name="h1" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h2" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h3" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h4" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h5" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="h6" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:CoreHtmlType" name="font" minOccurs="0"
+						maxOccurs="unbounded" />
+
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+
+	<complexType name="ContentType">
+		<sequence>
+		</sequence>
+		<attribute name="name" type="string" use="optional"></attribute>
+		<attribute name="id" type="string" use="optional"></attribute>
+		<attribute name="caption" type="string" use="optional"></attribute>
+		<attribute name="height" type="string" use="optional"></attribute>
+		<attribute name="width" type="string" use="optional"></attribute>
+		<attribute name="alignment" type="c:ContentTypeAlignmentType"
+			use="optional" />
+		<attribute name="sizeFull" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="expandRatio" type="float" use="optional" />
+		<attribute name="enabled" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="visible" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="styleName" type="string" use="optional"></attribute>
+		<attribute name="immediate" type="c:TrueFalseType" use="optional"></attribute>
+		<attribute name="description" type="string" use="optional"></attribute>
+		<attribute name="class" type="string" use="optional">
+			<annotation>
+				<documentation>
+					Qualified component class name, for example,
+					name="com.vaadin.ui.Button"
+				</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+
+	<simpleType name="ContentTypeAlignmentType">
+		<restriction base="string">
+			<enumeration value="BOTTOM_CENTER" />
+			<enumeration value="BOTTOM_LEFT" />
+			<enumeration value="BOTTOM_RIGHT" />
+			<enumeration value="MIDDLE_CENTER" />
+			<enumeration value="MIDDLE_LEFT" />
+			<enumeration value="MIDDLE_RIGHT" />
+			<enumeration value="TOP_CENTER" />
+			<enumeration value="TOP_LEFT" />
+			<enumeration value="TOP_RIGHT" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="TrueFalseType">
+		<restriction base="string">
+			<enumeration value="false" />
+			<enumeration value="true" />
+		</restriction>
+	</simpleType>
+
+
+
+
+	<complexType name="PanelType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<choice minOccurs="1" maxOccurs="1">
+					<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:TabSheetType" name="Accordion" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:WindowType" name="Window" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:ContentContainerType" name="hl" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:ContentContainerType" name="vl" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:ButtonType" name="Button" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:FieldType" name="TextField" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:LabelType" name="Label" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:HtmlType" name="Html" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:HtmlType" name="html" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:LinkType" name="Link" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:EmbeddedType" name="Embedded" minOccurs="0"
+						maxOccurs="unbounded" />
+					<element type="c:PopupDateFieldType" name="PopupDateField"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:InlineDateFieldType" name="InlineDateField"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:InlineDateFieldType" name="DateField"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+
+					<element type="c:TextAreaType" name="TextArea" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:RichTextAreaType" name="RichTextArea"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:ListSelectType" name="ListSelect"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element name="ComboBox" type="c:ComboBoxType" maxOccurs="unbounded"
+						minOccurs="0">
+					</element>
+					<element type="c:TwinColSelectType" name="TwinColSelect"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:OptionGroupType" name="OptionGroup"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:SliderType" name="Slider" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:UploadType" name="Upload" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:FormLayoutType" name="FormLayout"
+						minOccurs="0" maxOccurs="unbounded">
+					</element>
+					<element type="c:TableType" name="Table" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:TableType" name="TreeTable" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+
+					<element type="c:TreeType" name="Tree" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:PanelType" name="Panel" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:CompositeType" name="composite" minOccurs="0"
+						maxOccurs="unbounded">
+					</element>
+					<element type="c:PlaceHolderType" name="placeholder"
+						minOccurs="0" maxOccurs="unbounded" />
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="CompositeLocationType">
+		<restriction base="string">
+			<enumeration value="RESOURCE" />
+			<enumeration value="FILE" />
+			<enumeration value="URL" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="CompositeType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<attribute name="controller" type="string" use="optional"></attribute>
+				<attribute name="location" type="c:CompositeLocationType"
+					use="optional">
+					<annotation>
+						<documentation>Deprecated. Use attribute "content" instead of
+							location+path.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="margin" type="c:TrueFalseType"></attribute>
+				<attribute name="spacing" type="c:TrueFalseType"></attribute>
+				<attribute name="path" type="string" use="optional">
+					<annotation>
+						<documentation>Deprecated. Use attribute "content" instead of
+							location+path.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="src" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ExtensionCompositeType">
+		<complexContent>
+			<extension base="c:CompositeType">
+				<attribute name="placeholder" type="string" use="required"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="PlaceHolderType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<attribute name="controller" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="EventListenerType" mixed="true">
+		<attribute name="call" type="string"></attribute>
+	</complexType>
+
+
+	<complexType name="PropertyType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<attribute name="value" type="string"></attribute>
+				<attribute name="onChange" type="string">
+					<annotation>
+						<documentation>
+							The name of controller method. You must implement
+							method with this
+							name with parameter type of ValueChangeEvent. for
+							example: public
+							void onValueChange (ValueChangeEvent event) {...}.
+						</documentation>
+					</annotation>
+				</attribute>
+			</extension>
+
+		</complexContent>
+	</complexType>
+
+	<complexType name="FieldType">
+		<complexContent>
+			<extension base="c:PropertyType">
+				<attribute name="inputPrompt" use="optional" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="TextFieldType">
+		<complexContent>
+			<extension base="c:FieldType">
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<simpleType name="PopupDateFieldResolutionType">
+		<restriction base="string">
+			<enumeration value="SECOND" />
+			<enumeration value="MINUTE" />
+			<enumeration value="HOUR" />
+			<enumeration value="DAY" />
+			<enumeration value="MONTH" />
+			<enumeration value="YEAR" />
+		</restriction>
+	</simpleType>
+
+
+
+	<complexType name="PopupDateFieldType">
+		<complexContent>
+			<extension base="c:FieldType">
+				<attribute name="resolution" type="c:PopupDateFieldResolutionType" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="InlineDateFieldType">
+		<complexContent>
+			<extension base="c:PopupDateFieldType" />
+		</complexContent>
+	</complexType>
+
+
+
+	<complexType name="LabelType">
+		<complexContent>
+			<extension base="c:PropertyType" />
+		</complexContent>
+	</complexType>
+
+	<complexType name="LinkType">
+		<complexContent>
+			<extension base="c:PropertyType">
+				<attribute name="url" type="string"></attribute>
+				<attribute name="resource" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<simpleType name="EmbeddedTypeType">
+		<restriction base="string">
+			<enumeration value="TYPE_BROWSER" />
+			<enumeration value="TYPE_IMAGE" />
+			<enumeration value="TYPE_OBJECT" />
+		</restriction>
+	</simpleType>
+
+
+	<complexType name="EmbeddedType">
+		<complexContent>
+			<extension base="c:LinkType">
+				<sequence>
+					<element name="parameter" type="string" minOccurs="0"
+						maxOccurs="unbounded" />
+				</sequence>
+
+				<attribute name="alternateText" type="string" />
+				<attribute name="mimeType" type="string" />
+				<attribute name="type" type="c:EmbeddedTypeType" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="TextAreaType">
+		<complexContent>
+			<extension base="c:FieldType">
+				<attribute name="rows" type="int" />
+				<attribute name="columns" type="int" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="RichTextAreaType">
+		<complexContent>
+			<extension base="c:TextAreaType">
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+	<complexType name="ButtonType">
+		<complexContent>
+			<extension base="c:ContentType">
+				<attribute name="onClick" type="string">
+					<annotation>
+						<documentation>
+							The name of controller method. You must implement
+							method with such
+							name in your controller. For example: public void
+							onClick
+							(ClickEvent event) {...}.
+						</documentation>
+					</annotation>
+				</attribute>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ItemType" mixed="true">
+		<sequence>
+			<element name="item" type="c:ItemType" maxOccurs="unbounded"
+				minOccurs="0" />
+		</sequence>
+		<attribute name="value" use="optional"></attribute>
+	</complexType>
+
+
+	<complexType name="ListSelectType">
+		<complexContent>
+			<extension base="c:FieldType">
+				<sequence>
+					<element name="item" type="c:ItemType" maxOccurs="unbounded"
+						minOccurs="0" />
+				</sequence>
+				<attribute name="enum" type="string"></attribute>
+				<attribute name="rows" type="integer" use="optional"></attribute>
+				<attribute name="nullSelectionAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="multiSelect" type="c:TrueFalseType"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+	<complexType name="TwinColSelectType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<attribute name="leftColumnCaption" type="string" use="optional"></attribute>
+				<attribute name="rightColumnCaption" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+
+	<complexType name="OptionGroupType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<attribute name="htmlContentAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="ComboBoxFilteringModeType">
+		<restriction base="string">
+			<enumeration value="OFF" />
+			<enumeration value="STARTSWITH" />
+			<enumeration value="CONTAINS" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="ComboBoxType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<attribute name="filteringMode" type="c:ComboBoxFilteringModeType"
+					use="optional"></attribute>
+				<attribute name="newItemsAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="beanClass" type="string" use="optional"></attribute>
+				<attribute name="beanIdField" type="string" use="optional"></attribute>
+				<attribute name="beanCaptionField" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="SliderOrientationType">
+		<restriction base="string">
+			<enumeration value="HORISONTAL" />
+			<enumeration value="VERTICAL" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="SliderType">
+		<complexContent>
+			<extension base="c:FieldType">
+				<attribute name="min" type="double" use="optional"></attribute>
+				<attribute name="max" type="double" use="optional"></attribute>
+				<attribute name="orientation" type="c:SliderOrientationType"
+					use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="UploadType">
+		<complexContent>
+			<extension base="c:FieldType">
+
+				<attribute name="saveTo" type="string">
+					<annotation>
+						<documentation>
+							To simplify the use of the component Upload, you
+							can just specify the path to the directory in which to store all
+							the uploaded files.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="buttonCaption" type="string"></attribute>
+				<attribute name="onFinished" type="string"></attribute>
+				<attribute name="onStarted" type="string"></attribute>
+				<attribute name="onProgress" type="string"></attribute>
+				<attribute name="onSucceeded" type="string"></attribute>
+				<attribute name="onFailed" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="FormLayoutType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<simpleType name="TableRowHeaderModeType">
+		<restriction base="string">
+			<enumeration value="ITEM">
+				<annotation>
+					<documentation>Column headers are explicitly specified with
+						setColumnHeaders(String[]).
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="INDEX">
+				<annotation>
+					<documentation>
+						Row caption mode: Index of the item is used as item
+						caption. The
+						index mode can only be used with the containers
+						implementing the
+						com.vaadin.data.Container.Indexed interface.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="HIDDEN">
+				<annotation>
+					<documentation>Column headers are hidden.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="ID">
+				<annotation>
+					<documentation>Property ID:s are used as column headers.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="EXPLICIT_DEFAULTS_ID">
+				<annotation>
+					<documentation>
+						Row caption mode: Item captions are explicitly
+						specified, but if
+						the
+						caption is missing, the item id objects
+						toString()
+						is used instead.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="EXPLICIT">
+				<annotation>
+					<documentation>Row caption mode: Item captions are explicitly
+						specified.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="ICON_ONLY">
+				<annotation>
+					<documentation>Row caption mode: Only icons are shown, the captions
+						are hidden.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="PROPERTY">
+				<annotation>
+					<documentation>Row caption mode: Item captions are read from
+						property specified with
+						setItemCaptionPropertyId(Object).
+					</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+
+
+	<simpleType name="TableColumnHeaderModeType">
+		<restriction base="string">
+			<enumeration value="HIDDEN">
+				<annotation>
+					<documentation>
+						Column headers are hidden.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="ID">
+				<annotation>
+					<documentation>
+						Property ID:s are used as column headers.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="EXPLICIT">
+				<annotation>
+					<documentation>
+						Column headers are explicitly specified with
+						setColumnHeaders(String[]).
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="EXPLICIT_DEFAULTS_ID">
+				<annotation>
+					<documentation>
+						Column headers are explicitly specified with
+						setColumnHeaders(String[]). If a header is not specified for
+						a
+						given property, its property id is used instead.
+						<p>
+							<b>This is the default behavior. </b>
+						</p>
+					</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="TableColumnAlignType">
+		<restriction base="string">
+			<enumeration value="LEFT" />
+			<enumeration value="CENTER" />
+			<enumeration value="RIGHT" />
+		</restriction>
+	</simpleType>
+
+
+
+	<complexType name="TableColumnType">
+		<sequence>
+		</sequence>
+		<attribute name="id" type="string"></attribute>
+		<attribute name="type" type="string" default="String.class"></attribute>
+		<attribute name="alignment" type="c:TableColumnAlignType"></attribute>
+		<attribute name="defaultValue" type="string"></attribute>
+		<attribute name="collapsed" type="c:TrueFalseType"></attribute>
+		<attribute name="collapsible" type="c:TrueFalseType"></attribute>
+		<attribute name="expandRatio" type="float"></attribute>
+		<attribute name="footer" type="string"></attribute>
+		<attribute name="header" type="string"></attribute>
+		<attribute name="icon" type="string"></attribute>
+		<attribute name="reorderingAllowed" type="c:TrueFalseType"></attribute>
+		<attribute name="width" type="int"></attribute>
+	</complexType>
+	<element name="column" type="c:TableColumnType"></element>
+
+
+	<complexType name="TableColumnsType">
+		<sequence>
+			<element ref="c:column" minOccurs="1" maxOccurs="unbounded"></element>
+		</sequence>
+	</complexType>
+
+	<element name="columns" type="c:TableColumnsType"></element>
+
+
+
+	<complexType name="TableType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<sequence>
+					<element ref="c:columns" minOccurs="0" maxOccurs="unbounded"></element>
+				</sequence>
+				<attribute name="selectable" type="c:TrueFalseType" use="optional"
+					default="false"></attribute>
+				<attribute name="multiSelectAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="columnReorderingAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="columnCollapsingAllowed" type="c:TrueFalseType"
+					use="optional"></attribute>
+				<attribute name="rowHeaderMode" type="c:TableRowHeaderModeType"
+					use="optional"></attribute>
+				<attribute name="columnHeaderMode" type="c:TableColumnHeaderModeType"
+					use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="TreeTableType">
+		<complexContent>
+			<extension base="c:TableType">
+				<attribute name="min" type="double" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+
+
+	<simpleType name="TreeDragModeType">
+		<restriction base="string">
+			<enumeration value="NONE">
+				<annotation>
+					<documentation>
+						When drag mode is NONE, dragging from Tree is not
+						supported. Browsers
+						may still support selecting text/icons from
+						Tree which can
+						initiate
+						HTML 5 style drag and drop operation.
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="NODE">
+				<annotation>
+					<documentation>
+						When drag mode is NODE, users can initiate drag from
+						Tree nodes that
+						represent {@link Item}s in from the backed {@link
+						Container}.
+					</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+
+
+
+	<simpleType name="TreeMultiSelectModeType">
+		<restriction base="string">
+			<enumeration value="DEFAULT">
+				<annotation>
+					<documentation>
+						The default behavior of the multi select mode
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="SIMPLE">
+				<annotation>
+					<documentation>
+						The previous more simple behavior of the multi
+						select
+					</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+
+
+	<complexType name="TreeType">
+		<complexContent>
+			<extension base="c:ListSelectType">
+				<sequence></sequence>
+				<attribute name="itemCaptionPropertyId" type="string"></attribute>
+				<attribute name="lazyLoading" type="c:TrueFalseType" use="optional">
+				</attribute>
+				<attribute name="dragMode" type="c:TreeDragModeType" use="optional">
+				</attribute>
+				<attribute name="multiselectMode" type="c:TreeMultiSelectModeType"
+					use="optional">
+				</attribute>
+				<attribute name="newItemsAllowed" type="c:TrueFalseType"
+					use="optional">
+				</attribute>
+				<attribute name="selectable" type="c:TrueFalseType" use="optional">
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SubstituteType" mixed="true">
+		<complexContent>
+			<extension base="c:CoreHtmlType">
+				<attribute name="value" type="string" use="optional"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="ExtensionImplementType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element type="c:SubstituteType" name="subst" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+						Not implemented yet
+					</documentation>
+				</annotation>
+			</element>
+			
+			<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:TabSheetType" name="Accordion" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
+			<element type="c:WindowType" name="Window" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
+
+			<element type="c:HtmlType" name="Html" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:HtmlType" name="html" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:ContentContainerType" name="hl" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:ContentContainerType" name="vl" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
+			<element type="c:OverlayType" name="Overlay" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+
+			<element type="c:ButtonType" name="Button" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:FieldType" name="TextField" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:LabelType" name="Label" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:LinkType" name="Link" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:EmbeddedType" name="Embedded" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element type="c:PopupDateFieldType" name="PopupDateField"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:InlineDateFieldType" name="InlineDateField"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:InlineDateFieldType" name="DateField"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+
+			<element type="c:TextAreaType" name="TextArea" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:RichTextAreaType" name="RichTextArea"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:ListSelectType" name="ListSelect" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element name="ComboBox" type="c:ComboBoxType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element type="c:TwinColSelectType" name="TwinColSelect"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:OptionGroupType" name="OptionGroup"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element type="c:SliderType" name="Slider" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:UploadType" name="Upload" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:FormLayoutType" name="FormLayout" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:TableType" name="Table" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:TreeType" name="Tree" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:PanelType" name="Panel" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:CompositeType" name="composite" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+			<element type="c:PlaceHolderType" name="placeholder"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="placeholder" use="required"></attribute>
+	</complexType>
+
+
+	<complexType name="ExtensionType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element type="c:SubstituteType" name="subst" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+						Not implemented yet
+					</documentation>
+				</annotation>
+			</element>
+			<element type="c:ExtensionImplementType" name="implement"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="base" type="string" use="required"></attribute>
+		<attribute name="controller" type="string"></attribute>
+		<attribute name="spacing" type="c:TrueFalseType"></attribute>
+		<attribute name="margin" type="c:TrueFalseType"></attribute>
+	</complexType>
+
+
+	<complexType name="PartExtensionType">
+		<complexContent>
+			<extension base="c:ExtensionType">
+				<sequence minOccurs="0" maxOccurs="unbounded">
+				</sequence>
+				<attribute name="name" type="string" use="required"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="RootContentType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+				<sequence minOccurs="0" maxOccurs="unbounded">
+					<element type="c:SubstituteType" name="subst" minOccurs="0"
+						maxOccurs="unbounded">
+						<annotation>
+							<documentation>
+							</documentation>
+						</annotation>
+					</element>
+				</sequence>
+				<attribute name="controller" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="OverlayType">
+		<complexContent>
+			<extension base="c:ContentContainerType">
+				<attribute name="onElementChange" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ComplexContentType">
+		<complexContent>
+			<extension base="c:RootContentType">
+				<attribute name="name" use="prohibited"></attribute>
+			</extension>
+		</complexContent>
+
+	</complexType>
+
+	<complexType name="ComplexType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element type="c:RootContentType" name="part" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+					</documentation>
+				</annotation>
+			</element>
+
+			<element type="c:ComplexContentType" name="content"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+
+			<element type="c:PartExtensionType" name="extension"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+
+		</sequence>
+		<attribute name="controller" type="string"></attribute>
+	</complexType>
+
+
+
+	<element name="hl" type="c:RootContentType"></element>
+	<element name="vl" type="c:RootContentType"></element>
+	<element name="content" type="c:RootContentType"></element>
+	<element name="extension" type="c:ExtensionType"></element>
+	<element name="complex" type="c:ComplexType"></element>
+
+</schema>

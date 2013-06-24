@@ -228,9 +228,18 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 	}
 
 	public void gotoMarker(IMarker marker) {
-		setActivePage(0);
-		IDE.gotoMarker(getEditor(0), marker);
+		if (javaEditor == null) return;
+		setActivePage(1);
+		setActiveEditor(javaEditor);
+		javaEditor.setFocus();
+		javaEditor.gotoMarker(marker);
+		//IDE.gotoMarker(javaEditor, marker);
 	}
+	
+	
+	
+	
+
 
 	@SuppressWarnings("deprecation")
 	public void init(IEditorSite site, IEditorInput edInput) throws PartInitException {
@@ -288,7 +297,7 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 
 		javaFile = updateSourceFile("src.main.java."+ controllerPackageName, controllerName, MAIN_JAVA, ".java", "controller.vm");
 		xmlFile  = updateSourceFile("src.main.resources."+viewPackageName, viewName, MAIN_RESOURCES,".xml", "view.vm");
-		this.setTitle(viewControllerNameBase);
+		this.setTitle(controllerName+".java"); //viewControllerNameBase
 
 		super.init(site, edInput);
 	}
@@ -512,6 +521,10 @@ public class FmMvcEditor extends MultiPageEditorPart implements	IResourceChangeL
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void selectActivePage(int i) {
+		setActivePage (i);
 	}
 
 }

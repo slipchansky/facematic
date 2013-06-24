@@ -1,5 +1,6 @@
 package org.facematic.facematic.editors.parts;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
 import org.eclipse.jdt.internal.ui.preferences.JavaPreferencesSettings;
 import org.eclipse.jdt.internal.ui.text.JavaColorManager;
@@ -10,6 +11,7 @@ import org.eclipse.jdt.ui.text.JavaTextTools;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IAutoIndentStrategy;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.facematic.facematic.editors.FmMvcEditor;
 

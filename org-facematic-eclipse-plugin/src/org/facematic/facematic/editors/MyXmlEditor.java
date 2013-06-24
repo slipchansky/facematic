@@ -1,5 +1,6 @@
 package org.facematic.facematic.editors;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.ui.StructuredTextViewerConfigurationXML;

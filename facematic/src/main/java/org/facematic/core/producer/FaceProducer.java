@@ -794,5 +794,9 @@ public class FaceProducer implements Serializable {
 			complexResources = new HashMap<String, String> ();
 		complexResources.put(name,  xml);
 	}
+	
+	public void addSubst (String name, String value) {
+		viewSubstitutions.put(name, value);
+	}
 
 }

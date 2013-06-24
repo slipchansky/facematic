@@ -4,7 +4,9 @@
 	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
 	controller="org.facematic.site.showcase.combobox.ComboBoxExample" margin="true">
 	
-	<ComboBox name="comboBox" enum="org.facematic.site.showcase.combobox.EnumForCombo/description" immediate="true" onChange="comboChanged"/>
+	<ComboBox name="comboBox" enum="org.facematic.site.showcase.combobox.EnumForCombo" immediate="true" onChange="comboChanged"/>
+	
+	<ComboBox name="comboBoxB" enum="org.facematic.site.showcase.combobox.EnumForCombo/description" immediate="true" onChange="comboChanged"/>
 	
 	
 </content>

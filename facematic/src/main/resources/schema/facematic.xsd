@@ -155,7 +155,7 @@
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="input" minOccurs="0"
 				maxOccurs="unbounded" />
-			<element type="c:CoreHtmlType" name="a" minOccurs="0"
+			<element type="c:HrefHtmlType" name="a" minOccurs="0"
 				maxOccurs="unbounded" />
 			<element type="c:CoreHtmlType" name="b" minOccurs="0"
 				maxOccurs="unbounded" />
@@ -214,6 +214,15 @@
 		<attribute name="type" type="string"></attribute>
 		<attribute name="align" type="string"></attribute>
 		<attribute name="size" type="string"></attribute>
+	</complexType>
+
+
+	<complexType name="HrefHtmlType">
+		<complexContent>
+			<extension base="c:CoreHtmlType">
+				<attribute name="href" type="string"></attribute>
+			</extension>
+		</complexContent>
 	</complexType>
 
 
@@ -291,7 +300,7 @@
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="input" minOccurs="0"
 						maxOccurs="unbounded" />
-					<element type="c:CoreHtmlType" name="a" minOccurs="0"
+					<element type="c:HrefHtmlType" name="a" minOccurs="0"
 						maxOccurs="unbounded" />
 					<element type="c:CoreHtmlType" name="b" minOccurs="0"
 						maxOccurs="unbounded" />
@@ -511,6 +520,15 @@
 	<complexType name="CompositeType">
 		<complexContent>
 			<extension base="c:ContentType">
+			<sequence maxOccurs="unbounded" minOccurs="0">
+					<element type="c:SubstituteType" name="subst" minOccurs="0"
+						maxOccurs="unbounded">
+						<annotation>
+							<documentation>
+							</documentation>
+						</annotation>
+					</element>
+			</sequence>
 				<attribute name="controller" type="string" use="optional"></attribute>
 				<attribute name="location" type="c:CompositeLocationType"
 					use="optional">
@@ -1084,11 +1102,6 @@
 		<sequence minOccurs="0" maxOccurs="unbounded">
 			<element type="c:SubstituteType" name="subst" minOccurs="0"
 				maxOccurs="unbounded">
-				<annotation>
-					<documentation>
-						Not implemented yet
-					</documentation>
-				</annotation>
 			</element>
 			
 			<element type="c:TabSheetType" name="TabSheet" minOccurs="0"
