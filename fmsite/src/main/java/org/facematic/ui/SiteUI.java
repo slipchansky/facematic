@@ -25,7 +25,7 @@ public class SiteUI extends org.facematic.core.ui.FacematicUI {
 		try {
 			FaceProducer  producer = new FaceProducer(this);
 			
-		    	Object cont = producer.getViewFor (org.facematic.site.showcasestudio.ShowCaseStudio.class); //
+		    	Object cont = producer.getViewFor (org.facematic.ui.controllers.MainController.class); //
 		    	if (cont != null) {
 		    		setContent((Component)cont);
                         }

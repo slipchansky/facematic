@@ -1,0 +1,72 @@
+A) Facematic.
+
+Facematic = Declarative Vaadin (on slide B)
+
+in 2 words: Facematic - something like XAML (Microsoft WPF) for RIA.
+
+- Separation of the logic (Java code) from presentation (XML markup)
+- XSD-enforced XML UI declarations
+- Mechanisms for components modularity and inheritance on declarative level
+- Eclipse plugins for easement of development
+
+
+B) Vaadin
+
+http://vaadin.com
+Vaadin is an open source Web application framework for RIA.
+Apache License
+Maturity: sice 2002
+
+in 2 words: Vaadin - something like swing for RIA.
+
+/*
+ Vaadin features a complete stack that include a robust server-side 
+ programming model as well as client-side development tools based on GWT and HTML5. 
+ The rapid development model that abstracts away from implementation details such as RPC and cross 
+ browser compatibility and full control over all the layers.
+*/
+
+Features:
+1. GWT as platform 
+2. Java as a main programming language.
+2.1. Advantages:
+- one main tool, one place for reach the goal
+- high level of data, business-logic and presentation consistency
+- control access to data and functionality on a server-side
+3. Strong community, huge collection of UI components.
+4. Possibility to write critical client-side extensions using javascript.
+
+
+
+C) Pros and Cons
+Pros:
+1. Rapid Application Development
+2. Rich collection of existing UI components
+3. High level of aplication consistency
+4. High level of modularity (module inheritance, loosely coupled modules, module reusing)
+5. High level of Browsers compatibility
+
+Cons:
+1. massive javascript runtime (about 1 M. cached on browser)
+2. statefull sessionscoped application
+3. some specific cases are hard to implementat
+
+D) Browsers compatibility
+- Mozilla Firefox 3–21
+- Internet Explorer 6–9
+- Safari 4–5
+- Opera 10–12
+- Google Chrome 13–21
+- iOS 4–5
+- Android 2–4
+
+
+E) Where to use
+
+Pre-production application protoypig: The best
+Intranet enterprise applications: The best
+Internet enterprise applications: Good
+Specific one-page, simple form internet/intranet applications: May be, but not good.
+High availabile internet content: Poor
+
+

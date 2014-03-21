@@ -2,7 +2,7 @@
 
 <hl xmlns="http://facematic.org/fm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://facematic.org/fm http://facematic.org/facematic.xsd"
-	controller="org.facematic.ui.controllers.MainMenu" margin="false">
+	controller="org.facematic.ui.controllers.MainMenu" margin="true" >
 	
 	<composite name="menuFacematic" src="org.facematic.ui.views.MenuItem" >
 	   <subst name="caption" value="facematic"/>
